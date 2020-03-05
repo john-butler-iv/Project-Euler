@@ -287,30 +287,40 @@ class PrimeFinder {
 		return totientValue;
 	}
 
-	static List<Integer> findNPrimes(int n) {
-		List<Integer> primes = new ArrayList<>();
-		if (n <= 0)
-			return primes;
-		primes.add(2);
-		for (int i = 3; primes.size() < n; i += 2) {
-			boolean flag = true;
-			for (int prime : primes)
-				if (i % prime == 0) {
-					flag = false;
-					break;
+	/**
+	 * counts the number of divisors of n, including 1 and n
+	 * 
+	 * @param n a positive integer with some number of divisors
+	 * @return returns the number of divisors of n
+	 */
+	public int divisors(int n) {
+		List<Integer> factors = primeFactorize(n);
+		int divisors = 1;
 
-				}
-			if (flag)
-				primes.add(i);
+		for (int i = 0; i < factors.size();) {
+			int numFactor = 1;
+			for (int j = i + 1; j < factors.size() && factors.get(j) == factors.get(i); j++)
+				numFactor++;
+			divisors *= numFactor + 1;
+			i += numFactor;
 		}
-
-		return primes;
+		return divisors;
 	}
 
+	/**
+	 * a getter for the primes found
+	 * 
+	 * @return returns all primes less than the limit
+	 */
 	List<Integer> getPrimes() {
 		return primes;
 	}
 
+	/**
+	 * returns a table where getPrimeTable()[i] is true iff i is prime
+	 * 
+	 * @return returns a table to look up if a number is prime
+	 */
 	boolean[] getPrimeTable() {
 		return primeTable;
 	}

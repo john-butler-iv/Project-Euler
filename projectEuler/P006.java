@@ -1,14 +1,14 @@
 package projectEuler;
 
-class P006 extends ParameterizedProblem {
+class P006 extends ParameterizedProblem<Long> {
 
 	@Override
-	long getDefaultParameter() {
-		return 100;
+	Long getDefaultParameter() {
+		return 100L;
 	}
 
 	@Override
-	long solve(long parameter, boolean printResults) {
+	long solve(Long parameter, boolean printResults) {
 		long sum1 = parameter * (parameter + 1) / 2;
 		sum1 *= sum1;
 
@@ -24,8 +24,8 @@ class P006 extends ParameterizedProblem {
 	}
 
 	@Override
-	protected long getTestParameter() {
-		return 10;
+	protected Long getTestParameter() {
+		return 10L;
 	}
 
 	@Override

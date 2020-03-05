@@ -1,18 +1,18 @@
 package projectEuler;
 
-class P005 extends ParameterizedProblem {
+class P005 extends ParameterizedProblem<Integer> {
 
 	@Override
-	long getDefaultParameter() {
+	Integer getDefaultParameter() {
 		return 20;
 	}
 
 	@Override
-	long solve(long parameter, boolean printResults) {
+	long solve(Integer parameter, boolean printResults) {
 
-		PrimeFinder pf = new PrimeFinder((int) parameter + 1);
+		PrimeFinder pf = new PrimeFinder(parameter + 1);
 
-		int[] totalFactorsNeeded = new int[(int) parameter + 1];
+		int[] totalFactorsNeeded = new int[parameter + 1];
 		
 		for (int i = 2; i <= parameter; i++) {
 
@@ -43,7 +43,7 @@ class P005 extends ParameterizedProblem {
 	}
 
 	@Override
-	protected long getTestParameter() {
+	protected Integer getTestParameter() {
 		return 10;
 	}
 

@@ -2,15 +2,15 @@ package projectEuler;
 
 import java.util.ArrayList;
 
-class P003 extends ParameterizedProblem {
+class P003 extends ParameterizedProblem<Long> {
 
 	@Override
-	long getDefaultParameter() {
+	Long getDefaultParameter() {
 		return 600851475143L;
 	}
 
 	@Override
-	long solve(long parameter, boolean printResults) {
+	long solve(Long parameter, boolean printResults) {
 		// TODO I can refactor this, but it works and it's quick and I'm too lazy to
 		// implement prime stuff for longs
 		ArrayList<Long> factors = new ArrayList<Long>();
@@ -30,7 +30,7 @@ class P003 extends ParameterizedProblem {
 	}
 
 	@Override
-	protected long getTestParameter() {
+	protected Long getTestParameter() {
 		return 13195L;
 	}
 

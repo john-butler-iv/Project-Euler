@@ -45,6 +45,16 @@ class EulerTools {
 	}
 
 	/**
+	 * Finds the i'th triangular number, where triangle(1) = 1
+	 * 
+	 * @param i the index of the triangle number
+	 * @param returns the ith triangular number
+	 */
+	public static int triangle(int i) {
+		return i * (i + 1) / 2;
+	}
+
+	/**
 	 * determines if n is a perfect square
 	 * 
 	 * @param n a number which may or may not be a perfect square

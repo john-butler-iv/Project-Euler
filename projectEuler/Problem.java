@@ -11,7 +11,7 @@ abstract class Problem implements Consumer<Object> {
 	abstract long solve(boolean printResults);
 
 	abstract String getTitle();
-	
+
 	public int getNumber() {
 		return Integer.valueOf(getTitle().substring(9, 12));
 	}

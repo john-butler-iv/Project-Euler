@@ -2,16 +2,16 @@ package projectEuler;
 
 import java.util.Iterator;
 
-class P002 extends ParameterizedProblem {
+class P002 extends ParameterizedProblem<Long> {
 
 	@Override
-	public long getDefaultParameter() {
-		return 4000000;
+	public Long getDefaultParameter() {
+		return 4000000L;
 	}
 
 	@Override
-	public long getTestParameter() {
-		return 100;
+	public Long getTestParameter() {
+		return 100L;
 	}
 	
 	@Override
@@ -20,7 +20,7 @@ class P002 extends ParameterizedProblem {
 	}
 	
 	@Override
-	public long solve(long parameter, boolean printResults) {
+	public long solve(Long parameter, boolean printResults) {
 		Iterator<Long> it = EulerTools.fibonacciIterator();
 		it.next();//0
 		it.next();//1

@@ -5,7 +5,7 @@ abstract class ProblemTimer extends Timer {
 
 	private Problem getProblem(int problemID) {
 		if (problemID < 0 || problemID >= problems.length)
-			throw new IllegalArgumentException();
+			return null;
 
 		return problems[problemID];
 	}
@@ -13,25 +13,34 @@ abstract class ProblemTimer extends Timer {
 	private int[] getAllIDs() {
 		int size = problems.length;
 		int[] ids = new int[size];
-		
+
 		for (int i = 0; i < size; i++)
 			ids[i] = i;
-		
+
 		return ids;
 	}
 
 	long time(int problemID) {
+		if (getProblem(problemID) == null)
+			return -1;
 		return Timer.time(getProblem(problemID), null, DEFUALT_TRIALS, false);
 	}
 
-	boolean test(int problemID) {
+	public boolean test(int problemID) {
 		Problem problem = getProblem(problemID);
-		return problem instanceof ParameterizedProblem ? ((ParameterizedProblem)problem).test() : true;
+		if (problem == null)
+			return false;
+		return problem instanceof ParameterizedProblem ? ((ParameterizedProblem) problem).test() : true;
 	}
 
 	String report(int problemID) {
-		String title = getProblem(problemID).getTitle();
+		Problem problem = getProblem(problemID);
 		
+		if (problem == null)
+			return "There is no problem with ID " + problemID;
+
+		String title = problem.getTitle();
+
 		if (!test(problemID))
 			return title + " failed its test";
 

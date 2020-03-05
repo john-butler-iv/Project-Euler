@@ -1,26 +1,26 @@
 package projectEuler;
 
-class P001 extends ParameterizedProblem {
+class P001 extends ParameterizedProblem<Long> {
 	@Override
 	public String getTitle() {
 		return "Problem 001: Multiples of 3 and 5";
 	}
 
 	@Override
-	public long getDefaultParameter() {
-		return 1000;
+	public Long getDefaultParameter() {
+		return 1000L;
 	}
 
 	@Override
-	public long getTestParameter() {
-		return 10;
+	public Long getTestParameter() {
+		return 10L;
 	}
 	public long getTestSolution(){
 		return 23;
 	}
 
 	@Override
-	long solve(long parameter, boolean printResults) {
+	long solve(Long parameter, boolean printResults) {
 		long sum = 0;
 		
 		for (long i = 1; i < parameter; i++)
