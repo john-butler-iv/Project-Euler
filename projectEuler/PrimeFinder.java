@@ -1,9 +1,7 @@
 package projectEuler;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 class PrimeFinder {
 	private boolean[] primeTable;
@@ -11,7 +9,8 @@ class PrimeFinder {
 	private int limit;
 
 	/**
-	 * Finds all primes less than limit, non-inclusive
+	 * Finds all primes less than limit, non-inclusive. The most this algorithm can
+	 * generate under 1ms on my system is about 1.6 million.
 	 * 
 	 * @param limit the upper-limit on which primes will be found, non-inclusive
 	 */
@@ -130,15 +129,53 @@ class PrimeFinder {
 			factors.add(n);
 			return factors;
 		}
+		// since we remove each prime factor of n, we'll know we've finished because
+		// there are no more factors i.e. n = 1
 		for (int i = 0; n != 1; i++) {
 			while (n % primes.get(i) == 0) {
-				factors.add(i);
+				factors.add(primes.get(i));
 				n /= primes.get(i);
 			}
 		}
 		return factors;
 	}
 
+	/**
+	 * finds all unique prime factors of n. For example, primeFactorize(12) returns
+	 * a List containing {2, 3}
+	 * 
+	 * @param n the number to be factorized
+	 * @return returns a sorted list of all unique prime factors of n
+	 */
+	public List<Integer> uniquePrimeFactorize(int n) {
+		List<Integer> factors = new ArrayList<>();
+
+		// this check isn't necessary, but it's constant runtime, and if n was in fact
+		// prime, it saves a lot of time
+		if (isPrime(n)) {
+			factors.add(n);
+			return factors;
+		}
+		for (int i = 0; n != 1; i++) {
+			if (n % primes.get(i) == 0) {
+				factors.add(primes.get(i));
+				// this is so we don't add factors more than once, and it's written like this
+				// because we already checked the condition
+				do
+					n /= primes.get(i);
+				while (n % primes.get(i) == 0);
+			}
+		}
+		return factors;
+	}
+
+	/**
+	 * Uses a somewhat optimized algorithm with time complexity O(sqrt(n)). Finds
+	 * all factors of n and returns them in an ascending list
+	 * 
+	 * @param n the number to be factorized
+	 * @return returns a list of the factors of n in ascending order
+	 */
 	public List<Integer> factorize(int n) {
 		/*
 		 * TODO there is likely a faster algorithm with combining combinations of prime
@@ -175,31 +212,106 @@ class PrimeFinder {
 		return lowerFactors;
 	}
 
+	/**
+	 * This function finds the greatest common demonator between a and b
+	 * 
+	 * @param a one of the numbers compared
+	 * @param b one of the numbers compared
+	 * @return returns the greatest common denomonator between a and b
+	 */
 	public int gcd(int a, int b) {
-		// makes sure that a is the smaller number. I want this because, on average,
-		// smaller numbers have fewer factors
-		if (a > b) {
-			int temp = a;
-			a = b;
-			b = temp;
-		}
-		if (isPrime(a))
-			return b % a == 0 ? a : 1;
-		if (isPrime(b))
-			return 1;
-
-		List<Integer> aFactors = factorize(a);
-		List<Integer> bFactors = factorize(b);
+		List<Integer> aFactors = primeFactorize(a);
+		List<Integer> bFactors = primeFactorize(b);
 
 		int gcd = 1;
 
-		// compare factors
-		// if match, remove it from each and multiply gcd by that removed number
+		for (int i = 0; i < aFactors.size(); i++) {
+			for (int j = 0; j < bFactors.size(); b++) {
+
+				if (aFactors.get(i).equals(bFactors.get(j))) {
+					gcd *= aFactors.get(i);
+					// removing the factor outright is slow, so I instead set it to something not in
+					// a
+					bFactors.set(j, -1);
+					// by breaking, we do not worry "re-treading old ground" because we will only
+					// increase in the size of factors
+					break;
+				}
+			}
+		}
 
 		return gcd;
 	}
 
+	/**
+	 * Determines whether a and b are coprime
+	 * 
+	 * @param a one potentially coprime number
+	 * @param b one potentially coprime number
+	 * @return returns true if a and b are coprime, false otherwise
+	 */
 	public boolean areCoprime(int a, int b) {
 		return gcd(a, b) == 1;
+	}
+
+	/**
+	 * returns the value of Euler's totient function of n. That is it finds how many
+	 * numbers are coprime with n, below n
+	 * 
+	 * @param n the input value
+	 * @return returns φ(n) <=> how many numbers below n are coprime with n
+	 */
+	public int totient(int n) {
+		// double totientValue = n;
+		// List<Integer> factors = uniquePrimeFactorize(n);
+		// for (int p : factors) {
+		// double correction = 1 / (double) p;
+		// totientValue *= (1 - correction);
+		// }
+		// round to the nearest int, because there may have been some float precision
+		// error
+		// return (int) (totientValue + 0.5);
+		/*
+		 * This is the formula I found online, and what is writen below is what I came
+		 * up with. They both seem to give the same answer and run really quickly, but
+		 * I'd assume mine is slightly faster because we don't have to deal with
+		 * floating point arithmetic
+		 */
+		int totientValue = n;
+		List<Integer> factors = uniquePrimeFactorize(n);
+		int denomonator = 1;
+		for (int i = 0; i < factors.size(); i++) {
+			denomonator *= factors.get(i);
+			totientValue -= n / denomonator;
+		}
+		return totientValue;
+	}
+
+	static List<Integer> findNPrimes(int n) {
+		List<Integer> primes = new ArrayList<>();
+		if (n <= 0)
+			return primes;
+		primes.add(2);
+		for (int i = 3; primes.size() < n; i += 2) {
+			boolean flag = true;
+			for (int prime : primes)
+				if (i % prime == 0) {
+					flag = false;
+					break;
+
+				}
+			if (flag)
+				primes.add(i);
+		}
+
+		return primes;
+	}
+
+	List<Integer> getPrimes() {
+		return primes;
+	}
+
+	boolean[] getPrimeTable() {
+		return primeTable;
 	}
 }
