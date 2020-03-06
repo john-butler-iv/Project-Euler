@@ -299,12 +299,33 @@ class PrimeFinder {
 
 		for (int i = 0; i < factors.size();) {
 			int numFactor = 1;
+
+			// count how much the current factor divides n
 			for (int j = i + 1; j < factors.size() && factors.get(j) == factors.get(i); j++)
 				numFactor++;
+
 			divisors *= numFactor + 1;
+
+			//skip past all of the current factors
 			i += numFactor;
 		}
 		return divisors;
+	}
+
+	/**
+	 * Finds σ(n), that is, this function finds the sum of all divisors of n, including n itself
+	 * 
+	 * @param n the input to σ(n)
+	 * @return returns σ(n)
+	 */
+	public int sigma(int n) {
+		List<Integer> factors = factorize(n);
+		int sum = 0;
+
+		for(int factor : factors)
+			sum += factor;
+
+		return sum;
 	}
 
 	/**

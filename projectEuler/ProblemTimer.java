@@ -33,56 +33,44 @@ abstract class ProblemTimer extends Timer {
 		return problem instanceof ParameterizedProblem ? ((ParameterizedProblem) problem).test() : true;
 	}
 
-	String report(int problemID) {
+	void report(int problemID) {
 		Problem problem = getProblem(problemID);
-		
-		if (problem == null)
-			return "There is no problem with ID " + problemID;
+
+		if (problem == null) {
+			System.out.println("There is no problem with ID " + problemID);
+			return;
+		}
 
 		String title = problem.getTitle();
 
-		if (!test(problemID))
-			return title + " failed its test";
+		if (!test(problemID)) {
+			System.out.println(title + " failed its test");
+			return;
+		}
 
 		long time = time(problemID);
-
-		return title + " finished in " + time + "ms.";
+		System.out.println(title + " finished in " + time + "ms.");
 	}
 
 	long[] time(int[] problemIDs) {
 		long[] times = new long[problemIDs.length];
-		for (int i = 0; i < problemIDs.length; i++) {
-			try {
-				times[i] = time(problemIDs[i]);
-			} catch (IllegalArgumentException e) {
-				times[i] = -1;
-			}
-		}
+		for (int i = 0; i < problemIDs.length; i++)
+			times[i] = time(problemIDs[i]);
+
 		return times;
 	}
 
 	boolean[] test(int[] problemIDs) {
 		boolean[] tests = new boolean[problemIDs.length];
 		for (int i = 0; i < problemIDs.length; i++) {
-			try {
-				tests[i] = test(problemIDs[i]);
-			} catch (IllegalArgumentException e) {
-				tests[i] = false;
-			}
+			tests[i] = test(problemIDs[i]);
 		}
 		return tests;
 	}
 
-	String[] report(int[] problemIDs) {
-		String[] reports = new String[problemIDs.length];
-		for (int i = 0; i < problemIDs.length; i++) {
-			try {
-				reports[i] = report(problemIDs[i]);
-			} catch (IllegalArgumentException e) {
-				reports[i] = problemIDs[i] + " is an invalid ID, valid ID's range from 0 - " + (problems.length - 1);
-			}
-		}
-		return reports;
+	void report(int[] problemIDs) {
+		for (int i = 0; i < problemIDs.length; i++)
+			report(problemIDs[i]);
 	}
 
 	long[] timeInRange() {
@@ -93,11 +81,11 @@ abstract class ProblemTimer extends Timer {
 		return test(getAllIDs());
 	}
 
-	String[] reportInRange() {
-		return report(getAllIDs());
+	void reportInRange() {
+		report(getAllIDs());
 	}
 
 	abstract long[] timeAll();
 
-	abstract String[] reportAll();
+	abstract void reportAll();
 }

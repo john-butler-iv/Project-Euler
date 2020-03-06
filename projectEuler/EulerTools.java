@@ -1,10 +1,12 @@
 package projectEuler;
 
+import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 
 class EulerTools {
 	private static String DEFAULT_PRINT_SEPARATOR = ", ";
+	public static final BigInteger TWO = new BigInteger("2");
 
 	public static Iterator<Long> fibonacciIterator() {
 		return new Iterator<Long>() {
@@ -45,9 +47,50 @@ class EulerTools {
 	}
 
 	/**
+	 * finds i!, that is i * (i-1) * ... * 2 * 1
+	 * 
+	 * @param i the input to the factorial function
+	 * @return returns i!
+	 */
+	public static int factorial(int i) {
+		for (int j = i - 1; j > 1; j--)
+			i *= j;
+		return i;
+	}
+
+	/**
+	 * finds l!, that is l * (l-1) * ... * 2 * 1
+	 * 
+	 * @param l the input to the factorial function
+	 * @return returns l!
+	 */
+	public static long factorial(long l) {
+		for (long j = l - 1; j > 1; j--)
+			l *= j;
+		return l;
+	}
+
+	
+	/**
+	 * finds bi!, that is bi * (bi-1) * ... * 2 * 1
+	 * 
+	 * @param bi the input to the factorial function
+	 * @return returns bi!
+	 */
+	public static BigInteger factorial(BigInteger bi) {
+		BigInteger cnt = new BigInteger(bi.toString());
+		cnt = cnt.subtract(BigInteger.ONE);
+		while (cnt.compareTo(BigInteger.ONE) > 0) {
+			bi = bi.multiply(cnt);
+			cnt = cnt.subtract(BigInteger.ONE);
+		}
+		return bi;
+	}
+
+	/**
 	 * Finds the i'th triangular number, where triangle(1) = 1
 	 * 
-	 * @param i the index of the triangle number
+	 * @param i       the index of the triangle number
 	 * @param returns the ith triangular number
 	 */
 	public static int triangle(int i) {
@@ -62,6 +105,17 @@ class EulerTools {
 	 */
 	public static boolean isSquare(int n) {
 		return isIntegral(Math.sqrt(n));
+	}
+
+	/**
+	 * computes the next Collatz number based on the starting input: n → n/2 (n is
+	 * even) n → 3n + 1 (n is odd)
+	 * 
+	 * @param n the "seed" value for the Collatz sequence
+	 * @return returns the next Collatz number after n
+	 */
+	public static long nextCollatz(long n) {
+		return n % 2 == 0 ? n / 2 : 3 * n + 1;
 	}
 
 	/**

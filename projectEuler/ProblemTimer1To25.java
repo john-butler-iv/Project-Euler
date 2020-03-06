@@ -15,16 +15,16 @@ class ProblemTimer1To25 extends ProblemTimer {
 		problems[9] = new P010();
 		problems[10] = new P011();
 		problems[11] = new P012();
-		// problems[12] = new P013();
-		// problems[13] = new P014();
-		// problems[14] = new P015();
-		// problems[15] = new P016();
-		// problems[16] = new P017();
-		// problems[17] = new P018();
-		// problems[18] = new P019();
-		// problems[19] = new P020();
-		// problems[20] = new P021();
-		// problems[21] = new P022();
+		problems[12] = new P013();
+		problems[13] = new P014();
+		problems[14] = new P015();
+		problems[15] = new P016();
+		problems[16] = new P017();
+		problems[17] = new P018();
+		problems[18] = new P019();
+		problems[19] = new P020();
+		problems[20] = new P021();
+		problems[21] = new P022();
 		// problems[22] = new P023();
 		// problems[23] = new P024();
 		// problems[24] = new P025();
@@ -36,13 +36,13 @@ class ProblemTimer1To25 extends ProblemTimer {
 	}
 
 	@Override
-	String[] reportAll() {
-		return reportInRange();
+	void reportAll() {
+		reportInRange();
 	}
 
 	public static void main(String[] args) {
-		EulerTools.printlnArr(new ProblemTimer1To25().reportAll(), "\n");
-		//new P012().solve(true);
+		new P022().solve(true);
+		new ProblemTimer1To25().reportAll();
 	}
 
 }

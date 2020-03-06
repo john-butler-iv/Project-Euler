@@ -36,7 +36,7 @@ class P012 extends ParameterizedProblem<Integer> {
 
 	@Override
 	String getTitle() {
-		return "Highly Divisible Triangular Number";
+		return "Problem 012: Highly Divisible Triangular Number";
 	}
 
 }
