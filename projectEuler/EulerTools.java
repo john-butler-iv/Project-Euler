@@ -28,6 +28,45 @@ class EulerTools {
 			}
 		};
 	}
+	public static Iterator<BigInteger> bigFibonacciIterator(){
+		return new Iterator<BigInteger>(){
+			BigInteger currNum = BigInteger.ZERO;
+			BigInteger prevNum = BigInteger.ONE;
+
+			@Override
+			public boolean hasNext(){
+				return true;
+			}
+
+			@Override
+			public BigInteger next(){
+				BigInteger temp = currNum;
+				currNum = currNum.add(prevNum);
+				prevNum = temp;
+
+				return prevNum;
+			}
+		};
+	}
+
+	public static boolean isPandigital(String str){
+
+		if(str.contains("0")) return false;
+		char[] chs = str.toCharArray();
+
+		int cnt;
+		for(char ch = '1'; ch <= '9'; ch++) {
+			cnt = 0;
+			for(char c : chs) 
+				if(c == ch)
+					if(++cnt > 1)
+						return false;
+
+			if(cnt != 1)
+				return false;
+		}
+        return true;
+	}
 
 	/**
 	 * Determines whether str is a palindrome i.e. it is the same forwards and
@@ -70,7 +109,6 @@ class EulerTools {
 		return l;
 	}
 
-	
 	/**
 	 * finds bi!, that is bi * (bi-1) * ... * 2 * 1
 	 * 
@@ -219,6 +257,81 @@ class EulerTools {
 	public static <T> void printlnArr(T[] arr, String separator) {
 		printArr(arr, separator);
 		System.out.println();
+	}
+
+	public static <T extends Comparable<T>> boolean binaryContains(List<T> list, T t) {
+		return binaryContains(list, t, 0, list.size() - 1);
+	}
+
+	private static <T extends Comparable<T>> boolean binaryContains(List<T> list, T t, int start, int end) {
+		if (start >= end)
+			return list.get(start).equals(t);
+
+		// if we found it here, we can stop
+		int midPoint = (start + end) / 2;
+
+		if (list.get(midPoint).equals(t))
+			return true;
+		// only need to check points greater than midpoint
+		if (list.get(midPoint).compareTo(t) < 0)
+			return binaryContains(list, t, midPoint + 1, end);
+		// to get here, t must be less than the value at midpoint
+		return binaryContains(list, t, start, midPoint - 1);
+	}
+
+	public static <T> T[] swap(T[] arr, int i, int j) {
+		T temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+		return arr;
+	}
+
+	public static <T> List<T> swap(List<T> list, int i, int j) {
+		T temp = list.get(i);
+		list.set(i, list.get(j));
+		list.set(j, temp);
+		return list;
+	}
+
+	public static <T> T[] reverse(T[] arr) {
+		return reverse(arr, 0);
+	}
+	public static <T> T[] reverse(T[] arr, int startingIndex){
+		for (int i = startingIndex; i < (startingIndex + arr.length) / 2; i++)
+			arr = swap(arr, i, arr.length - (i- startingIndex)- 1);
+		return arr;
+	}
+
+	public static <T> List<T> reverse(List<T> list) {
+		return reverse(list, 0);
+	}
+	public static<T> List<T> reverse(List<T> list, int startingIndex){
+		for (int i = 0; i < (startingIndex + list.size()) / 2; i++)
+			list = swap(list, i, list.size() - i - 1);
+		return list;
+	}
+
+	public static <T extends Comparable<T>> T[] permute(T[] arr){
+    	if(arr == null)
+    		return null;
+    	int pivot = -1;
+    	for(int i = arr.length -1; i >= 1; i--){
+			if(arr[i - 1].compareTo(arr[i]) < 0){
+    			pivot = i-1;
+    			break;
+		    }
+	    }
+	    if(pivot == -1)
+	        return null;
+	    for(int i = arr.length - 1; i > pivot; i--){
+			if(arr[i].compareTo(arr[pivot]) > 0){
+	    		arr = swap(arr, i , pivot);
+	    		arr = reverse(arr, pivot+1);
+
+	    		return arr;
+		    }
+	    }
+	    return swap(arr, arr.length-1, arr.length-2);
 	}
 
 	/**

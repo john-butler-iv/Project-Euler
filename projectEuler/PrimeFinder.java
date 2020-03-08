@@ -129,6 +129,8 @@ class PrimeFinder {
 			factors.add(n);
 			return factors;
 		}
+
+
 		// since we remove each prime factor of n, we'll know we've finished because
 		// there are no more factors i.e. n = 1
 		for (int i = 0; n != 1; i++) {
@@ -137,6 +139,7 @@ class PrimeFinder {
 				n /= primes.get(i);
 			}
 		}
+
 		return factors;
 	}
 
@@ -219,7 +222,7 @@ class PrimeFinder {
 	 * @param b one of the numbers compared
 	 * @return returns the greatest common denomonator between a and b
 	 */
-	public int gcd(int a, int b) {
+	public int gcf(int a, int b) {
 		List<Integer> aFactors = primeFactorize(a);
 		List<Integer> bFactors = primeFactorize(b);
 
@@ -251,7 +254,7 @@ class PrimeFinder {
 	 * @return returns true if a and b are coprime, false otherwise
 	 */
 	public boolean areCoprime(int a, int b) {
-		return gcd(a, b) == 1;
+		return gcf(a, b) == 1;
 	}
 
 	/**
@@ -306,14 +309,15 @@ class PrimeFinder {
 
 			divisors *= numFactor + 1;
 
-			//skip past all of the current factors
+			// skip past all of the current factors
 			i += numFactor;
 		}
 		return divisors;
 	}
 
 	/**
-	 * Finds σ(n), that is, this function finds the sum of all divisors of n, including n itself
+	 * Finds σ(n), that is, this function finds the sum of all divisors of n,
+	 * including n itself
 	 * 
 	 * @param n the input to σ(n)
 	 * @return returns σ(n)
@@ -322,10 +326,19 @@ class PrimeFinder {
 		List<Integer> factors = factorize(n);
 		int sum = 0;
 
-		for(int factor : factors)
+		for (int factor : factors)
 			sum += factor;
 
 		return sum;
+	}
+
+	public int[] reduce(int a, int b) {
+		int gcf = gcf(a, b);
+		return new int[] { a / gcf, b / gcf };
+	}
+
+	public int[] reduce(int[] frac) {
+		return reduce(frac[0], frac[1]);
 	}
 
 	/**
