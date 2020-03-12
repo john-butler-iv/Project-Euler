@@ -222,14 +222,14 @@ class PrimeFinder {
 	 * @param b one of the numbers compared
 	 * @return returns the greatest common denomonator between a and b
 	 */
-	public int gcf(int a, int b) {
+	public int gcd(int a, int b) {
 		List<Integer> aFactors = primeFactorize(a);
 		List<Integer> bFactors = primeFactorize(b);
 
 		int gcd = 1;
 
 		for (int i = 0; i < aFactors.size(); i++) {
-			for (int j = 0; j < bFactors.size(); b++) {
+			for (int j = 0; j < bFactors.size(); j++) {
 
 				if (aFactors.get(i).equals(bFactors.get(j))) {
 					gcd *= aFactors.get(i);
@@ -254,7 +254,7 @@ class PrimeFinder {
 	 * @return returns true if a and b are coprime, false otherwise
 	 */
 	public boolean areCoprime(int a, int b) {
-		return gcf(a, b) == 1;
+		return gcd(a, b) == 1;
 	}
 
 	/**
@@ -333,8 +333,8 @@ class PrimeFinder {
 	}
 
 	public int[] reduce(int a, int b) {
-		int gcf = gcf(a, b);
-		return new int[] { a / gcf, b / gcf };
+		int gcd = gcd(a, b);
+		return new int[] { a / gcd, b / gcd};
 	}
 
 	public int[] reduce(int[] frac) {
