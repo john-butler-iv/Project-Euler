@@ -7,7 +7,7 @@ class Timer {
 
 	public static void main(String[] args) {
 		//PrimeFinder pf = new PrimeFinder(Integer.MAX_VALUE /8);
-		//compareTimes(p -> new P023().solve(false), 0, p -> new P023().solveFast(false), 0);
+		compareTimes(p -> new P033().solve(false), 0, p -> new P033().solveOther(false), 0);
 	}
 
 	/**

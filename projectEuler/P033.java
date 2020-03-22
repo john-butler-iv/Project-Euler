@@ -32,39 +32,47 @@ class P033 extends Problem {
 			return Position.ff;
 		}
 
+		private String[] doAgain() {
+			String[] unreduced = unreduced();
+			if (unreduced[0].compareTo(unreduced[1]) >= 0)
+				return next();
+
+			return unreduced();
+		}
+
 		public String[] next() {
 			if (reals == null) {
 				currentPos = Position.ff;
 				reals = new char[] { '1', '1' };
 				reducable = '1';
-				return unreduced();
+				return doAgain();
 			}
 			Position next = nextPos(currentPos);
 			if (next != null) {
 				currentPos = next;
-				return unreduced();
+				return doAgain();
 			}
 			currentPos = Position.ff;
 
 			if (reducable < '9') {
 				reducable++;
-				return unreduced();
+				return doAgain();
 			}
-			reducable = '0';
+			reducable = '1';
 			if (reals[1] < '9') {
 				reals[1]++;
-				return unreduced();
+				return doAgain();
 			}
-			reals[1] = '0';
-			if(reals[0] < '9'){
+			reals[1] = '1';
+			if (reals[0] < '9') {
 				reals[0]++;
-				return unreduced();
+				return doAgain();
 			}
 
 			return null;
 		}
 
-		private String[] unreduced() {
+		public String[] unreduced() {
 			String num;
 			String den;
 			switch (currentPos) {
@@ -89,41 +97,37 @@ class P033 extends Problem {
 			}
 			return new String[] { num, den };
 		}
+
+		public int[] reduced() {
+			return new int[] { reals[0] - '0', reals[1] - '0' };
+		}
 	}
 
 	@Override
 	long solve(boolean printResults) {
 		int cnt = 0;
-
-		pf = new PrimeFinder(100);
 		int prodNum = 1;
 		int prodDen = 1;
 
-		// it may be easier to iterate through only the "fake-reducable" numbers
-		for (int num = 10; num < 100; num++) {
-			for (int den = num + 1; den < 100; den++) {
+		pf = new PrimeFinder(100);
+		FakeFraction fakeFraction = new FakeFraction();
+		while (cnt < 4) {
+			// iterating through fractions like this invloves going through fewer cases
+			fakeFraction.next();
 
-				// I start with this one first because I'm under the assumption that going
-				// through it is less computationally intensive to "fake reduce" than to
-				// actually reduce
-				int[] fake = fakeReduce(num, den);
+			String[] fullFrac = fakeFraction.unreduced();
+			// I can only reduce integer fractions
+			int[] intFrac = new int[] { Integer.parseInt(fullFrac[0]), Integer.parseInt(fullFrac[1]) };
+			int[] realReduced = pf.reduce(intFrac);
 
-				// if weren't able to reduce incorrecty, then we don't care
-				// the fraction cannot reduce to 0, without starting out as 0, so we can skip
-				// if the denominator is 0, that obviously is not a number and thus cannot be
-				// reduced to
-				if (fake[0] >= 10 || fake[0] == 0 || fake[1] == 0)
-					continue;
+			int[] fakeReduced = fakeFraction.reduced();
 
-				int[] real = pf.reduce(num, den);
-
-				if (real[0] / (double) real[1] == fake[0] / (double) fake[1]) {
-					prodNum *= real[0];
-					prodDen *= real[1];
-					// we know there are exactly four such cases
-					if (++cnt == 4)
-						break;
-				}
+			// figure out if the reduced fraction works out
+			if (realReduced[0] / (double) realReduced[1] == fakeReduced[0] / (double) fakeReduced[1]) {
+				// need to keep track of both to reduce
+				prodNum *= realReduced[0];
+				prodDen *= realReduced[1];
+				cnt++;
 			}
 		}
 
@@ -131,45 +135,6 @@ class P033 extends Problem {
 		if (printResults)
 			System.out.println(frac[1]);
 		return frac[1];
-	}
-
-	private static Iterator<FakeFraction> iterator() {
-		return new Iterator<FakeFraction>() {
-
-			FakeFraction frac = new FakeFraction();
-
-			@Override
-			public boolean hasNext() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public FakeFraction next() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-		};
-	}
-
-	private static int[] fakeReduce(int n, int d) {
-		char[] num = String.valueOf(n).toCharArray();
-		char[] den = String.valueOf(d).toCharArray();
-
-		if (num[0] == '0' || num[1] == '0' || den[0] == '0' || den[1] == '1')
-			return new int[] { n, d };
-
-		if (num[0] == den[0]) {
-			return new int[] { num[1] - '0', den[1] - '0' };
-		} else if (num[0] == den[1]) {
-			return new int[] { num[1] - '0', den[0] - '0' };
-		} else if (num[1] == den[0]) {
-			return new int[] { num[0] - '0', den[1] - '0' };
-		} else if (num[1] == den[1]) {
-			return new int[] { num[0] - '0', den[0] - '0' };
-		}
-		return new int[] { n, d };
 	}
 
 	@Override
