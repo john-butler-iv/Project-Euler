@@ -1,22 +1,20 @@
 package projectEuler;
 
-import java.nio.ReadOnlyBufferException;
-import java.util.Iterator;
-
 class P033 extends Problem {
 	PrimeFinder pf;
 
-	private static class FakeFraction {
-		enum Position {
-			ff, fs, sf, ss
+	private static class DigitReducableFraction {
+		// represents where in the fraction the reducable digit will be placed.
+		private enum Position {
+			ff, // first in numerator, first in denomonator
+			fs, // first in numerator, second in denomonator
+			sf, // second in numerator, first in denomonator
+			ss // second in numerator, second in denomonator
 		}
 
-		char[] reals;
-		char reducable;
-		Position currentPos;
-
-		public FakeFraction() {
-		}
+		private char[] reals;
+		private char reducable;
+		private Position currentPos;
 
 		private static Position nextPos(Position pos) {
 			switch (pos) {
@@ -32,46 +30,80 @@ class P033 extends Problem {
 			return Position.ff;
 		}
 
-		private String[] doAgain() {
+		/**
+		 * Ensures the current fraction is a valid fraction, and continues to iterate
+		 * over fractions until one is found
+		 * 
+		 * @return returns the first valid fraction from when the method is called
+		 */
+		private String[] validate() {
 			String[] unreduced = unreduced();
+
+			// the problem specifies fractions must be less than one (a/b < 1 => a < b)
 			if (unreduced[0].compareTo(unreduced[1]) >= 0)
 				return next();
 
 			return unreduced();
 		}
 
+		/**
+		 * finds the next possible digit reducable fraction, starting with 11/11. After
+		 * the final possible fraction, it returns null. Note: 0's cannot be reduced, so
+		 * we don't consider them.
+		 * 
+		 * @return first call returns 11/11, each subsiquent call gives another digit
+		 *         reducable fraction, or null if there is are no more.
+		 */
 		public String[] next() {
+			// check if initialized
 			if (reals == null) {
 				currentPos = Position.ff;
 				reals = new char[] { '1', '1' };
 				reducable = '1';
-				return doAgain();
+				return validate();
 			}
+
+			// first attempt to move where we cancel the digit
 			Position next = nextPos(currentPos);
 			if (next != null) {
 				currentPos = next;
-				return doAgain();
+				return validate();
 			}
 			currentPos = Position.ff;
 
+			// if we've tried every position, change the digit we're canceling
 			if (reducable < '9') {
 				reducable++;
-				return doAgain();
+				return validate();
 			}
 			reducable = '1';
+
+			// if we've tried every digit, change the digit in the denomonator which doesn't
+			// reduce.
 			if (reals[1] < '9') {
 				reals[1]++;
-				return doAgain();
+				return validate();
 			}
 			reals[1] = '1';
+
+			// if we've tried every number in the denomonator, change the digit in the
+			// numerator which doesn't reduce
 			if (reals[0] < '9') {
 				reals[0]++;
-				return doAgain();
+				return validate();
 			}
 
+			// if everything has been exhausted, we've reached the end of the line
 			return null;
 		}
 
+		/**
+		 * converts the internal state into a String[] in the form [numerator,
+		 * denomonator].
+		 * 
+		 * @return returns a String[] representation of the fraction currently stored by
+		 *         this instance.
+		 */
 		public String[] unreduced() {
 			String num;
 			String den;
@@ -98,6 +130,13 @@ class P033 extends Problem {
 			return new String[] { num, den };
 		}
 
+		/**
+		 * converts the internal state into a int[] in the form [reduced numerator,
+		 * reduced denomonator].
+		 * 
+		 * @return returns a int[] representation of the reduced form of the fraction
+		 *         currently stored by this instance.
+		 */
 		public int[] reduced() {
 			return new int[] { reals[0] - '0', reals[1] - '0' };
 		}
@@ -106,25 +145,32 @@ class P033 extends Problem {
 	@Override
 	long solve(boolean printResults) {
 		int cnt = 0;
+		// need to keep track of both to reduce later
 		int prodNum = 1;
 		int prodDen = 1;
 
 		pf = new PrimeFinder(100);
-		FakeFraction fakeFraction = new FakeFraction();
+		DigitReducableFraction drFrac = new DigitReducableFraction();
 		while (cnt < 4) {
-			// iterating through fractions like this invloves going through fewer cases
-			fakeFraction.next();
+			// iterating through fractions like this invloves going through fewer cases than
+			// iterating over all fractions or properly reducable ones
+			drFrac.next();
 
-			String[] fullFrac = fakeFraction.unreduced();
-			// I can only reduce integer fractions
+			// the digit-canceled fractions
+			String[] fullFrac = drFrac.unreduced();
+			int[] fakeReduced = drFrac.reduced();
+
+			// the real math-reduced fractions
+
+			// I can only reduce integer fractions with PrimeFinder
 			int[] intFrac = new int[] { Integer.parseInt(fullFrac[0]), Integer.parseInt(fullFrac[1]) };
+
 			int[] realReduced = pf.reduce(intFrac);
 
-			int[] fakeReduced = fakeFraction.reduced();
-
 			// figure out if the reduced fraction works out
+			// I can't just compare the digits because the digit cancelation may only
+			// partially reduce. i.e. 49/98 -> 4/8
 			if (realReduced[0] / (double) realReduced[1] == fakeReduced[0] / (double) fakeReduced[1]) {
-				// need to keep track of both to reduce
 				prodNum *= realReduced[0];
 				prodDen *= realReduced[1];
 				cnt++;
@@ -133,7 +179,8 @@ class P033 extends Problem {
 
 		int[] frac = pf.reduce(prodNum, prodDen);
 		if (printResults)
-			System.out.println(frac[1]);
+			System.out.println(frac[1]
+					+ " is the reduced denomonator of the product of all two-digit fractions which can be reduced properly or by digits.");
 		return frac[1];
 	}
 

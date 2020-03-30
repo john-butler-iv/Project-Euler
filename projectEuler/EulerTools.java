@@ -8,6 +8,14 @@ class EulerTools {
 	private static String DEFAULT_PRINT_SEPARATOR = ", ";
 	public static final BigInteger TWO = new BigInteger("2");
 
+	/**
+	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... ),
+	 * but behavior is only defined while the numbers can fit in an int. hasNext()
+	 * will return false after the final valid Fibonacci number has been generated.
+	 * 
+	 * @return returns an Iterator which iterates over the Fibonacci numbers which
+	 *         can fit in an int.
+	 */
 	public static Iterator<Long> fibonacciIterator() {
 		return new Iterator<Long>() {
 			long currNum = 0;
@@ -15,7 +23,7 @@ class EulerTools {
 
 			@Override
 			public boolean hasNext() {
-				return currNum + prevNum > 0;
+				return currNum > 0;
 			}
 
 			@Override
@@ -28,18 +36,25 @@ class EulerTools {
 			}
 		};
 	}
-	public static Iterator<BigInteger> bigFibonacciIterator(){
-		return new Iterator<BigInteger>(){
+
+	/**
+	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... )
+	 * 
+	 * @return returns an Iterator which iterates over the Fibonacci numbers with no
+	 *         limit.
+	 */
+	public static Iterator<BigInteger> bigFibonacciIterator() {
+		return new Iterator<BigInteger>() {
 			BigInteger currNum = BigInteger.ZERO;
 			BigInteger prevNum = BigInteger.ONE;
 
 			@Override
-			public boolean hasNext(){
+			public boolean hasNext() {
 				return true;
 			}
 
 			@Override
-			public BigInteger next(){
+			public BigInteger next() {
 				BigInteger temp = currNum;
 				currNum = currNum.add(prevNum);
 				prevNum = temp;
@@ -49,23 +64,24 @@ class EulerTools {
 		};
 	}
 
-	public static boolean isPandigital(String str){
+	/**
+	 * Determines whether the string passed is pandigital, that is only contains the
+	 * digits 1-9 each exactly once.
+	 * 
+	 * @param str a string which may or may not be pandigital
+	 * @return returns true if str is pandigital, false otherwise.
+	 */
+	public static boolean isPandigital(String str) {
+		// these are some common violated restrictions
+		if (str.contains("0") || str.length() != 9)
+			return false;
 
-		if(str.contains("0")) return false;
-		char[] chs = str.toCharArray();
-
-		int cnt;
-		for(char ch = '1'; ch <= '9'; ch++) {
-			cnt = 0;
-			for(char c : chs) 
-				if(c == ch)
-					if(++cnt > 1)
-						return false;
-
-			if(cnt != 1)
+		// check that every digit is in the string
+		for (char ch = '1'; ch <= '9'; ch++)
+			if (!str.contains(String.valueOf(ch)))
 				return false;
-		}
-        return true;
+
+		return true;
 	}
 
 	/**
@@ -86,7 +102,7 @@ class EulerTools {
 	}
 
 	/**
-	 * finds i!, that is i * (i-1) * ... * 2 * 1
+	 * finds i! = i * (i-1) * ... * 2 * 1
 	 * 
 	 * @param i the input to the factorial function
 	 * @return returns i!
@@ -98,7 +114,7 @@ class EulerTools {
 	}
 
 	/**
-	 * finds l!, that is l * (l-1) * ... * 2 * 1
+	 * finds l! = l * (l-1) * ... * 2 * 1
 	 * 
 	 * @param l the input to the factorial function
 	 * @return returns l!
@@ -110,7 +126,7 @@ class EulerTools {
 	}
 
 	/**
-	 * finds bi!, that is bi * (bi-1) * ... * 2 * 1
+	 * finds bi! = bi * (bi-1) * ... * 2 * 1
 	 * 
 	 * @param bi the input to the factorial function
 	 * @return returns bi!
@@ -296,42 +312,44 @@ class EulerTools {
 	public static <T> T[] reverse(T[] arr) {
 		return reverse(arr, 0);
 	}
-	public static <T> T[] reverse(T[] arr, int startingIndex){
+
+	public static <T> T[] reverse(T[] arr, int startingIndex) {
 		for (int i = startingIndex; i < (startingIndex + arr.length) / 2; i++)
-			arr = swap(arr, i, arr.length - (i- startingIndex)- 1);
+			arr = swap(arr, i, arr.length - (i - startingIndex) - 1);
 		return arr;
 	}
 
 	public static <T> List<T> reverse(List<T> list) {
 		return reverse(list, 0);
 	}
-	public static<T> List<T> reverse(List<T> list, int startingIndex){
+
+	public static <T> List<T> reverse(List<T> list, int startingIndex) {
 		for (int i = 0; i < (startingIndex + list.size()) / 2; i++)
 			list = swap(list, i, list.size() - i - 1);
 		return list;
 	}
 
-	public static <T extends Comparable<T>> T[] permute(T[] arr){
-    	if(arr == null)
-    		return null;
-    	int pivot = -1;
-    	for(int i = arr.length -1; i >= 1; i--){
-			if(arr[i - 1].compareTo(arr[i]) < 0){
-    			pivot = i-1;
-    			break;
-		    }
-	    }
-	    if(pivot == -1)
-	        return null;
-	    for(int i = arr.length - 1; i > pivot; i--){
-			if(arr[i].compareTo(arr[pivot]) > 0){
-	    		arr = swap(arr, i , pivot);
-	    		arr = reverse(arr, pivot+1);
+	public static <T extends Comparable<T>> T[] permute(T[] arr) {
+		if (arr == null)
+			return null;
+		int pivot = -1;
+		for (int i = arr.length - 1; i >= 1; i--) {
+			if (arr[i - 1].compareTo(arr[i]) < 0) {
+				pivot = i - 1;
+				break;
+			}
+		}
+		if (pivot == -1)
+			return null;
+		for (int i = arr.length - 1; i > pivot; i--) {
+			if (arr[i].compareTo(arr[pivot]) > 0) {
+				arr = swap(arr, i, pivot);
+				arr = reverse(arr, pivot + 1);
 
-	    		return arr;
-		    }
-	    }
-	    return swap(arr, arr.length-1, arr.length-2);
+				return arr;
+			}
+		}
+		return swap(arr, arr.length - 1, arr.length - 2);
 	}
 
 	/**

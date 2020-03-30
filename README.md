@@ -10,7 +10,8 @@
  Problems which can easily be parameterized extend ParapeterizedProblem
  EulerTools contains functions about simple properties of numbers
  PrimeFinder, as the name suggests finds primes and contains functions relating to primes, including factorizing
- Problems are times via the Problem Timers, grouped by 50's (1 page).
+ Problems are times via the Problem Timers, grouped by 50's (1 page in the archives).
 
-# Username
-My Projet Euler user name is relicanth56
+# Extra Details
+ My Projet Euler user name is relicanth56
+ A spreadsheet compiling runtimes can be found here: https://docs.google.com/spreadsheets/d/12H4ZGuuocjOavenPG3hvZQLHR3obMMyhbHItba9GMYY/edit?usp=sharing
