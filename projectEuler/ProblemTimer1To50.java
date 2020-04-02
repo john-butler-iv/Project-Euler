@@ -40,8 +40,8 @@ class ProblemTimer1To50 extends ProblemTimer {
 		problems[34] = new P035();
 		problems[35] = new P036();
 		problems[36] = new P037();
-		// problems[37] = new P038();
-		// problems[38] = new P039();
+		problems[37] = new P038();
+		problems[38] = new P039();
 		// problems[39] = new P040();
 		// problems[40] = new P041();
 		// problems[41] = new P042();

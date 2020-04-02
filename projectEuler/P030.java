@@ -1,6 +1,7 @@
 package projectEuler;
 
 class P030 extends ParameterizedProblem<Integer> {
+
     @Override
     long solve(Integer parameter, boolean printResults) {
         // the overall sum; the answer we're looking for

@@ -275,11 +275,21 @@ class EulerTools {
 		System.out.println();
 	}
 
+	/**
+	 * Determines whether t is in list using the binary search algorithm with time
+	 * complexity O(log_2(list.size())). The list must be sorted in ascending order
+	 * 
+	 * @param list an ascending list which may or may not contain t
+	 * @param t    a value which may be in list.
+	 * @return returns true if list contains t, false otherwise
+	 */
 	public static <T extends Comparable<T>> boolean binaryContains(List<T> list, T t) {
 		return binaryContains(list, t, 0, list.size() - 1);
 	}
 
 	private static <T extends Comparable<T>> boolean binaryContains(List<T> list, T t, int start, int end) {
+		if (list.size() == 0)
+			return false;
 		if (start >= end)
 			return list.get(start).equals(t);
 
@@ -295,43 +305,87 @@ class EulerTools {
 		return binaryContains(list, t, start, midPoint - 1);
 	}
 
-	public static <T> T[] swap(T[] arr, int i, int j) {
+	/**
+	 * swaps the values at index i and j in arr, leaving all other elements
+	 * unaltered.
+	 * 
+	 * @param arr the array in which we're swapping two elements
+	 * @param i   the index of one element to be swapped
+	 * @param j   the index of one element to be swapped
+	 */
+	public static <T> void swap(T[] arr, int i, int j) {
 		T temp = arr[i];
 		arr[i] = arr[j];
 		arr[j] = temp;
-		return arr;
 	}
 
-	public static <T> List<T> swap(List<T> list, int i, int j) {
+	/**
+	 * swaps the values at index i and j in list, leaving all other elements
+	 * unaltered.
+	 * 
+	 * @param list the list in which we're swapping two elements
+	 * @param i    the index of one element to be swapped
+	 * @param j    the index of one element to be swapped
+	 */
+	public static <T> void swap(List<T> list, int i, int j) {
 		T temp = list.get(i);
 		list.set(i, list.get(j));
 		list.set(j, temp);
-		return list;
 	}
 
-	public static <T> T[] reverse(T[] arr) {
-		return reverse(arr, 0);
+	/**
+	 * reverses the elements of arr. i.e. reverse({0,1,2,3}) gives {3,2,1,0}.
+	 * 
+	 * @param arr the array which will be reversed
+	 */
+	public static <T> void reverse(T[] arr) {
+		reverse(arr, 0);
 	}
 
-	public static <T> T[] reverse(T[] arr, int startingIndex) {
+	/**
+	 * reverses the elements of arr, starting at startingIndex. i.e.
+	 * reverse({0,1,2,3}, 1) gives {0,3,2,1}.
+	 * 
+	 * @param arr           the array which will be reversed.
+	 * @param startingIndex the first index to be reversed.
+	 */
+	public static <T> void reverse(T[] arr, int startingIndex) {
 		for (int i = startingIndex; i < (startingIndex + arr.length) / 2; i++)
-			arr = swap(arr, i, arr.length - (i - startingIndex) - 1);
-		return arr;
+			swap(arr, i, arr.length - (i - startingIndex) - 1);
 	}
 
+	/**
+	 * reverses the elements of list. i.e. reverse({0,1,2,3}) gives {3,2,1,0}.
+	 * 
+	 * @param list the list which will be reversed
+	 */
 	public static <T> List<T> reverse(List<T> list) {
 		return reverse(list, 0);
 	}
 
+	/**
+	 * reverses the elements of list, starting at startingIndex. i.e.
+	 * reverse({0,1,2,3}, 1) gives {0,3,2,1}.
+	 * 
+	 * @param list          the list which will be reversed.
+	 * @param startingIndex the first index to be reversed.
+	 */
 	public static <T> List<T> reverse(List<T> list, int startingIndex) {
 		for (int i = 0; i < (startingIndex + list.size()) / 2; i++)
-			list = swap(list, i, list.size() - i - 1);
+			swap(list, i, list.size() - i - 1);
 		return list;
 	}
 
-	public static <T extends Comparable<T>> T[] permute(T[] arr) {
+	/**
+	 * computes the next lexicographic permutation of arr. i.e. permute({0,1,2,3})
+	 * gives {0,1,3,2}
+	 * 
+	 * @param arr the array which will be permuted
+	 */
+	public static <T extends Comparable<T>> void permute(T[] arr) {
 		if (arr == null)
-			return null;
+			return;
+
 		int pivot = -1;
 		for (int i = arr.length - 1; i >= 1; i--) {
 			if (arr[i - 1].compareTo(arr[i]) < 0) {
@@ -340,16 +394,16 @@ class EulerTools {
 			}
 		}
 		if (pivot == -1)
-			return null;
+			return;
 		for (int i = arr.length - 1; i > pivot; i--) {
 			if (arr[i].compareTo(arr[pivot]) > 0) {
-				arr = swap(arr, i, pivot);
-				arr = reverse(arr, pivot + 1);
+				swap(arr, i, pivot);
+				reverse(arr, pivot + 1);
 
-				return arr;
+				return;
 			}
 		}
-		return swap(arr, arr.length - 1, arr.length - 2);
+		swap(arr, arr.length - 1, arr.length - 2);
 	}
 
 	/**
@@ -363,10 +417,11 @@ class EulerTools {
 	public static <T> boolean equals(List<T> list1, List<T> list2) {
 		if (list1.size() != list2.size())
 			return false;
-		for (int i = 0; i < list1.size(); i++) {
+
+		for (int i = 0; i < list1.size(); i++)
 			if (!list1.get(i).equals(list2.get(i)))
 				return false;
-		}
+
 		return true;
 	}
 }
