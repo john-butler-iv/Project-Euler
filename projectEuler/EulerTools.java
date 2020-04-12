@@ -320,6 +320,25 @@ class EulerTools {
 	}
 
 	/**
+	 * swaps the chars at indices i and j in str, leaving all other chars unaltered.
+	 * 
+	 * @param String the String in which we're swapping two elements
+	 * @param i      the index of one element to be swapped
+	 * @param j      the index of one element to be swapped
+	 */
+	public static String swap(String str, int i, int j) {
+		// by using substrings, like I am, i cannot be larger than j
+		if (i > j) {
+			int temp = i;
+			i = j;
+			j = temp;
+		}
+
+		// rearrange the string such that i and j get swapped
+		return str.substring(0, i) + str.charAt(j) + str.substring(i + 1, j) + str.charAt(i) + str.substring(j + 1);
+	}
+
+	/**
 	 * swaps the values at index i and j in list, leaving all other elements
 	 * unaltered.
 	 * 
@@ -404,6 +423,47 @@ class EulerTools {
 			}
 		}
 		swap(arr, arr.length - 1, arr.length - 2);
+	}
+
+	/**
+	 * computes the next lexicographic permutation of str. i.e. permute("3210")
+	 * gives "3201"
+	 * 
+	 * @param str the string which will be permuted
+	 * @return returns the next permutation of str.
+	 */
+	public static <T extends Comparable<T>> String prevPermute(String str) {
+		if (str == null)
+			return null;
+
+		int pivot = -1;
+		for (int i = str.length() - 1; i >= 1; i--) {
+			if (str.charAt(i - 1) > str.charAt(i)) {
+				pivot = i - 1;
+				break;
+			}
+		}
+		if (pivot == -1)
+			return "";
+
+		// this variable marks where we will need to switch in order to get the previous
+		// permutation
+		int lexRoot = -1;
+
+		for (int i = str.length() - 1; i > pivot; i--) {
+			if (str.charAt(pivot) > str.charAt(i)) {
+				lexRoot = i;
+				break;
+			}
+		}
+		str = swap(str, pivot, lexRoot);
+
+		// reverse the string up to the pivot
+		String rev = "";
+		for (int i = str.length() - 1; i > pivot; i--)
+			rev += str.charAt(i);
+
+		return str.substring(0, pivot + 1) + rev;
 	}
 
 	/**

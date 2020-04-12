@@ -100,17 +100,48 @@ class PrimeFinder {
 	}
 
 	/**
-	 * This method determines if p is prime in constant time; the computational work
-	 * is done during initialization.
+	 * This method determines if p is prime in constant time if p < limit, or in
+	 * O(sqrt(p)) time if p >= limit.
 	 * 
 	 * @param p the number which may or may not be prime
 	 * @return returns true if p is prime, and false if p is composite or p is not
 	 *         within the limit
 	 */
 	public boolean isPrime(int p) {
-		if (p < 0 || p >= limit)
+		// negative numbers cannot be prime, and 0 and 1 are not prime.
+		if (p <= 1)
 			return false;
-		return primeTable[p];
+
+		// if we have the value in the table, we can just look it up.
+		if (p < limit)
+			return primeTable[p];
+
+		// If we reach this point, we are forced to check the factors of p, but we'll
+		// only have to check up to sqrt(p), as if p has any factors, there will be one
+		// less than sqrt(p)
+		int sqrt = (int) Math.sqrt(p);
+
+		for (int prime : primes) {
+			// this is the best way I could think of for only checking as far as we need and
+			// not going out of bounds if p is too large.
+			if (sqrt < prime)
+				break;
+			// obviously, if a prime divides p, p is not prime.
+			// if a composite divides p, then its prime factors will aswell.
+			if (p % prime == 0)
+				return false;
+		}
+
+		// if there are still potential factors we have not considered,
+		if (sqrt >= limit)
+			// we don't know if any number past limit is prime, so we'll just check every
+			// number
+			for (int n = limit; n < sqrt; n++)
+				if (p % n == 0)
+					return false;
+
+		// if we have not found any factors, p must be prime.
+		return true;
 	}
 
 	/**
@@ -129,7 +160,6 @@ class PrimeFinder {
 			factors.add(n);
 			return factors;
 		}
-
 
 		// since we remove each prime factor of n, we'll know we've finished because
 		// there are no more factors i.e. n = 1
@@ -334,7 +364,7 @@ class PrimeFinder {
 
 	public int[] reduce(int a, int b) {
 		int gcd = gcd(a, b);
-		return new int[] { a / gcd, b / gcd};
+		return new int[] { a / gcd, b / gcd };
 	}
 
 	public int[] reduce(int[] frac) {
