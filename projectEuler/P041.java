@@ -1,9 +1,6 @@
 package projectEuler;
 
 public class P041 extends Problem {
-	public static void main(String[] args) {
-		new P041().solve(true);
-	}
 
 	@Override
 	long solve(boolean printResults) {

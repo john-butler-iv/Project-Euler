@@ -353,7 +353,8 @@ class EulerTools {
 			int temp = i;
 			i = j;
 			j = temp;
-		}
+		} else if (i == j)
+			return str;
 
 		// rearrange the string such that i and j get swapped
 		return str.substring(0, i) + str.charAt(j) + str.substring(i + 1, j) + str.charAt(i) + str.substring(j + 1);
@@ -417,66 +418,65 @@ class EulerTools {
 	}
 
 	/**
-	 * computes the next lexicographic permutation of arr. i.e. permute({0,1,2,3})
-	 * gives {0,1,3,2}
-	 * 
-	 * @param arr the array which will be permuted
-	 */
-	public static <T extends Comparable<T>> void permute(T[] arr) {
-		if (arr == null)
-			return;
-
-		int pivot = -1;
-		for (int i = arr.length - 1; i >= 1; i--) {
-			if (arr[i - 1].compareTo(arr[i]) < 0) {
-				pivot = i - 1;
-				break;
-			}
-		}
-		if (pivot == -1)
-			return;
-		for (int i = arr.length - 1; i > pivot; i--) {
-			if (arr[i].compareTo(arr[pivot]) > 0) {
-				swap(arr, i, pivot);
-				reverse(arr, pivot + 1);
-
-				return;
-			}
-		}
-		swap(arr, arr.length - 1, arr.length - 2);
-	}
-
-	/**
-	 * computes the next lexicographic permutation of str. i.e. permute("3210")
-	 * gives "3201"
+	 * computes the next lexicographic permutation of str. i.e. permute("0123")
+	 * gives "0132"
 	 * 
 	 * @param str the string which will be permuted
 	 * @return returns the next permutation of str.
 	 */
-	public static <T extends Comparable<T>> String prevPermute(String str) {
+	public static String permute(String str) {
 		if (str == null)
 			return null;
 
-		int pivot = -1;
-		for (int i = str.length() - 1; i >= 1; i--) {
-			if (str.charAt(i - 1) > str.charAt(i)) {
-				pivot = i - 1;
-				break;
-			}
-		}
+		// assigns the pivot to before the last "run" in the string
+		int pivot = str.length() - 1;
+		while (--pivot >= 0 && str.charAt(pivot) >= str.charAt(pivot + 1))
+			;
+
+		// if we're already at the last permutation, there is no next one.
 		if (pivot == -1)
 			return "";
 
-		// this variable marks where we will need to switch in order to get the previous
-		// permutation
-		int lexRoot = -1;
+		// finds the last number greater than the pivot
+		int lexRoot = str.length();
+		while (--lexRoot > pivot && str.charAt(pivot) >= str.charAt(lexRoot))
+			;
 
-		for (int i = str.length() - 1; i > pivot; i--) {
-			if (str.charAt(pivot) > str.charAt(i)) {
-				lexRoot = i;
-				break;
-			}
-		}
+		str = swap(str, pivot, lexRoot);
+
+		// reverse everything after the pivot
+		String rev = "";
+		for (int i = str.length() - 1; i > pivot; i--)
+			rev += str.charAt(i);
+
+		return str.substring(0, pivot + 1) + rev;
+	}
+
+	/**
+	 * computes the previous lexicographic permutation of str. i.e. permute("3210")
+	 * gives "3201"
+	 * 
+	 * @param str the string which will be permuted
+	 * @return returns the previous permutation of str.
+	 */
+	public static String prevPermute(String str) {
+		if (str == null)
+			return null;
+
+		// assigns the pivot to before the last "run" in the string
+		int pivot = str.length() - 1;
+		while (--pivot >= 0 && str.charAt(pivot) <= str.charAt(pivot + 1))
+			;
+
+		// if we're already at the first permutation, there is no previous permutation
+		if (pivot == -1)
+			return "";
+
+		// finds the last number less than the pivot
+		int lexRoot = str.length();
+		while (--lexRoot > pivot && str.charAt(pivot) <= str.charAt(lexRoot))
+			;
+
 		str = swap(str, pivot, lexRoot);
 
 		// reverse the string up to the pivot

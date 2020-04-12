@@ -65,7 +65,7 @@ class ProblemTimer1To50 extends ProblemTimer {
 	}
 
 	public static void main(String[] args) {
-		new P042().solve(true);
+		new P024().solve(true);
 		// new ProblemTimer1To50().reportAll();
 	}
 
