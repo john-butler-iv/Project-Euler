@@ -44,7 +44,7 @@ class ProblemTimer1To50 extends ProblemTimer {
 		problems[38] = new P039();
 		problems[39] = new P040();
 		problems[40] = new P041();
-		// problems[41] = new P042();
+		problems[41] = new P042();
 		// problems[42] = new P043();
 		// problems[43] = new P044();
 		// problems[44] = new P045();
@@ -65,7 +65,7 @@ class ProblemTimer1To50 extends ProblemTimer {
 	}
 
 	public static void main(String[] args) {
-		new P037().solve(true);
+		new P042().solve(true);
 		// new ProblemTimer1To50().reportAll();
 	}
 

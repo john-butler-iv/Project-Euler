@@ -151,6 +151,27 @@ class EulerTools {
 		return i * (i + 1) / 2;
 	}
 
+	// LaTeX write up code that I drafted since I don't have an actual writeup.
+	// tri=\frac{n(n+1)}{2}\\
+	// \therefore 2 T=n(n+1)\\
+	// n^2 < n(n+1) < (n+1)^2\\
+	// \therefore n < \sqrt{n(n+1)} < n+1\\
+	// \therefore \sqrt{n(n+1)} \nin \mathbb{Z}\\
+	// \therefore n=\lfloor\sqrt{n(n+1)}\rfloor\\
+	// \therefore 2T = \lfloor\sqrt{n(n+1)}\rfloor\cdot \lfloor\sqrt{n(n+1)} +
+	// 1\rfloor
+
+	/**
+	 * Determines whether tri is or is not a triangular number
+	 * 
+	 * @param tri a number which may or may not be a triangular number
+	 * @return returns true if tri is a triangular number, false otherwise
+	 */
+	public static boolean isTriangular(int tri) {
+		int n = (int) Math.sqrt(tri * 2);
+		return n * (n + 1) == tri * 2;
+	}
+
 	/**
 	 * determines if n is a perfect square
 	 * 
