@@ -12,7 +12,7 @@ public class P041 extends Problem {
 		String str = origStr;
 
 		while (!pf.isPrime(Integer.valueOf(str))) {
-			str = EulerTools.prevPermute(str);
+			str = CollectionTools.prevPermute(str);
 
 			// if we ran out of permutations on this length, we need to go one shorter
 			if (str.equals("")) {
