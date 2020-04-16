@@ -211,9 +211,9 @@ class PrimeFinder {
 	 */
 	public List<Integer> factorize(int n) {
 		/*
-		 * TODO there is likely a faster algorithm with combining combinations of prime
-		 * factors, becasue there are far fewer primes than total numbers, and
-		 * generating combinations is fairly quick as I understand.
+		 * TODO there is likely a faster algorithm with combining prime factors, becasue
+		 * there are far fewer primes than total numbers, and generating combinations is
+		 * fairly quick as I understand.
 		 */
 		List<Integer> lowerFactors = new ArrayList<>();
 		lowerFactors.add(1);
@@ -295,21 +295,6 @@ class PrimeFinder {
 	 * @return returns φ(n) <=> how many numbers below n are coprime with n
 	 */
 	public int totient(int n) {
-		// double totientValue = n;
-		// List<Integer> factors = uniquePrimeFactorize(n);
-		// for (int p : factors) {
-		// double correction = 1 / (double) p;
-		// totientValue *= (1 - correction);
-		// }
-		// round to the nearest int, because there may have been some float precision
-		// error
-		// return (int) (totientValue + 0.5);
-		/*
-		 * This is the formula I found online, and what is writen below is what I came
-		 * up with. They both seem to give the same answer and run really quickly, but
-		 * I'd assume mine is slightly faster because we don't have to deal with
-		 * floating point arithmetic
-		 */
 		int totientValue = n;
 		List<Integer> factors = uniquePrimeFactorize(n);
 		int denomonator = 1;
@@ -369,6 +354,15 @@ class PrimeFinder {
 
 	public int[] reduce(int[] frac) {
 		return reduce(frac[0], frac[1]);
+	}
+
+	/**
+	 * a getter for the current limit
+	 * 
+	 * @return returns the limit to which primes have been found
+	 */
+	public int limit() {
+		return limit;
 	}
 
 	/**

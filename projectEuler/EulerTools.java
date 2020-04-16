@@ -140,15 +140,54 @@ class EulerTools {
 	}
 
 	/**
-	 * Finds the i'th triangular number, where triangle(1) = 1
+	 * Finds the nth triangular number, where triangle(1) = 1
 	 * 
-	 * @param i       the index of the triangle number
-	 * @param returns the ith triangular number
+	 * @param n the index of the triangle number
+	 * @return returns the nth triangular number
 	 */
-	public static int triangle(int i) {
-		return i * (i + 1) / 2;
+	public static int triangle(int n) {
+		return n * (n + 1) / 2;
 	}
 
+	/**
+	 * Finds the nth triangular number, where triangle(1) = 1
+	 * 
+	 * @param n the index of the triangle number
+	 * @return returns the nth triangular number
+	 */
+	public static long triangleL(int n) {
+		return n * (n + 1L) / 2;
+	}
+
+	/**
+	 * finds the nth pentagonal number, where pentagon(1) = 1
+	 * 
+	 * @param n the index of the pentagonal number
+	 * @return returns the nth pentagonal number
+	 */
+	public static long pentagonL(int n) {
+		return n * (3L * n - 1) / 2;
+	}
+
+	/**
+	 * finds the nth hexagonal number, where hexagon(1) = 1
+	 * 
+	 * @param n the index of the hexagonal number
+	 * @return returns the nth hexagonal number
+	 */
+	public static int hexagon(int n) {
+		return n * (2 * n - 1);
+	}
+
+	/**
+	 * finds the nth hexagonal number, where hexagon(1) = 1
+	 * 
+	 * @param n the index of the hexagonal number
+	 * @return returns the nth hexagonal number
+	 */
+	public static long hexagonL(int n) {
+		return n * (2L * n - 1);
+	}
 	// LaTeX write up code that I drafted since I don't have an actual writeup.
 	// tri=\frac{n(n+1)}{2}\\
 	// \therefore 2 T=n(n+1)\\
@@ -162,22 +201,48 @@ class EulerTools {
 	/**
 	 * Determines whether tri is or is not a triangular number
 	 * 
-	 * @param tri a number which may or may not be a triangular number
-	 * @return returns true if tri is a triangular number, false otherwise
+	 * @param t a number which may or may not be a triangular number
+	 * @return returns true if t is a triangular number, false otherwise
 	 */
-	public static boolean isTriangular(int tri) {
-		int n = (int) Math.sqrt(tri * 2);
-		return n * (n + 1) == tri * 2;
+	public static boolean isTriangular(int t) {
+		int n = (int) Math.sqrt(t * 2);
+		return n * (n + 1) == t * 2;
 	}
 
 	/**
-	 * determines if n is a perfect square
+	 * determines if s is a perfect square
 	 * 
-	 * @param n a number which may or may not be a perfect square
-	 * @return returns true if n is a perfect square, false otherwise
+	 * @param s a number which may or may not be a perfect square
+	 * @return returns true if s is a perfect square, false otherwise
 	 */
-	public static boolean isSquare(int n) {
-		return isIntegral(Math.sqrt(n));
+	public static boolean isSquare(int s) {
+		return isIntegral(Math.sqrt(s));
+	}
+
+	// LaTeX write up code that I drafted since I don't have an actual writeup.
+	// P \text{ is pentagonal.}\\
+	// \therefore \exists n \in \mathbb{N} : P = \frac{n(3n - 1)}{2}\\
+	// \therefore 2P = n(3n-1)\\
+	// &= 3n^2 - n\\
+	// 0 &= 3n^2 - n - 1P\\
+	// n = \frac{1 \pm \sqrt{1 - 4(3)(-2P)}}{6}\\
+	// &= \frac{1 \pm \sqrt {1 - 24P}{6}\\
+	// n \in \mathbb{N} \implies n \ge 0 \implies n \ne \frac{1 - \sqrt{1 + 24P}}{6}
+	// < 0\\
+	// \therefore n = \frac{1 + \sqrt{1 + 24P}}{6} \text{ only.}\\
+	// \threfore \text{If } P \text{ is pentagonal, } \frac{1 + \sqrt{1 + 24P}}{6}
+	// \in \mathbb{N}\\
+	// Converse follows similarly, but it would still be good to write it
+	// explicitly.
+
+	/**
+	 * Determines if p is a pentagonal number
+	 * 
+	 * @param p a number which may or may not be pentagonal
+	 * @return returns true if p is pentagonal, false otherwise
+	 */
+	public static boolean isPentagonal(long p) {
+		return isIntegral((1 + Math.sqrt(1 + 24 * p)) / 6);
 	}
 
 	/**

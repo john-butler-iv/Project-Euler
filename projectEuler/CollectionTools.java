@@ -290,6 +290,38 @@ public class CollectionTools {
 	}
 
 	/**
+	 * determines if str1 and str2 are permutations of each other, i.e.
+	 * arePermutations("123345", "543123") returns true
+	 * 
+	 * @param str1 one string which may or may be a permuted version of str2
+	 * @param str2 one string which may or may be a permuted version of str1
+	 * @return returns true if str1 and str2 are permutations of each other
+	 */
+	public static boolean arePermutations(String str1, String str2) {
+		if (str1.length() != str2.length())
+			return false;
+
+		for (char ch : str1.toCharArray()) {
+
+			// look for each character in str1, check that it's also in str2
+			boolean contained = false;
+			for (int j = 0; !contained && j < str2.length(); j++) {
+				if (ch == str2.charAt(j)) {
+
+					// if you find a match, remove it so that you don't look at it again
+					str2 = str2.substring(0, j) + str2.substring(j + 1);
+					contained = true;
+				}
+			}
+
+			// if there was no match, they are not permutations
+			if (!contained)
+				return false;
+		}
+		return str2.length() == 0;
+	}
+
+	/**
 	 * determines whether the two lists are equal
 	 * 
 	 * @param list1 one of the lists compared
