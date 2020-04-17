@@ -48,20 +48,6 @@ public class P050 extends ParameterizedProblem<Integer> {
 		return -1;
 	}
 
-	private static boolean isConsecutive(List<Integer> primes, int chainLength, int prime) {
-		for (int i = 0; i < primes.size() - chainLength + 1; i++) {
-			int sum = 0;
-			for (int j = 0; j < chainLength; j++) {
-				sum += primes.get(i + j);
-				if (sum > prime)
-					return false;
-			}
-			if (sum == prime)
-				return true;
-		}
-		return false;
-	}
-
 	@Override
 	protected Integer getTestParameter() {
 		return 100;

@@ -6,9 +6,9 @@ class Timer {
 	protected static final int DEFUALT_TRIALS = 500;
 
 	public static void main(String[] args) {
-		// PrimeFinder pf = new PrimeFinder(Integer.MAX_VALUE /8);
-		// compareTimes(p -> new P033().solve(false), 0, p -> new
-		// P033().solveOther(false), 0);
+		// PrimeFinder pf = new PrimeFinder(Integer.MAX_VALUE / 8);
+		// compareTimes(p -> new P053().solve(false), 0, p -> new P053().solve2(false),
+		// 0);
 	}
 
 	/**

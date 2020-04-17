@@ -1,6 +1,7 @@
 package projectEuler;
 
 abstract class ProblemTimer extends Timer {
+	protected ProblemTimer previousTimer;
 	protected Problem[] problems;
 
 	private Problem getProblem(int problemID) {
@@ -62,9 +63,9 @@ abstract class ProblemTimer extends Timer {
 
 	boolean[] test(int[] problemIDs) {
 		boolean[] tests = new boolean[problemIDs.length];
-		for (int i = 0; i < problemIDs.length; i++) {
+		for (int i = 0; i < problemIDs.length; i++)
 			tests[i] = test(problemIDs[i]);
-		}
+
 		return tests;
 	}
 
@@ -85,7 +86,24 @@ abstract class ProblemTimer extends Timer {
 		report(getAllIDs());
 	}
 
-	abstract long[] timeAll();
+	long[] timeAll() {
+		// get the times
+		long[] prevTimes = previousTimer.timeAll();
+		long[] currTimes = timeInRange();
 
-	abstract void reportAll();
+		long[] allTimes = new long[prevTimes.length + currTimes.length];
+		// join the arrays into one array.
+		for (int i = 0; i < prevTimes.length; i++)
+			allTimes[i] = prevTimes[i];
+		for (int i = 0; i < allTimes.length; i++)
+			allTimes[i + prevTimes.length] = currTimes[i];
+
+		// return the merged array
+		return allTimes;
+	}
+
+	void reportAll() {
+		previousTimer.reportAll();
+		reportInRange();
+	}
 }
