@@ -1,5 +1,6 @@
 package projectEuler;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class CollectionTools {
@@ -95,6 +96,63 @@ public class CollectionTools {
 	public static <T> void printlnArr(T[] arr, String separator) {
 		printArr(arr, separator);
 		System.out.println();
+	}
+
+	public static <T extends Comparable<T>> void quickSort(T[] arr) {
+		quickSort(arr, 0, arr.length - 1);
+	}
+
+	private static <T extends Comparable<T>> void quickSort(T[] arr, int start, int end) {
+		// if there are 5 or fewer elements, just bubble sort
+		if (end - start < 5) {
+			bubbleSort(arr, start, end);
+			return;
+		}
+		int trackerUp = start + 1;
+		int trackerDown = end;
+		int pivot = start;
+
+		while (trackerUp < trackerDown) {
+			// track up until you find an element for part.2
+			while (trackerUp < trackerDown && arr[pivot].compareTo(arr[trackerUp]) <= 0)
+				trackerUp++;
+
+			// if we couldn't find an element for partition 2,
+			if (trackerUp == trackerDown) {
+				// we've finished partitioning.
+				// i.e. move the pivot between the partitions and sort each partition.
+				swap(arr, trackerUp - 1, pivot);
+			}
+			// track down until you find an element for part.1
+			while (trackerDown > trackerUp && arr[pivot].compareTo(arr[trackerDown]) >= 0)
+				trackerDown++;
+
+			// if we couldn't find an element for partition 1,
+			if (trackerUp == trackerDown) {
+				// we've finished partitioning.
+				// i.e. move the pivot between the partitions and sort each partition.
+				swap(arr, trackerDown, pivot);
+			}
+
+			// swap them
+			swap(arr, trackerUp, trackerDown);
+		}
+	}
+
+	public static <T extends Comparable<T>> void bubbleSort(T[] arr) {
+		bubbleSort(arr, 0, arr.length - 1);
+	}
+
+	private static <T extends Comparable<T>> void bubbleSort(T[] arr, int start, int end) {
+		int lastSwap = end;
+		while (lastSwap > start) {
+			for (int i = start; i < lastSwap; i++) {
+				if (arr[i].compareTo(arr[i + 1]) > 0) {
+					swap(arr, i, i + 1);
+					lastSwap = i;
+				}
+			}
+		}
 	}
 
 	/**

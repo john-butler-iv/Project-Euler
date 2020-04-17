@@ -3,7 +3,7 @@ package projectEuler;
 public class ProblemTimer51To100 extends ProblemTimer {
 
 	public static void main(String[] args) {
-		new ProblemTimer51To100().report(0);
+		new ProblemTimer51To100().report(3);
 	}
 
 	public ProblemTimer51To100() {
@@ -11,7 +11,7 @@ public class ProblemTimer51To100 extends ProblemTimer {
 		problems[0] = new P051();
 		problems[1] = new P052();
 		problems[2] = new P053();
-		// problems[3] = new P054();
+		problems[3] = new P054();
 		// problems[4] = new P055();
 		// problems[5] = new P056();
 		// problems[6] = new P057();
