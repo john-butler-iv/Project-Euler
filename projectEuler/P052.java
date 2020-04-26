@@ -2,10 +2,6 @@ package projectEuler;
 
 public class P052 extends ParameterizedProblem<Integer> {
 
-	public static void main(final String[] args) {
-		new P052().solve(9, true);
-	}
-
 	@Override
 	Integer getDefaultParameter() {
 		return 6;

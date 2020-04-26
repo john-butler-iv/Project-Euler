@@ -9,10 +9,6 @@ public class P050 extends ParameterizedProblem<Integer> {
 		return 1000000;
 	}
 
-	public static void main(String[] args) {
-		new P050().solve(true);
-	}
-
 	@Override
 	long solve(Integer parameter, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(parameter);

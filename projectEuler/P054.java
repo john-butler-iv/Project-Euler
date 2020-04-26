@@ -6,6 +6,11 @@ import java.util.Scanner;
 
 public class P054 extends Problem {
 
+	private final static int P1 = 0;
+	private final static int P2 = 1;
+	private final static int VALUE = 0;
+	private final static int SUIT = 1;
+
 	private final static char T = 10 + '0';
 	private final static char J = 11 + '0';
 	private final static char Q = 12 + '0';
@@ -26,6 +31,10 @@ public class P054 extends Problem {
 	}
 
 	public long solve(boolean printResults) {
+
+		// data is stored as an array list with each element being one round.
+		// Each round is an array with each element representing each player.
+		// Each player has a sorted array of cards like "<value><suit>".
 		ArrayList<String[/* player */][/* card */]> hands = readData("p054.txt");
 
 		int player1Wins = 0;
@@ -43,7 +52,7 @@ public class P054 extends Problem {
 		if (sf1) {
 			// if there's a tie, whoever's straight is higher
 			if (sf2)
-				return hand1[0].charAt(0) > hand2[0].charAt(0) ? 1 : 2;
+				return hand1[P1].charAt(VALUE) > hand2[P1].charAt(VALUE) ? 1 : 2;
 			return 1;
 		}
 
@@ -59,9 +68,9 @@ public class P054 extends Problem {
 
 		if (four1.result) {
 			if (four2.result) {
-				if (four1.usedCard.charAt(0) == four2.usedCard.charAt(0))
+				if (four1.usedCard.charAt(VALUE) == four2.usedCard.charAt(VALUE))
 					return highCardsWinner(four1.leftoverCards, four2.leftoverCards);
-				return four1.usedCard.charAt(0) > four2.usedCard.charAt(0) ? 1 : 2;
+				return four1.usedCard.charAt(VALUE) > four2.usedCard.charAt(VALUE) ? 1 : 2;
 			}
 			return 1;
 		}
@@ -78,9 +87,9 @@ public class P054 extends Problem {
 
 		if (full1.result) {
 			if (full2.result) {
-				if (full1.usedCard.charAt(0) == full2.usedCard.charAt(0))
-					return full1.leftoverCards[0].charAt(0) > full2.leftoverCards[0].charAt(0) ? 1 : 2;
-				return full1.usedCard.charAt(0) > full2.usedCard.charAt(0) ? 1 : 2;
+				if (full1.usedCard.charAt(VALUE) == full2.usedCard.charAt(VALUE))
+					return full1.leftoverCards[0].charAt(VALUE) > full2.leftoverCards[0].charAt(VALUE) ? 1 : 2;
+				return full1.usedCard.charAt(VALUE) > full2.usedCard.charAt(VALUE) ? 1 : 2;
 			}
 			return 1;
 		}
@@ -123,9 +132,9 @@ public class P054 extends Problem {
 
 		if (three1.result) {
 			if (three2.result) {
-				if (three1.usedCard.charAt(0) == three2.usedCard.charAt(0))
+				if (three1.usedCard.charAt(VALUE) == three2.usedCard.charAt(VALUE))
 					return highCardsWinner(three1.leftoverCards, three2.leftoverCards);
-				return three1.usedCard.charAt(0) > three2.usedCard.charAt(0) ? 1 : 2;
+				return three1.usedCard.charAt(VALUE) > three2.usedCard.charAt(VALUE) ? 1 : 2;
 			}
 			return 1;
 		}
@@ -141,9 +150,9 @@ public class P054 extends Problem {
 		ReturnObj pair2 = isNKind(hand2, 2);
 		if (pair1.result) {
 			if (pair2.result) {
-				if (pair1.usedCard.charAt(0) == pair2.usedCard.charAt(0))
+				if (pair1.usedCard.charAt(VALUE) == pair2.usedCard.charAt(VALUE))
 					return highCardsWinner(pair1.leftoverCards, pair2.leftoverCards);
-				return (pair1.usedCard.charAt(0) > pair2.usedCard.charAt(0)) ? 1 : 2;
+				return (pair1.usedCard.charAt(VALUE) > pair2.usedCard.charAt(VALUE)) ? 1 : 2;
 			}
 			return 1;
 		}
@@ -157,48 +166,48 @@ public class P054 extends Problem {
 	private static int whoWins(String[][] hands) {
 		// Straight Flush.
 		// Royal flush is a special case, so we don't have to explicitly check for it
-		int sfWinner = straightFlushWin(hands[0], hands[1]);
+		int sfWinner = straightFlushWin(hands[P1], hands[P2]);
 		if (sfWinner != 0)
 			return sfWinner;
 
 		// Four of a Kind
-		int fkWinner = fourKindWin(hands[0], hands[1]);
+		int fkWinner = fourKindWin(hands[P1], hands[P2]);
 		if (fkWinner != 0)
 			return sfWinner;
 
 		// Full House
-		int fhWinner = fullHouseWin(hands[0], hands[1]);
+		int fhWinner = fullHouseWin(hands[P1], hands[P2]);
 		if (fhWinner != 0)
 			return fhWinner;
 
 		// Flush
-		int fWinner = flushWin(hands[0], hands[1]);
+		int fWinner = flushWin(hands[P1], hands[P2]);
 		if (fWinner != 0)
 			return fWinner;
 
 		// Straight
-		int sWinner = straightWin(hands[0], hands[1]);
+		int sWinner = straightWin(hands[P1], hands[P2]);
 		if (sWinner != 0)
 			return sWinner;
 
 		// Three of a Kind
-		int tWinner = threeWin(hands[0], hands[1]);
+		int tWinner = threeWin(hands[P1], hands[P2]);
 		if (tWinner != 0)
 			return tWinner;
 
 		// Two Pairs
-		if (isTwoPairs(hands[0]).result)
+		if (isTwoPairs(hands[P1]).result)
 			return 1;
-		if (isTwoPairs(hands[1]).result)
+		if (isTwoPairs(hands[P2]).result)
 			return 2;
 
 		// One Pair
-		int pWinner = pairWin(hands[0], hands[1]);
+		int pWinner = pairWin(hands[P1], hands[P2]);
 		if (pWinner != 0)
 			return pWinner;
 
 		// High Card
-		return highCardsWinner(hands[0], hands[1]);
+		return highCardsWinner(hands[P1], hands[P2]);
 	}
 
 	private static ReturnObj isFullHouse(String[] hand) {
@@ -218,7 +227,7 @@ public class P054 extends Problem {
 	private static boolean isFlush(String[] hand) {
 		// ensure no suits are the same
 		for (int i = 0; i < 4; i++)
-			if (hand[i].charAt(1) != hand[i + 1].charAt(1))
+			if (hand[i].charAt(SUIT) != hand[i + 1].charAt(SUIT))
 				return false;
 
 		return true;
@@ -227,18 +236,18 @@ public class P054 extends Problem {
 	private static boolean isStraight(String[] hand) {
 		// ensure no cards are the same
 		for (int i = 0; i < 4; i++)
-			if (hand[i].charAt(0) == hand[i + 1].charAt(0))
+			if (hand[i].charAt(VALUE) == hand[i + 1].charAt(VALUE))
 				return false;
 
 		// make sure they only go up by one each
-		return hand[0].charAt(0) + 4 == hand[4].charAt(0);
+		return hand[0].charAt(VALUE) + 4 == hand[4].charAt(VALUE);
 	}
 
 	// figures out if there is "n" of a kind i.e. 3 of a kind
 	private static ReturnObj isNKind(String[] hand, int n) {
 		for (int i = 0; i < hand.length - n + 1; i++) {
 			// if _ in a row,
-			if (hand[i].charAt(0) == hand[i + n - 1].charAt(0)) {
+			if (hand[i].charAt(VALUE) == hand[i + n - 1].charAt(VALUE)) {
 				String[] leftoverCards = new String[hand.length - n];
 
 				// keep track of cards before triplet
@@ -270,9 +279,9 @@ public class P054 extends Problem {
 
 	private static int highCardsWinner(String[] hand1, String[] hand2) {
 		for (int i = hand1.length - 1; i >= 0; i--) {
-			if (hand1[i].charAt(0) > hand2[i].charAt(0))
+			if (hand1[i].charAt(VALUE) > hand2[i].charAt(VALUE))
 				return 1;
-			else if (hand1[i].charAt(0) < hand2[i].charAt(0))
+			else if (hand1[i].charAt(VALUE) < hand2[i].charAt(VALUE))
 				return 2;
 		}
 		return 0;
@@ -281,7 +290,6 @@ public class P054 extends Problem {
 	private static ArrayList<String[][]> readData(String filename) {
 		try {
 			Scanner scanner = new Scanner(new File(filename));
-			//
 			ArrayList<String[][]> rounds = new ArrayList<>();
 
 			// put the each hand in the data structure
@@ -290,8 +298,8 @@ public class P054 extends Problem {
 				for (int player = 0; player < 2; player++) {
 					for (int card = 0; card < 5; card++) {
 						String rawCard = scanner.next();
-						char value = rawCard.charAt(0);
-						char suit = rawCard.charAt(1);
+						char value = rawCard.charAt(VALUE);
+						char suit = rawCard.charAt(VALUE);
 
 						// using 'T', 'J', ... makes the coding more complicated, so I change it to
 						// ('9' + 1), ('9' + 2), ...
@@ -324,12 +332,9 @@ public class P054 extends Problem {
 				for (int player = 0; player < 2; player++) {
 					String[] hand = rounds.get(round)[player];
 
-					// bubble sort since hands are only 5 cards
-					for (int i = hand.length - 1; i >= 0; i--)
-						for (int j = 1; j <= i; j++)
-							if (hand[j - 1].charAt(0) > hand[j].charAt(0))
-								CollectionTools.swap(hand, j - 1, j);
-
+					// bubble sort is fine since hands are small
+					// sorts by value then suit
+					CollectionTools.bubbleSort(hand);
 				}
 			}
 			return rounds;
