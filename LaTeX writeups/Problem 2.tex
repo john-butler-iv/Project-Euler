@@ -1,0 +1,139 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=0.75in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{xcolor}
+\usepackage{framed}
+
+
+\definecolor{shadecolor}{RGB}{0,113,186}
+\usepackage{xparse}
+\NewDocumentCommand{\DIV}{om}{%
+  \IfValueT{#1}{\setcounter{#2}{\numexpr#1-1\relax}}%
+  \csname #2\endcsname
+}
+
+
+\title{Project Euler, Problem 2:\\\large{Even Fibonacci Numbers}}
+\author{John Butler}
+\date{}							% Activate to display a given date or no date
+
+
+\begin{document}
+\maketitle
+
+%1
+\section{Problem Description}
+	Find the sum of all $F_n < 4,000,000$ such that $F_n$ is even, where
+	\[ F_n  = \begin{cases}
+		0 & \text{for } n = 0 \\
+		1 & \text{for } n = 1 \\
+		F_{n-1} + F_{n-2} & \text{for } n \ge 2
+	\end{cases}	\]
+
+%2
+\section{Theorems whose results aid in my solution}
+	%2.1
+	\subsection{Lemma: $\forall n \in \mathbb{N}$, $\exists k \in \mathbb{N}: n = 2k$ or $n =2k + 1$}
+		\begin{center}
+		\begin{tabular}{c|c}
+			case $n = 0$&case $n = 1$\\
+			$0 = 2\cdot 0$&$1 = 0 + 1$\\
+			&$1 = 2\cdot 0 + 1$\\
+			Let $k  =0$& Let $k = 0$\\
+			$0 = 2k$&$1 = 2k + 1$
+		\end{tabular}
+		\end{center}
+			Assume $n - 1 = 2k$, or $n - 1 = 2k + 1$\\
+		\begin{center}
+		\begin{tabular}{c|c}
+			case $n - 1 = 2k$&case $n - 1 = 2k + 1$\\
+			$n = 2k + 1$&$n = 2k + 2$\\
+			&$n = 2(k + 1)$\\
+			&Let $k' = k + 1$\\
+			&$n = 2k'$
+		\end{tabular}
+		\end{center}
+
+	%2.2
+	\subsection{Lemma: $o$ is odd $\iff \exists n \in \mathbb{N} : o =2n + 1$, and $e$ is even $\iff \exists n \in \mathbb{N} : e = 2n$}
+		\begin{align*}
+			\text{Suppose } e & \text{ is even.}\\
+			\iff e & \text{ is divisible by } 2\\
+			\iff \frac{e}{2} &= n \text{ for some } n \in \mathbb{N}\\
+			\iff e &= 2n
+		\end{align*}
+		\begin{align*}
+			\text{Suppose } o & \text{ is odd.}\\
+			\iff o & \text{ is not divisible by } 2\\
+			\iff o& \text{ is not even.}\\
+			\iff o &\ne 2n\\
+			\iff o &= 2n + 1 \text{ by lemma 1}
+		\end{align*}
+
+	%2.3
+	\subsection{Lemma: An odd number plus an even number equals an odd number, and an odd number plus an odd number equals an even number}
+		\begin{align*}
+			\text{Consider an odd number}&\text{ plus an even number.}\\
+			\iff & (2n_1+1) + (2n_2) \text{ for some } n_1, n_2 \in \mathbb{N}\\
+			= & 2n_1 + 2n_2 + 1\\
+			= & 2(n_1 + n_2) + 1\\
+			\text{Let } n_3 =& n_1 + n_2\\
+			= & 2n_3 + 1\\
+			\text{which }& \text{is odd by lemma 2}.\\
+			\therefore \text{ an odd plus an }&\text{even equals an odd } \square
+		\end{align*}
+		\begin{align*}
+			\text{Now consider an odd number}&\text{ plus an odd number.}\\
+			\iff & (2n_1+1) + (2n_2+1) \text{ for some } n_1, n_2 \in \mathbb{N}\\
+			= & 2n_1 + 2n_2 + 1 + 1\\
+			= & 2n_1 + 2n_2 + 2\\
+			= & 2(n_1 + n_2 + 1)\\
+			\text{Let } n_3 = & n_1 + n_2 + 1\\
+			= & 2n_3\\
+			\text{which }& \text{is even by lemma 2}.\\
+			\therefore \text{ an odd plus an }&\text{odd equals an even } \square
+		\end{align*}
+
+	%2.4
+	\subsection{Theorem: only every third Fibonacci number is even}
+		Proof by induction:\\
+		case $n \in \{0, 1, 2\}$
+		\begin{center}
+		\begin{tabular}{c|c|c}
+			$F_0 = 0$&$F_1 = 1$&$F_2 = F_1 + F_0$\\
+			&$F_1 = 0 + 1$&\\
+			$F_0 = 2\cdot 0$&$F_1 = 2\cdot0 + 1$&$F_2 =  F_1 + 0$\\
+			Let $k_1 = 0$&Let $k_2 = 0$&\\
+			$\therefore F_0 = 2k_1$&$\therefore F_1 = 2k_2 + 1$&$F_2 = F_1$\\
+			$\therefore F_0$ is even&$\therefore F_1$ is odd&$\therefore F_2$ is odd\\
+		\end{tabular}
+		\end{center}
+		Assume $F_{n - 3}$ is even, $F_{n - 2}$ is odd, and $F_{n - 1}$ is odd
+		\begin{center}
+		\begin{tabular}{c|c|c c}
+			$F_n = F_{n - 1} + F_{n - 2}$&$F_{n+1} = F_n + F_{n - 1}$&$F_{n+2} = F_{n + 1} + F_n$&\\
+			$F_n =$ odd $+ $ odd&$F_{n+1} =$ even $+$ odd&$F_{n+ 2} =$ odd $+$ even&\\
+			$F_n =$ even&$F_{n+1} =$ odd& $F_{n+2} =$ odd&$\square$
+		\end{tabular}
+		\end{center}
+
+%3
+\section{Application to Code}
+	Now that we know that every third Fibonacci number is even, we don't have to worry about evenness. Instead, since we know that $F_0 = 0$ is the first Fibonacci number which is even, we can add $F_0$ to our sum, then compute $F_1$, $F_2$, and then add $F_3=2$ to our sum, and so on. Granted, checking if a number is even is computationally light.\\
+
+	Additionally, $F_0$ doesn't affect our sum, so we can start with $F_3=2$; Project Euler doesn't even mention $F_0$ or $F_1$.
+
+%4
+\section{Furthur Optimizations}
+	For this section, assume that $n$ is the index of the maximum Fibonacci number we must execute, and $L$ is the limit ($4,000,000$)
+	Considering the definition, it calculating the Fibonacci numbers would seem to be most natural to use a top-down recurrsive algorithm, but this would be incredibly slow, $O(2^n)$ for \textit{each} number, meaning we end up with a time complexity of $O(n2^n)$. It doesn't help that this is the example used by many introductory programming courses for recursion, so this is what many people write first. There are of course optimizations you can apply, such as providing a memo so we don't have to recompute $F_{n-1}$ and $F_{n-2}$, or any previous numbers, but that has linear space complexity. Not only that, but once don't even need to store $F_{n-3}$, since we're always only computing the next number.\\
+	The algorithm I'm using uses a bottom up approach, which has an overall space complexity of $O(1)$ and a time complexity of $O(n)$. The idea is to store only $F_{n-1}$ and $F_{n-2}$, so that we can compute $F_n$. After that we shift over what we're storing, so that we forget $F_{n-2}$ and keep $F_n$ and $F_{n-1}$ in order to calculate $F_{n+1}$.
+\end{document}  

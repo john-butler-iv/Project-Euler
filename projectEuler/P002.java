@@ -2,43 +2,50 @@ package projectEuler;
 
 import java.util.Iterator;
 
-class P002 extends ParameterizedProblem<Long> {
+class P002 extends ParameterizedProblem<Integer> {
 
 	@Override
-	public Long getDefaultParameter() {
-		return 4000000L;
+	public Integer getDefaultParameter() {
+		return 4000000;
 	}
 
 	@Override
-	public Long getTestParameter() {
-		return 100L;
+	public Integer getTestParameter() {
+		return 100;
 	}
-	
+
 	@Override
-	public long getTestSolution(){
+	public long getTestSolution() {
 		return 44;
 	}
-	
+
 	@Override
-	public long solve(Long parameter, boolean printResults) {
-		Iterator<Long> it = EulerTools.fibonacciIterator();
-		it.next();//0
-		it.next();//1
-		it.next();//1
-		it.next();//2
-		long sum = 0;
-		long curr = 2;
+	public long solve(Integer parameter, boolean printResults) {
+		Iterator<Integer> it = EulerTools.fibonacciIterator();
+
+		// we only we know 2 is the first even Fibonacci number, so we just don't check
+		// until then
+		it.next(); // 0
+		it.next(); // 1
+		it.next(); // 1
+		it.next(); // 2
+		int sum = 0;
+
+		// technically I can make this into a for loop, but it would be kinda messy, so
+		// I don't do it
+		int curr = 2;
 		do {
 			sum += curr;
 
-			//every third 
+			// only every third Fibonacci number is even, see writeup for proof.
+			// This means that we don't have to directly check if its even
 			it.next();
 			it.next();
 			curr = it.next();
-		} while (curr <= parameter);
+		} while (curr < parameter);
 
 		if (printResults)
-			System.out.println("The sum of the even Fibonacci numbers below "+ parameter + " is " + sum);
+			System.out.println("The sum of the even Fibonacci numbers below " + parameter + " is " + sum);
 
 		return sum;
 	}

@@ -11,13 +11,13 @@ class EulerTools {
 	 * but behavior is only defined while the numbers can fit in an int. hasNext()
 	 * will return false after the final valid Fibonacci number has been generated.
 	 * 
-	 * @return returns an Iterator which iterates over the Fibonacci numbers which
+	 * @return returns an Iterator which iterates over all Fibonacci numbers which
 	 *         can fit in an int.
 	 */
-	public static Iterator<Long> fibonacciIterator() {
-		return new Iterator<Long>() {
-			long currNum = 0;
-			long prevNum = 1;
+	public static Iterator<Integer> fibonacciIterator() {
+		return new Iterator<Integer>() {
+			int currNum = 0;
+			int prevNum = 1;
 
 			@Override
 			public boolean hasNext() {
@@ -25,8 +25,8 @@ class EulerTools {
 			}
 
 			@Override
-			public Long next() {
-				long temp = currNum;
+			public Integer next() {
+				int temp = currNum;
 				currNum += prevNum;
 				prevNum = temp;
 
