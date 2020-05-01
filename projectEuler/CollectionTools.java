@@ -388,12 +388,42 @@ public class CollectionTools {
 	 *         false otherwise
 	 */
 	public static <T> boolean equals(List<T> list1, List<T> list2) {
+		// can't compare if one of them is null
+		if (list1 == null || list2 == null)
+			// they they're both null, thye're equal
+			return list1 == list2;
+
 		// don't bother checking elements if they one has extra elements
 		if (list1.size() != list2.size())
 			return false;
 
 		for (int i = 0; i < list1.size(); i++)
 			if (!list1.get(i).equals(list2.get(i)))
+				return false;
+
+		return true;
+	}
+
+	/**
+	 * determines whether the two arrays are equal
+	 * 
+	 * @param arr1 one of the arrays compared
+	 * @param arr2 one of the arrays compared
+	 * @return returns true if both array have the same elements in the same order,
+	 *         false otherwise
+	 */
+	public static <T> boolean equals(T[] arr1, T[] arr2) {
+		// can't compare if one of them is null
+		if (arr1 == null || arr2 == null)
+			// they they're both null, thye're equal
+			return arr1 == arr2;
+
+		// don't bother checking elements if they one has extra elements
+		if (arr1.length != arr2.length)
+			return false;
+
+		for (int i = 0; i < arr1.length; i++)
+			if (!arr1[i].equals(arr2[i]))
 				return false;
 
 		return true;
