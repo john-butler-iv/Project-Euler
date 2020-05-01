@@ -1,6 +1,10 @@
 package projectEuler;
 
 public class P043 extends Problem {
+	@Override
+	public boolean test() {
+		return satisfiesConditions("1406357289") != 0;
+	}
 
 	@Override
 	long solve(boolean printResults) {

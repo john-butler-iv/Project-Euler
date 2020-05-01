@@ -12,8 +12,8 @@ class P018 extends ParameterizedProblem<String> {
 	}
 
 	@Override
-	long solve(String parameter, boolean printResults) {
-		int[] tree = readData(parameter);
+	long solve(String treeFilename, boolean printResults) {
+		int[] tree = readData(treeFilename);
 		int[] sums = new int[tree.length];
 
 		// using an inductive algorithm

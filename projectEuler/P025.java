@@ -11,18 +11,18 @@ class P025 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    long solve(Integer parameter, boolean printResults) {
+    long solve(Integer numDigits, boolean printResults) {
         Iterator<BigInteger> it = EulerTools.bigFibonacciIterator();
 
         // my iterator starts on F(0) = 0
         int index = 0;
 
-        while (it.next().toString().length() < parameter)
+        while (it.next().toString().length() < numDigits)
             index++;
 
         if (printResults)
             System.out.println(
-                    index + " is the index of the first Fibonacci number to have over " + parameter + " digits.");
+                    index + " is the index of the first Fibonacci number to have over " + numDigits + " digits.");
         return index;
     }
 

@@ -2,6 +2,13 @@ package projectEuler;
 
 class P027 extends Problem {
     PrimeFinder pf;
+
+    @Override
+    public boolean test() {
+        pf = new PrimeFinder(1602);
+        return countConsecutivePrimes(-79, 1601) == 80;
+    }
+
     @Override
     long solve(boolean printResults) {
         int limit = 1000;
@@ -22,7 +29,7 @@ class P027 extends Problem {
                     largestB = b;
                     mostPrimes = consecPrimes;
                 }
-                consecPrimes = countConsecutivePrimes(a, - b);
+                consecPrimes = countConsecutivePrimes(a, -b);
                 if (mostPrimes < consecPrimes) {
                     largestA = a;
                     largestB = -1 * b;

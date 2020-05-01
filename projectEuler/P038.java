@@ -2,8 +2,10 @@ package projectEuler;
 
 class P038 extends Problem {
 
-	public static void main(String[] args) {
-		new P038().solve(true);
+	@Override
+	public boolean test() {
+		String testStr = String.valueOf(192) + String.valueOf(192 * 2) + String.valueOf(192 * 3);
+		return EulerTools.isPandigital(testStr);
 	}
 
 	@Override

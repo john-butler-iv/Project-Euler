@@ -51,7 +51,7 @@ class P022 extends Problem {
 
 			// this
 			score_pos[POSITION]++;
-			score_pos[SCORE] += this.score(score_pos[1]);
+			score_pos[SCORE] += this.score(score_pos[POSITION]);
 
 			// right
 			if (right != null)
@@ -60,7 +60,7 @@ class P022 extends Problem {
 			return score_pos;
 		}
 
-		private int score(int position) {
+		public int score(int position) {
 			int score = 0;
 
 			char[] charArray = name.toCharArray();
@@ -71,6 +71,11 @@ class P022 extends Problem {
 
 			return score;
 		}
+	}
+
+	public boolean test() {
+		NameTree tree = new NameTree("COLIN");
+		return tree.score(938) == 49714;
 	}
 
 	@Override

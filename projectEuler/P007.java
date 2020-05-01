@@ -12,13 +12,13 @@ class P007 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
+	long solve(Integer primeIndex, boolean printResults) {
 
-		PrimeFinder pf = new PrimeFinder(3 * (int) Math.log(parameter) * parameter);
+		PrimeFinder pf = new PrimeFinder(3 * (int) Math.log(primeIndex) * primeIndex);
 
-		int prime = pf.getPrimes().get(parameter - 1);
+		int prime = pf.getPrimes().get(primeIndex - 1);
 		if (printResults)
-			System.out.println("the " + parameter + " prime is " + prime);
+			System.out.println("the " + primeIndex + " prime is " + prime);
 
 		return prime;
 	}

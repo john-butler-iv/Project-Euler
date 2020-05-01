@@ -1,8 +1,19 @@
 package projectEuler;
 
 public class P040 extends Problem {
-	public static void main(String[] args) {
-		new P040().solve(true);
+
+	@Override
+	public boolean test() {
+		int digitCounter = 1;
+		int currentDigit = 1;
+
+		while (digitCounter <= 12) {
+			String digitString = String.valueOf(currentDigit++);
+			for (int i = 0; i < digitString.length(); ++i)
+				if (digitCounter++ == 12)
+					return digitString.charAt(i) == '1';
+		}
+		return false;
 	}
 
 	@Override

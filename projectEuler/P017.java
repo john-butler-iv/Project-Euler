@@ -8,14 +8,14 @@ class P017 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
+	long solve(Integer maxN, boolean printResults) {
 		int total = 0;
 
-		for (int i = 1; i <= parameter; ++i)
+		for (int i = 1; i <= maxN; ++i)
 			total += numbersToLetters(i);
 
 		if (printResults)
-			System.out.println(total + " is the sum of the number of letters of 1-" + parameter);
+			System.out.println(total + " is the sum of the number of letters of 1-" + maxN);
 
 		return total;
 	}

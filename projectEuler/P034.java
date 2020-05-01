@@ -1,6 +1,17 @@
 package projectEuler;
 
 class P034 extends Problem {
+
+	@Override
+	public boolean test() {
+		int digitSum = 0;
+
+		for (char c : String.valueOf(145).toCharArray())
+			digitSum += EulerTools.factorial(c - '0');
+
+		return digitSum == 145;
+	}
+
 	@Override
 	long solve(boolean printResults) {
 

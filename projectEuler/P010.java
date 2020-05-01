@@ -8,8 +8,8 @@ class P010 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(parameter);
+	long solve(Integer primeLimit, boolean printResults) {
+		PrimeFinder pf = new PrimeFinder(primeLimit);
 
 		int sum = 0;
 
@@ -17,7 +17,7 @@ class P010 extends ParameterizedProblem<Integer> {
 			sum += prime;
 
 		if (printResults)
-			System.out.println(sum + " is the sum of all primes below " + parameter + ".");
+			System.out.println(sum + " is the sum of all primes below " + primeLimit + ".");
 
 		return sum;
 	}

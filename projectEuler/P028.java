@@ -8,9 +8,9 @@ class P028 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    long solve(Integer parameter, boolean printResults) {
-        //see my writeup for the derivation of this formula
-        int diaLen = parameter / 2;
+    long solve(Integer gridLength, boolean printResults) {
+        // see my writeup for the derivation of this formula
+        int diaLen = gridLength / 2;
         int total = diaLen * (16 * diaLen * diaLen + 30 * diaLen + 26) / 3 + 1;
 
         if (printResults)

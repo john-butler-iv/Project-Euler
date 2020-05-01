@@ -8,8 +8,8 @@ class P015 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
-		long[][] lattice = new long[parameter + 1][parameter + 1];
+	long solve(Integer latticeSize, boolean printResults) {
+		long[][] lattice = new long[latticeSize + 1][latticeSize + 1];
 		for (int i = 0; i < lattice.length; i++) {
 			lattice[0][i] = 1;
 			lattice[i][0] = 1;
@@ -22,7 +22,7 @@ class P015 extends ParameterizedProblem<Integer> {
 
 		if (printResults)
 			System.out.println(
-					"There are " + result + " ways to traverse a " + parameter + "x" + parameter + " lattice ");
+					"There are " + result + " ways to traverse a " + latticeSize + "x" + latticeSize + " lattice ");
 		return result;
 	}
 

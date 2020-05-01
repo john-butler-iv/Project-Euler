@@ -10,8 +10,8 @@ class P016 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
-		BigInteger largeNumber = EulerTools.TWO.pow(parameter);
+	long solve(Integer exponent, boolean printResults) {
+		BigInteger largeNumber = EulerTools.TWO.pow(exponent);
 		String str = largeNumber.toString();
 
 		int sum = 0;
@@ -20,7 +20,7 @@ class P016 extends ParameterizedProblem<Integer> {
 			sum += str.charAt(i) - '0';
 
 		if (printResults)
-			System.out.println(sum + " is the sum of the digits of 2^" + parameter);
+			System.out.println(sum + " is the sum of the digits of 2^" + exponent);
 
 		return sum;
 	}

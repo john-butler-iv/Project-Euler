@@ -10,8 +10,8 @@ public class P050 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(parameter);
+	long solve(Integer maxPrime, boolean printResults) {
+		PrimeFinder pf = new PrimeFinder(maxPrime);
 		List<Integer> primes = pf.getPrimes();
 
 		// summing the smallest consecutive primes, 545 primes brings you over 1000000
@@ -26,14 +26,14 @@ public class P050 extends ParameterizedProblem<Integer> {
 
 				// if we end up out of bounds, the numbers only get larger, so we just break out
 				// of the loop
-				if (sum >= parameter)
+				if (sum >= maxPrime)
 					break;
 
 				// if the sum is prime, we found our number
 				if (pf.isPrime(sum)) {
 					if (printResults)
 						System.out.println(
-								sum + " can be written as the sum of the most consecutive primes below " + parameter);
+								sum + " can be written as the sum of the most consecutive primes below " + maxPrime);
 					return sum;
 				}
 			}

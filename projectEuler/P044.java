@@ -3,6 +3,13 @@ package projectEuler;
 public class P044 extends Problem {
 
 	@Override
+	public boolean test() {
+		long p1 = EulerTools.pentagonL(4);
+		long p2 = EulerTools.pentagonL(7);
+		return EulerTools.isPentagonal(p1 + p2) && !EulerTools.isPentagonal(p2 - p1);
+	}
+
+	@Override
 	long solve(boolean printResults) {
 		int k = 1;
 		long K = EulerTools.pentagonL(k);

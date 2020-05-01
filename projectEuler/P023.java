@@ -3,28 +3,33 @@ package projectEuler;
 import java.util.ArrayList;
 import java.util.List;
 
-class P023 extends Problem {
+class P023 extends ParameterizedProblem<Integer> {
     PrimeFinder pf;
 
     @Override
-    long solve(boolean printResults) {
-        PrimeFinder pf = new PrimeFinder(28123);
+    Integer getDefaultParameter() {
+        return 28123;
+    }
+
+    @Override
+    long solve(Integer maxNum, boolean printResults) {
+        PrimeFinder pf = new PrimeFinder(maxNum);
         List<Integer> abundantNums = new ArrayList<Integer>();
         // find all relavent abundant numbers
         abundantNums.add(12);
-        for (int i = 13; i <= 28123; i++)
+        for (int i = 13; i <= maxNum; i++)
             if (pf.sigma(i) - i > i)
                 abundantNums.add(i);
 
         // start with the sums of all numbers
-        int sum = EulerTools.triangle(28123);
-        boolean[] expressable = new boolean[28124];
+        int sum = EulerTools.triangle(maxNum);
 
+        boolean[] expressable = new boolean[maxNum];
         for (int i = 0; i < abundantNums.size(); i++) {
             for (int j = i; j < abundantNums.size(); j++) {
 
                 int aij = abundantNums.get(i) + abundantNums.get(j);
-                if (aij > 28123)
+                if (aij > maxNum)
                     break;
 
                 // subtract from sum if it is actually expressable
@@ -39,6 +44,16 @@ class P023 extends Problem {
             System.out.println(
                     sum + " is the sum of all numbers which cannot be expressed as the sum of two abundant numbers.");
         return sum;
+    }
+
+    @Override
+    protected Integer getTestParameter() {
+        return 12;
+    }
+
+    @Override
+    protected long getTestSolution() {
+        return 24;
     }
 
     @Override

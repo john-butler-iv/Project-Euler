@@ -8,19 +8,19 @@ class P012 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(parameter * parameter * 4);
+	long solve(Integer numDivisors, boolean printResults) {
+		PrimeFinder pf = new PrimeFinder(numDivisors * numDivisors * 4);
 		int triNum = 1;
 
 		for (int i = 2;; ++i) {
 			triNum = EulerTools.triangle(i);
 
-			if (pf.divisors(triNum) > parameter)
+			if (pf.divisors(triNum) > numDivisors)
 				break;
 		}
 
 		if (printResults)
-			System.out.println(triNum + " is the first triangle number to have over " + parameter + " divisors.");
+			System.out.println(triNum + " is the first triangle number to have over " + numDivisors + " divisors.");
 		return triNum;
 	}
 

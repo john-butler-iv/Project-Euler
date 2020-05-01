@@ -3,6 +3,14 @@ package projectEuler;
 public class P045 extends Problem {
 
 	@Override
+	public boolean test() {
+		long t = EulerTools.triangleL(285);
+		long p = EulerTools.pentagonL(165);
+		long h = EulerTools.hexagonL(143);
+		return t == p && p == h;
+	}
+
+	@Override
 	long solve(boolean printResults) {
 		// T285 = P165 = H144 was the last occurrence.
 		int t = 286;

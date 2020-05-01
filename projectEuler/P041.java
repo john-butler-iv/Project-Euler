@@ -3,6 +3,12 @@ package projectEuler;
 public class P041 extends Problem {
 
 	@Override
+	public boolean test() {
+		PrimeFinder pf = new PrimeFinder(2144);
+		return pf.isPrime(2143) && EulerTools.isPandigital("2143");
+	}
+
+	@Override
 	long solve(boolean printResults) {
 		// floor plus one ensures that we get all factors of every number, even if
 		// 987,654,321 is a square.

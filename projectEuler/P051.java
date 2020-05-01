@@ -13,7 +13,7 @@ public class P051 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
+	long solve(Integer numPrimes, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(200000);
 
 		// counts how many primes the base will generate
@@ -23,7 +23,7 @@ public class P051 extends ParameterizedProblem<Integer> {
 		int ans = 0;
 		// 56**3 is the first base pattern to generate 7 primes, and generating 7 primes
 		// is necessary to generating 8 primes.
-		for (Integer baseNum = Integer.valueOf("56aa3", 11); currPrimesFound < parameter; baseNum++) {
+		for (Integer baseNum = Integer.valueOf("56aa3", 11); currPrimesFound < numPrimes; baseNum++) {
 			// we're treating the extra digit symbol as the one which should be replaced.
 			String basePattern = Integer.toString(baseNum, 11);
 
@@ -52,7 +52,7 @@ public class P051 extends ParameterizedProblem<Integer> {
 			// this is when we check to see if we generate enough primes to
 		}
 		if (printResults)
-			System.out.println(ans + " is the smallest prime which generates " + (parameter - 1)
+			System.out.println(ans + " is the smallest prime which generates " + (numPrimes - 1)
 					+ " other primes by replaces digits");
 		return ans;
 	}

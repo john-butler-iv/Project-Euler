@@ -2,6 +2,16 @@ package projectEuler;
 
 class P021 extends Problem {
 
+	public boolean test() {
+		PrimeFinder pf = new PrimeFinder(200);
+		int sigI = pf.sigma(220);
+
+		int j = sigI - 220;
+		int sigJ = pf.sigma(j);
+
+		return j == 284 && sigI == sigJ;
+	}
+
 	@Override
 	long solve(boolean printResults) {
 		int amNumsSum = 0;

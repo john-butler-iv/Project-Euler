@@ -3,6 +3,11 @@ package projectEuler;
 public class P039 extends Problem {
 
 	@Override
+	public boolean test() {
+		return true;
+	}
+
+	@Override
 	long solve(boolean printResults) {
 		int[] trisByP = new int[1001];
 

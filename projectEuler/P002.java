@@ -20,7 +20,7 @@ class P002 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	public long solve(Integer parameter, boolean printResults) {
+	public long solve(Integer maxValue, boolean printResults) {
 		Iterator<Integer> it = EulerTools.fibonacciIterator();
 
 		// we only we know 2 is the first even Fibonacci number, so we just don't check
@@ -42,10 +42,10 @@ class P002 extends ParameterizedProblem<Integer> {
 			it.next();
 			it.next();
 			curr = it.next();
-		} while (curr < parameter);
+		} while (curr < maxValue);
 
 		if (printResults)
-			System.out.println("The sum of the even Fibonacci numbers below " + parameter + " is " + sum);
+			System.out.println("The sum of the even Fibonacci numbers below " + maxValue + " is " + sum);
 
 		return sum;
 	}

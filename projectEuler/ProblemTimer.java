@@ -31,7 +31,7 @@ abstract class ProblemTimer extends Timer {
 		Problem problem = getProblem(problemID);
 		if (problem == null)
 			return false;
-		return problem instanceof ParameterizedProblem ? ((ParameterizedProblem) problem).test() : true;
+		return problem.test();
 	}
 
 	void report(int problemID) {

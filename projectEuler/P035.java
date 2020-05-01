@@ -19,11 +19,11 @@ class P035 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(parameter);
+	long solve(Integer maxPrime, boolean printResults) {
+		PrimeFinder pf = new PrimeFinder(maxPrime);
 
 		int numCircularPrimes = 0;
-		for (int i = 0; i < parameter; i++) {
+		for (int i = 0; i < maxPrime; i++) {
 			boolean allPrime = true;
 			int[] digitRotations = getDigitRotations(i);
 			for (int j : digitRotations)
@@ -35,7 +35,7 @@ class P035 extends ParameterizedProblem<Integer> {
 
 		}
 		if (printResults)
-			System.out.println("There are " + numCircularPrimes + " circular primes below " + parameter);
+			System.out.println("There are " + numCircularPrimes + " circular primes below " + maxPrime);
 
 		return numCircularPrimes;
 	}

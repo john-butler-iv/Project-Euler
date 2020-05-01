@@ -8,7 +8,7 @@ public class P047 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
+	long solve(Integer numConsec, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(134043);
 
 		// consecutive number of previous numbers to have the correct number of factors.
@@ -16,21 +16,21 @@ public class P047 extends ParameterizedProblem<Integer> {
 
 		// we declare i out here so we can reference it after the loop.
 		int i = 2;
-		for (; prevValid != parameter; i++) {
+		for (; prevValid != numConsec; i++) {
 			// count the number of prime factors
 			int factors = pf.uniquePrimeFactorize(i).size();
 
 			// adjust prevValid accordingly
-			if (factors == parameter)
+			if (factors == numConsec)
 				prevValid++;
 			else
 				prevValid = 0;
 		}
 
 		if (printResults)
-			System.out.println(i - parameter + " is the first of " + parameter
-					+ " consecutive integers to have exactly " + parameter + " distinct prime factors");
-		return i - parameter;
+			System.out.println(i - numConsec + " is the first of " + numConsec
+					+ " consecutive integers to have exactly " + numConsec + " distinct prime factors");
+		return i - numConsec;
 	}
 
 	@Override

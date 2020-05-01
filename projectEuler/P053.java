@@ -1,6 +1,15 @@
 package projectEuler;
 
 public class P053 extends Problem {
+	@Override
+	public boolean test() {
+		int[] line = new int[25];
+		line[0] = 1;
+		for (int i = 1; i <= 23; i++)
+			updateLine(line);
+
+		return line[10] > 1000000;
+	}
 
 	@Override
 	long solve(boolean printResults) {

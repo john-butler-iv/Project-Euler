@@ -3,6 +3,25 @@ package projectEuler;
 class P024 extends Problem {
 
     @Override
+    public boolean test() {
+        String permutation = "012";
+        permutation = CollectionTools.permute(permutation);
+        if (!permutation.equals("021"))
+            return false;
+        permutation = CollectionTools.permute(permutation);
+        if (!permutation.equals("102"))
+            return false;
+        permutation = CollectionTools.permute(permutation);
+        if (!permutation.equals("120"))
+            return false;
+        permutation = CollectionTools.permute(permutation);
+        if (!permutation.equals("201"))
+            return false;
+        permutation = CollectionTools.permute(permutation);
+        return permutation.equals("210");
+    }
+
+    @Override
     long solve(boolean printResults) {
         String permutation = "0123456789";
         int permNum = 1;

@@ -5,6 +5,19 @@ import java.util.List;
 public class P049 extends Problem {
 
 	@Override
+	public boolean test() {
+		PrimeFinder pf = new PrimeFinder(10000);
+		if (!pf.isPrime(1487))
+			return false;
+		if (!pf.isPrime(4817))
+			return false;
+		if (!pf.isPrime(8147))
+			return false;
+
+		return arePermutations(1487, 4817, 8147);
+	}
+
+	@Override
 	long solve(boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(10000);
 		List<Integer> primes = pf.getPrimes();

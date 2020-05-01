@@ -1,13 +1,21 @@
 package projectEuler;
 
-class P004 extends Problem {
+class P004 extends ParameterizedProblem<Integer> {
 
 	@Override
-	long solve(boolean printResults) {
+	Integer getDefaultParameter() {
+		return 3;
+	}
+
+	@Override
+	long solve(Integer digits, boolean printResults) {
 		int big = 0;
-		// iterate through all 3 digit numbers
-		for (int i = 999; i > 99; i--) {
-			for (int j = i; j > 99; j--) {
+		final int MIN = (int) Math.pow(10, digits);
+		final int MAX = MIN * 10 - 1;
+
+		// iterate through all n-digit numbers
+		for (int i = MAX; i > MIN; i--) {
+			for (int j = MAX; j >= i; j--) {
 				int product = j * i;
 				if (product > big && EulerTools.isPalindrome(String.valueOf(product)))
 					big = product;
@@ -18,8 +26,14 @@ class P004 extends Problem {
 		return big;
 	}
 
-	public static void main(String[] args) {
-		new P004().solve(true);
+	@Override
+	protected Integer getTestParameter() {
+		return 2;
+	}
+
+	@Override
+	protected long getTestSolution() {
+		return 9009;
 	}
 
 	@Override

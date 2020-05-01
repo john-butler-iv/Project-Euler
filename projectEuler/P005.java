@@ -8,13 +8,13 @@ class P005 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
+	long solve(Integer maxDivisor, boolean printResults) {
 
-		PrimeFinder pf = new PrimeFinder(parameter + 1);
+		PrimeFinder pf = new PrimeFinder(maxDivisor + 1);
 
-		int[] totalFactorsNeeded = new int[parameter + 1];
-		
-		for (int i = 2; i <= parameter; i++) {
+		int[] totalFactorsNeeded = new int[maxDivisor + 1];
+
+		for (int i = 2; i <= maxDivisor; i++) {
 
 			// find the multiplicity of each factor
 			int[] currFactorsNeeded = new int[totalFactorsNeeded.length];
@@ -31,13 +31,12 @@ class P005 extends ParameterizedProblem<Integer> {
 		// multiplies all of the prime factors together
 		int product = 1;
 		for (int i = 2; i < totalFactorsNeeded.length; i++)
-			if (totalFactorsNeeded[i] != 0) 
+			if (totalFactorsNeeded[i] != 0)
 				product *= Math.pow(i, totalFactorsNeeded[i]);
 
-				
 		if (printResults)
 			System.out.println(
-					product + " is the smallest number that is divisible by every number less than " + parameter);
+					product + " is the smallest number that is divisible by every number less than " + maxDivisor);
 
 		return product;
 	}

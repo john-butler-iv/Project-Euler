@@ -3,6 +3,11 @@ package projectEuler;
 class P031 extends Problem {
 
     @Override
+    public boolean test() {
+        return 1 * 1 + 1 * 50 + 2 * 20 + 1 * 5 + 1 * 2 + 3 * 1 == 200;
+    }
+
+    @Override
     long solve(boolean printResults) {
         int totalCombinations = 0;
         // there is almost certainly a combinatorics way to figure this out, but I'm too

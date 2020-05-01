@@ -8,6 +8,8 @@ abstract class Problem implements Consumer<Object> {
 		solve(false);
 	}
 
+	abstract boolean test();
+
 	abstract long solve(boolean printResults);
 
 	abstract String getTitle();

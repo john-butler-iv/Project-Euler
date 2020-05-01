@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class P042 extends Problem {
+	@Override
+	public boolean test() {
+		return EulerTools.isTriangular(wordToNumber("SKY"));
+	}
 
 	@Override
 	long solve(boolean printResults) {

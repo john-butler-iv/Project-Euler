@@ -10,8 +10,8 @@ class P020 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
-		BigInteger fact = EulerTools.factorial(BigInteger.valueOf(parameter));
+	long solve(Integer n, boolean printResults) {
+		BigInteger fact = EulerTools.factorial(BigInteger.valueOf(n));
 		String str = fact.toString();
 
 		int sum = 0;
@@ -19,7 +19,7 @@ class P020 extends ParameterizedProblem<Integer> {
 			sum += c - '0';
 
 		if (printResults)
-			System.out.println(sum + " is the sum of " + parameter + "!.");
+			System.out.println(sum + " is the sum of " + n + "!.");
 
 		return sum;
 	}

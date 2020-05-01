@@ -10,7 +10,7 @@ public class P048 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
+	long solve(Integer maxExponent, boolean printResults) {
 		BigInteger sum = BigInteger.ZERO;
 
 		// calculate the sum with no fancy techniques
@@ -18,7 +18,7 @@ public class P048 extends ParameterizedProblem<Integer> {
 		// \iff
 		// for(int i = 1; i < parameter; i++)
 		// sum += Math.pow(i, i);
-		for (BigInteger i = BigInteger.ONE; i.intValue() < parameter; i = i.add(BigInteger.ONE))
+		for (BigInteger i = BigInteger.ONE; i.intValue() < maxExponent; i = i.add(BigInteger.ONE))
 			sum = sum.add(i.pow(i.intValue()));
 
 		// format the answer accordingly
@@ -27,7 +27,7 @@ public class P048 extends ParameterizedProblem<Integer> {
 			ans = ans.substring(ans.length() - 10);
 
 		if (printResults)
-			System.out.println(ans + " is the last ten digits of 1^1 + 2^2 + ... + " + parameter + "^" + parameter);
+			System.out.println(ans + " is the last ten digits of 1^1 + 2^2 + ... + " + maxExponent + "^" + maxExponent);
 		return Long.valueOf(ans);
 	}
 

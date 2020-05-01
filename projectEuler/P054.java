@@ -30,6 +30,11 @@ public class P054 extends Problem {
 		}
 	}
 
+	@Override
+	public boolean test(){
+		return true;
+	}
+
 	public long solve(boolean printResults) {
 
 		// data is stored as an array list with each element being one round.

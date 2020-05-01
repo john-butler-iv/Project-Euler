@@ -10,21 +10,22 @@ class P003 extends ParameterizedProblem<Long> {
 	}
 
 	@Override
-	long solve(Long parameter, boolean printResults) {
+	long solve(Long num, boolean printResults) {
 		// TODO I can refactor this, but it works and it's quick and I'm too lazy to
 		// implement prime stuff for longs
 		ArrayList<Long> factors = new ArrayList<Long>();
 
-		while (parameter > 1) {
-			for (long i = 3; i <= parameter; i += 2) {
-				if (parameter % i == 0) {
+		while (num > 1) {
+			for (long i = 3; i <= num; i += 2) {
+				if (num % i == 0) {
 					factors.add(i);
-					parameter /= i;
+					num /= i;
 				}
 			}
 		}
+
 		long big = factors.get(factors.size() - 1);
-		if(printResults)
+		if (printResults)
 			System.out.println(big + " is the biggest prime factor of 6,008,514,751,43l");
 		return big;
 	}

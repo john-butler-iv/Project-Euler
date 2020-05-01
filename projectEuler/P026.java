@@ -10,12 +10,12 @@ class P026 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    long solve(Integer parameter, boolean printResults) {
+    long solve(Integer maxD, boolean printResults) {
 
         int largestLength = -1;
         int largestD = -1;
 
-        PrimeFinder pf = new PrimeFinder(parameter);
+        PrimeFinder pf = new PrimeFinder(maxD);
 
         ArrayList<Integer> remainders = new ArrayList<>();
         // I don't have a proof on why we only need to check primes, but when I looked

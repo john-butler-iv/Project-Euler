@@ -8,14 +8,14 @@ public class P052 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer parameter, boolean printResults) {
+	long solve(Integer maxMultiple, boolean printResults) {
 		for (int i = 1; i < Integer.MAX_VALUE; i++) {
 			String baseString = String.valueOf(i);
 
 			boolean permutable = true;
 			// by going backwards through the string, we can catch the multiple overflowing,
 			// so overall, there will be fewer computations
-			for (int j = parameter; j >= 2; j--) {
+			for (int j = maxMultiple; j >= 2; j--) {
 				String multipleString = String.valueOf(i * j);
 
 				// if the multiples gained an extra digt, increasing i will only continue that
@@ -39,7 +39,7 @@ public class P052 extends ParameterizedProblem<Integer> {
 				if (printResults)
 					System.out.println(
 							i + " is the smallest number which contains the same digits as its multiples up to "
-									+ parameter + " times.");
+									+ maxMultiple + " times.");
 				return i;
 			}
 		}

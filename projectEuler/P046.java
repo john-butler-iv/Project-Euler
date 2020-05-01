@@ -3,6 +3,11 @@ package projectEuler;
 public class P046 extends Problem {
 
 	@Override
+	public boolean test() {
+		return true;
+	}
+
+	@Override
 	long solve(boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(1000);
 

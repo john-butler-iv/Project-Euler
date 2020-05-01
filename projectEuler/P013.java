@@ -13,6 +13,10 @@ class P013 extends Problem {
 		nums = readData("p013.txt");
 	}
 
+	public boolean test() {
+		return true;
+	}
+
 	private static BigInteger[] readData(String filename) {
 		BigInteger[] nums = new BigInteger[100];
 		try {
@@ -33,14 +37,14 @@ class P013 extends Problem {
 	long solve(boolean printResults) {
 		BigInteger sum = BigInteger.ZERO;
 
-		for(int i = 0; i < nums.length; ++i)
+		for (int i = 0; i < nums.length; ++i)
 			sum = sum.add(nums[i]);
-		
+
 		String sumStr = sum.toString().substring(0, 10);
-		
-		if(printResults)
+
+		if (printResults)
 			System.out.println(sumStr + " are first ten digits.");
-		
+
 		return Long.valueOf(sumStr);
 	}
 
@@ -48,5 +52,5 @@ class P013 extends Problem {
 	String getTitle() {
 		return "Problem 013: Large Sum";
 	}
-	
+
 }
