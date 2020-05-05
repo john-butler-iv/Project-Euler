@@ -206,13 +206,12 @@ public class CollectionTools {
 	 * @param j      the index of one element to be swapped
 	 */
 	public static String swap(String str, int i, int j) {
-		// by using substrings, like I am, i cannot be larger than j
-		if (i > j) {
-			int temp = i;
-			i = j;
-			j = temp;
-		} else if (i == j)
+		if(i == j)
 			return str;
+		// by using substrings, like I am, i cannot be larger than j
+		int temp = i;
+		i = j;
+		j = temp;
 
 		// rearrange the string such that i and j get swapped
 		return str.substring(0, i) + str.charAt(j) + str.substring(i + 1, j) + str.charAt(i) + str.substring(j + 1);
@@ -274,6 +273,35 @@ public class CollectionTools {
 			swap(list, i, list.size() - i - 1);
 
 		return list;
+	}
+
+
+	/**
+	 * reverses the elements of str. i.e. reverse("0123", 1) gives "0321"
+	 *
+	 * @param str		the string which will be reversed.
+	 *
+	 * @return returns str, but reversed
+	 */
+	public static String reverse(String str){
+		return reverse(str, 0);
+	}
+
+	/**
+	 * reverses the elements of str, starting at startingIndex. i.e.
+	 * reverse("0123", 1) gives "0321"
+	 *
+	 * @param str		the string which will be reversed.
+	 * @param startingIndex	the first index to be reversed.
+	 *
+	 * @return returns str, but reversed after startingIndex
+	 */
+	public static String reverse(String str, int startingIndex){
+		String returnStr = str;
+		for(int i = 0; i < (startingIndex + str.length()) / 2; i++)
+			returnStr = swap(str, i, str.length() - 1 - i);
+
+		return returnStr;
 	}
 
 	/**
