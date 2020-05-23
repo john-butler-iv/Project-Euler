@@ -6,7 +6,7 @@ import java.util.Set;
 class P032 extends Problem {
 
 	@Override
-	boolean test() {
+	public boolean test() {
 		int a = 39;
 		int b = 186;
 		int c = a * b;
@@ -14,7 +14,7 @@ class P032 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		Set<Integer> set = new HashSet<>();
 
 		long sum = 0;
@@ -37,7 +37,7 @@ class P032 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 032: Pandigital Products";
 	}
 

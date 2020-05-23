@@ -7,13 +7,13 @@ class P023 extends ParameterizedProblem<Integer> {
     PrimeFinder pf;
 
     @Override
-    Integer getDefaultParameter() {
+    public Integer getDefaultParameter() {
         return 28123;
     }
 
     @Override
-    long solve(Integer maxNum, boolean printResults) {
-        PrimeFinder pf = new PrimeFinder(maxNum);
+    public long solve(Integer maxNum, boolean printResults) {
+        PrimeFinder pf = new PrimeFinder(maxNum + 1);
         List<Integer> abundantNums = new ArrayList<Integer>();
         // find all relavent abundant numbers
         abundantNums.add(12);
@@ -24,7 +24,7 @@ class P023 extends ParameterizedProblem<Integer> {
         // start with the sums of all numbers
         int sum = EulerTools.triangle(maxNum);
 
-        boolean[] expressable = new boolean[maxNum];
+        boolean[] expressable = new boolean[maxNum + 1];
         for (int i = 0; i < abundantNums.size(); i++) {
             for (int j = i; j < abundantNums.size(); j++) {
 
@@ -53,11 +53,11 @@ class P023 extends ParameterizedProblem<Integer> {
 
     @Override
     protected long getTestSolution() {
-        return 24;
+        return 78;
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Problem 023: Non-Abundant Sums";
     }
 

@@ -3,12 +3,12 @@ package projectEuler;
 class P010 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 2000000;
 	}
 
 	@Override
-	long solve(Integer primeLimit, boolean printResults) {
+	public long solve(Integer primeLimit, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(primeLimit);
 
 		int sum = 0;
@@ -33,7 +33,7 @@ class P010 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 010: Summation of Primes";
 	}
 

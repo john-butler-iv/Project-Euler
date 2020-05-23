@@ -3,7 +3,7 @@ package projectEuler;
 class P035 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 1000000;
 	}
 
@@ -19,7 +19,7 @@ class P035 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer maxPrime, boolean printResults) {
+	public long solve(Integer maxPrime, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(maxPrime);
 
 		int numCircularPrimes = 0;
@@ -51,7 +51,7 @@ class P035 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 035: Circular Primes";
 	}
 

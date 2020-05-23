@@ -17,7 +17,7 @@ public class P040 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		int product = 1;
 		int digitCounter = 1;
 		int currentDigit = 1;
@@ -50,7 +50,7 @@ public class P040 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 040: Champernowne's constant";
 	}
 

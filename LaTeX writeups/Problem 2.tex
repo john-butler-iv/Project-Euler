@@ -29,39 +29,23 @@
 \begin{document}
 \maketitle
 
+\tableofcontents
+\addtocontents{toc}{Problem Description}
+\addtocontents{toc}{Useful Theorems}
+
 %1
 \section{Problem Description}
 	Find the sum of all $F_n < 4,000,000$ such that $F_n$ is even, where
 	\[ F_n  = \begin{cases}
-		0 & \text{for } n = 0 \\
-		1 & \text{for } n = 1 \\
-		F_{n-1} + F_{n-2} & \text{for } n \ge 2
+		0 & n = 0 \\
+		1 & n = 1 \\
+		F_{n-1} + F_{n-2} & n \ge 2
 	\end{cases}	\]
 
 %2
 \section{Theorems whose results aid in my solution}
 	%2.1
-	\subsection{Lemma: $\forall n \in \mathbb{N}$, $\exists k \in \mathbb{N}: n = 2k$ or $n =2k + 1$}
-		\begin{center}
-		\begin{tabular}{c|c}
-			case $n = 0$&case $n = 1$\\
-			$0 = 2\cdot 0$&$1 = 0 + 1$\\
-			&$1 = 2\cdot 0 + 1$\\
-			Let $k  =0$& Let $k = 0$\\
-			$0 = 2k$&$1 = 2k + 1$
-		\end{tabular}
-		\end{center}
-			Assume $n - 1 = 2k$, or $n - 1 = 2k + 1$\\
-		\begin{center}
-		\begin{tabular}{c|c}
-			case $n - 1 = 2k$&case $n - 1 = 2k + 1$\\
-			$n = 2k + 1$&$n = 2k + 2$\\
-			&$n = 2(k + 1)$\\
-			&Let $k' = k + 1$\\
-			&$n = 2k'$
-		\end{tabular}
-		\end{center}
-
+	
 	%2.2
 	\subsection{Lemma: $o$ is odd $\iff \exists n \in \mathbb{N} : o =2n + 1$, and $e$ is even $\iff \exists n \in \mathbb{N} : e = 2n$}
 		\begin{align*}
@@ -119,20 +103,54 @@
 		Assume $F_{n - 3}$ is even, $F_{n - 2}$ is odd, and $F_{n - 1}$ is odd
 		\begin{center}
 		\begin{tabular}{c|c|c c}
-			$F_n = F_{n - 1} + F_{n - 2}$&$F_{n+1} = F_n + F_{n - 1}$&$F_{n+2} = F_{n + 1} + F_n$&\\
-			$F_n =$ odd $+ $ odd&$F_{n+1} =$ even $+$ odd&$F_{n+ 2} =$ odd $+$ even&\\
-			$F_n =$ even&$F_{n+1} =$ odd& $F_{n+2} =$ odd&$\square$
+			$F_n = F_{n - 1} + F_{n - 2}$&$F_{n+1} = F_n + F_{n - 1}$&$F_{n+2} = F_{n + 1} + F_n$\\
+			$F_n =$ odd $+ $ odd&$F_{n+1} =$ even $+$ odd&$F_{n+ 2} =$ odd $+$ even\\
+			$F_n =$ even&$F_{n+1} =$ odd& $F_{n+2} =$ odd
 		\end{tabular}
 		\end{center}
+		Therefore the first of each three subsequent Fibonacci numbers are even.
 
+	%2.5
+	\subsection{Theorem: $F_n = \frac{(1 + \sqrt 5)^n - (1 - \sqrt 5)^n}{2^n\sqrt 5}$}
+		\begin{align*}
+			\text{Assume }F_n &= cr^n.\\
+			F_n  &= F_{n-1} + F_{n - 2}\\
+			\implies cr^n &= cr^{n-1} + cr^{n-2}\\
+			  &= cr^n(r^{-1} + r^{-2})\\
+			\therefore 1 &= \frac{1}{r} + \frac{1}{r^2}\\
+			\therefore r^2& = r + 1\text{ Assuming } r\ne 0\\
+			\therefore r^2 - r - 1& = 0\\
+			\therefore r &= \frac{1 \pm \sqrt{(-1)^2 - 4\cdot 1 \cdot (-1)}}{2} \text{ using the quadratic formula}\\
+			  &= \frac{1\pm \sqrt{5}}{2}\\
+			\text{Say }r_1 &= \frac{1+\sqrt 5}{2}\\
+			\text{and } r_2 &= \frac{1 - \sqrt 5}{2}\\
+			\text{Now assume }F_n &= \alpha r_1^n + \beta r_2^n\\
+			F_0 &= 0\\
+			\therefore 0& = \alpha r_1^0 + \beta r_2^0\\
+			& = \alpha + \beta\\
+			\therefore \alpha &= -\beta\\
+			F_1& = 1\\
+			\therefore 1 &= \alpha r_1^1+\beta r_2^1\\
+			  &= \alpha r_1+\beta r_2\\
+			 & = -\beta r_1 + \beta r_2\\
+			 & = \beta(r_2 - r_1)\\
+			 & = \beta\left(\frac{1 - \sqrt 5}{2} - \frac{1 + \sqrt 5}{2}\right)\\
+			  &= \beta\left(\frac{1 - \sqrt 5 -1 - \sqrt 5}{2}\right)\\
+			 & = \beta\left(-\frac{2\sqrt 5}{2}\right)\\
+			 1& = \beta\left(-\sqrt 5\right)\\
+			\therefore \beta &= -\frac{1}{\sqrt 5}\\
+			\therefore \alpha &= \frac{1}{\sqrt5}\\
+			\therefore F_n &= \frac{1}{\sqrt 5}\cdot \left(\frac{1 + \sqrt 5}{2}\right)^n - \frac{1}{\sqrt 5} \cdot\left( \frac{1 - \sqrt 5}{2}\right)^n\\
+			&= \frac{(1 + \sqrt 5)^n - (1 - \sqrt 5)^n}{2^n\sqrt 5}
+		\end{align*}
 %3
 \section{Application to Code}
-	Now that we know that every third Fibonacci number is even, we don't have to worry about evenness. Instead, since we know that $F_0 = 0$ is the first Fibonacci number which is even, we can add $F_0$ to our sum, then compute $F_1$, $F_2$, and then add $F_3=2$ to our sum, and so on. Granted, checking if a number is even is computationally light.\\
+	Now that we know that every third Fibonacci number is even, we don't have to bother checking if a number is even. Instead, since we know that $F_0 = 0$ is the first Fibonacci number which is even, we can add $F_0$ to our sum, then compute $F_1$, $F_2$, and then add $F_3=2$ to our sum, and so on. Granted, checking if a number is even is computationally light.\\
 
 	Additionally, $F_0$ doesn't affect our sum, so we can start with $F_3=2$; Project Euler doesn't even mention $F_0$ or $F_1$.
 
 %4
-\section{Furthur Optimizations}
+\section{Comlexity Analysis/ Further Optimizations}
 	For this section, assume that $n$ is the index of the maximum Fibonacci number we must execute, and $L$ is the limit ($4,000,000$)
 	Considering the definition, it calculating the Fibonacci numbers would seem to be most natural to use a top-down recurrsive algorithm, but this would be incredibly slow, $O(2^n)$ for \textit{each} number, meaning we end up with a time complexity of $O(n2^n)$. It doesn't help that this is the example used by many introductory programming courses for recursion, so this is what many people write first. There are of course optimizations you can apply, such as providing a memo so we don't have to recompute $F_{n-1}$ and $F_{n-2}$, or any previous numbers, but that has linear space complexity. Not only that, but once don't even need to store $F_{n-3}$, since we're always only computing the next number.\\
 	The algorithm I'm using uses a bottom up approach, which has an overall space complexity of $O(1)$ and a time complexity of $O(n)$. The idea is to store only $F_{n-1}$ and $F_{n-2}$, so that we can compute $F_n$. After that we shift over what we're storing, so that we forget $F_{n-2}$ and keep $F_n$ and $F_{n-1}$ in order to calculate $F_{n+1}$.

@@ -3,12 +3,12 @@ package projectEuler;
 class P005 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 20;
 	}
 
 	@Override
-	long solve(Integer maxDivisor, boolean printResults) {
+	public long solve(Integer maxDivisor, boolean printResults) {
 
 		PrimeFinder pf = new PrimeFinder(maxDivisor + 1);
 
@@ -52,7 +52,7 @@ class P005 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 005: Smallest Multiple";
 	}
 

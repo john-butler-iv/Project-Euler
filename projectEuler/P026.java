@@ -5,11 +5,11 @@ import java.util.ArrayList;
 class P026 extends ParameterizedProblem<Integer> {
 
     @Override
-    Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
         return 1000;
     }
 
-    @Override
+    public @Override
     long solve(Integer maxD, boolean printResults) {
 
         int largestLength = -1;
@@ -72,7 +72,7 @@ class P026 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Problem 026: Reciprocal Cycles";
     }
 

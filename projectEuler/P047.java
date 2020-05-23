@@ -3,12 +3,12 @@ package projectEuler;
 public class P047 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 4;
 	}
 
 	@Override
-	long solve(Integer numConsec, boolean printResults) {
+	public long solve(Integer numConsec, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(134043);
 
 		// consecutive number of previous numbers to have the correct number of factors.
@@ -44,7 +44,7 @@ public class P047 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 047: Distinct prime factors";
 	}
 }

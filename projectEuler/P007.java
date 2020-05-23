@@ -3,7 +3,7 @@ package projectEuler;
 class P007 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 10001;
 	}
 
@@ -12,7 +12,7 @@ class P007 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer primeIndex, boolean printResults) {
+	public long solve(Integer primeIndex, boolean printResults) {
 
 		PrimeFinder pf = new PrimeFinder(3 * (int) Math.log(primeIndex) * primeIndex);
 
@@ -34,7 +34,7 @@ class P007 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 007: 10,001st Prime";
 	}
 

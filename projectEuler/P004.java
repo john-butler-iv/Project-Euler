@@ -3,14 +3,15 @@ package projectEuler;
 class P004 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 3;
 	}
 
+	
 	@Override
-	long solve(Integer digits, boolean printResults) {
+	public long solve(Integer digits, boolean printResults) {
 		int big = 0;
-		final int MIN = (int) Math.pow(10, digits);
+		final int MIN = (int) Math.pow(10, digits-1);
 		final int MAX = MIN * 10 - 1;
 
 		// iterate through all n-digit numbers
@@ -22,7 +23,7 @@ class P004 extends ParameterizedProblem<Integer> {
 			}
 		}
 		if (printResults)
-			System.out.println(big + " is the largest palindrome made from the product of two 3-digit numbers.");
+			System.out.println(big + " is the largest palindrome made from the product of two " + digits + "-digit numbers.");
 		return big;
 	}
 
@@ -37,7 +38,7 @@ class P004 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 004: Largest Palindrome Product";
 	}
 

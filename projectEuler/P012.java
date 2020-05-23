@@ -3,12 +3,12 @@ package projectEuler;
 class P012 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 500;
 	}
 
 	@Override
-	long solve(Integer numDivisors, boolean printResults) {
+	public long solve(Integer numDivisors, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(numDivisors * numDivisors * 4);
 		int triNum = 1;
 
@@ -35,7 +35,7 @@ class P012 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 012: Highly Divisible Triangular Number";
 	}
 

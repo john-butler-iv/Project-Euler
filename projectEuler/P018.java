@@ -7,12 +7,12 @@ import java.util.Scanner;
 class P018 extends ParameterizedProblem<String> {
 
 	@Override
-	String getDefaultParameter() {
+	public String getDefaultParameter() {
 		return "p018.txt";
 	}
 
 	@Override
-	long solve(String treeFilename, boolean printResults) {
+	public long solve(String treeFilename, boolean printResults) {
 		int[] tree = readData(treeFilename);
 		int[] sums = new int[tree.length];
 
@@ -66,7 +66,7 @@ class P018 extends ParameterizedProblem<String> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 018: Maximum Path Sum I";
 	}
 

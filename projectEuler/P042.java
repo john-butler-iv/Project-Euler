@@ -11,7 +11,7 @@ public class P042 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		int cnt = 0;
 
 		try {
@@ -43,7 +43,7 @@ public class P042 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 042: Coded triangle numbers";
 	}
 

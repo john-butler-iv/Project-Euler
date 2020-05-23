@@ -13,7 +13,7 @@ class P021 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		int amNumsSum = 0;
 		PrimeFinder pf = new PrimeFinder(10000);
 
@@ -35,7 +35,7 @@ class P021 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 021: Amicable Numbers";
 	}
 

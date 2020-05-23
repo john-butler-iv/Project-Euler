@@ -34,7 +34,7 @@ class P011 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		if (grid == null)
 			return -1;
 
@@ -73,7 +73,7 @@ class P011 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 011: Largest Product in a Grid";
 	}
 

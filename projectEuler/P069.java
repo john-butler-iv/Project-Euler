@@ -6,7 +6,7 @@ import java.lang.Math;
 public class P069 extends ParameterizedProblem<Integer> {
 
     @Override
-    Integer getDefaultParameter() {
+    public Integer getDefaultParameter() {
         return 1000000;
     }
 
@@ -15,7 +15,7 @@ public class P069 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    long solve(Integer maxN, boolean printResults) {
+    public long solve(Integer maxN, boolean printResults) {
         // see write up for proof that any lowest maximal n/φ(n) must be product of
         // primes.
         // As for only log_2(max) primes, I have no idea. The n grows exponentially,
@@ -50,7 +50,7 @@ public class P069 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Problem 069: Totient Maximum";
     }
 

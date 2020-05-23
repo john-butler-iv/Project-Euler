@@ -5,12 +5,12 @@ import java.util.ArrayList;
 class P003 extends ParameterizedProblem<Long> {
 
 	@Override
-	Long getDefaultParameter() {
+	public Long getDefaultParameter() {
 		return 600851475143L;
 	}
 
 	@Override
-	long solve(Long num, boolean printResults) {
+	public long solve(Long num, boolean printResults) {
 		// TODO I can refactor this, but it works and it's quick and I'm too lazy to
 		// implement prime stuff for longs
 		ArrayList<Long> factors = new ArrayList<Long>();
@@ -41,7 +41,7 @@ class P003 extends ParameterizedProblem<Long> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 003: Largesst Prime Factor";
 	}
 

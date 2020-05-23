@@ -13,7 +13,7 @@ class P034 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 
 		/* find factorials: */
 
@@ -58,7 +58,7 @@ class P034 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 034: Digit Factorials";
 	}
 

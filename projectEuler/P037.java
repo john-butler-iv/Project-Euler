@@ -21,7 +21,7 @@ class P037 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		int truncatablePrimesFound = 0;
 		int sumOfPrimes = 0;
 
@@ -55,7 +55,7 @@ class P037 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 037: Truncatable Primes";
 	}
 

@@ -3,12 +3,12 @@ package projectEuler;
 class P006 extends ParameterizedProblem<Long> {
 
 	@Override
-	Long getDefaultParameter() {
+	public Long getDefaultParameter() {
 		return 100L;
 	}
 
 	@Override
-	long solve(Long sumLimit, boolean printResults) {
+	public long solve(Long sumLimit, boolean printResults) {
 		long sum1 = sumLimit * (sumLimit + 1) / 2;
 		sum1 *= sum1;
 
@@ -34,7 +34,7 @@ class P006 extends ParameterizedProblem<Long> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 006: Sum Square Difference";
 	}
 

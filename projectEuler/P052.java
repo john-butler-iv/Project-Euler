@@ -3,12 +3,12 @@ package projectEuler;
 public class P052 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 6;
 	}
 
 	@Override
-	long solve(Integer maxMultiple, boolean printResults) {
+	public long solve(Integer maxMultiple, boolean printResults) {
 		for (int i = 1; i < Integer.MAX_VALUE; i++) {
 			String baseString = String.valueOf(i);
 
@@ -59,7 +59,7 @@ public class P052 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 052: Permuted multiples";
 	}
 

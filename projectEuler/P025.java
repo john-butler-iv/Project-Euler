@@ -6,12 +6,12 @@ import java.util.Iterator;
 class P025 extends ParameterizedProblem<Integer> {
 
     @Override
-    Integer getDefaultParameter() {
+    public Integer getDefaultParameter() {
         return 1000;
     }
 
     @Override
-    long solve(Integer numDigits, boolean printResults) {
+    public long solve(Integer numDigits, boolean printResults) {
         Iterator<BigInteger> it = EulerTools.bigFibonacciIterator();
 
         // my iterator starts on F(0) = 0
@@ -37,7 +37,7 @@ class P025 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    String getTitle() {
+	public String getTitle() {
         return "Problem 025: 1000-Digit Fibonacci Number";
     }
 

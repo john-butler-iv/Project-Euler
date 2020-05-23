@@ -56,13 +56,16 @@ class ProblemTimer1To50 extends ProblemTimer {
 	}
 
 	@Override
-	long[] timeAll() {
+	public long[] timeAll() {
 		return timeInRange();
 	}
 
 	@Override
-	void reportAll() {
+	public void reportAll() {
 		reportInRange();
 	}
 
+	public static void main(String[] args){
+		new ProblemTimer1To50().reportAll();
+	}
 }

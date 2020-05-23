@@ -1,0 +1,54 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=0.75in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{xcolor}
+\usepackage{framed}
+
+
+\definecolor{shadecolor}{RGB}{0,113,186}
+\usepackage{xparse}
+\NewDocumentCommand{\DIV}{om}{%
+  \IfValueT{#1}{\setcounter{#2}{\numexpr#1-1\relax}}%
+  \csname #2\endcsname
+}
+
+
+\title{General Proofs}
+\author{John Butler}
+\date{}							% Activate to display a given date or no date
+
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\subsection{Lemma: $\forall n \in \mathbb{N}$, $\exists k \in \mathbb{N}: n = 2k$ or $n =2k + 1$}
+		\begin{center}
+		\begin{tabular}{c|c}
+			case $n = 0$&case $n = 1$\\
+			$0 = 2\cdot 0$&$1 = 0 + 1$\\
+			&$1 = 2\cdot 0 + 1$\\
+			Let $k  =0$& Let $k = 0$\\
+			$0 = 2k$&$1 = 2k + 1$
+		\end{tabular}
+		\end{center}
+			Assume $n - 1 = 2k$, or $n - 1 = 2k + 1$\\
+		\begin{center}
+		\begin{tabular}{c|c}
+			case $n - 1 = 2k$&case $n - 1 = 2k + 1$\\
+			$n = 2k + 1$&$n = 2k + 2$\\
+			&$n = 2(k + 1)$\\
+			&Let $k' = k + 1$\\
+			&$n = 2k'$
+		\end{tabular}
+		\end{center}
+\end{document}

@@ -5,12 +5,12 @@ class P027 extends Problem {
 
     @Override
     public boolean test() {
-        pf = new PrimeFinder(1602);
+        pf = new PrimeFinder(5000);
         return countConsecutivePrimes(-79, 1601) == 80;
     }
 
     @Override
-    long solve(boolean printResults) {
+    public long solve(boolean printResults) {
         int limit = 1000;
         pf = new PrimeFinder(limit * limit);
 
@@ -18,10 +18,10 @@ class P027 extends Problem {
         int largestB = 0;
         int mostPrimes = 0;
 
-        for (int a = 0; a < limit; a++) {
-            for (int b : pf.getPrimes()) {
-                if (b > limit)
-                    break;
+		for(int b : pf.getPrimes()){
+			if(b > limit)
+				break;
+			for (int a = 0; a < limit; a++) {
 
                 int consecPrimes = countConsecutivePrimes(a, b);
                 if (mostPrimes < consecPrimes) {
@@ -73,7 +73,7 @@ class P027 extends Problem {
     }
 
     @Override
-    String getTitle() {
+	public String getTitle() {
         return "Problem 027: Quadratic Primes";
     }
 

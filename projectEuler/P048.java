@@ -5,12 +5,12 @@ import java.math.BigInteger;
 public class P048 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 1000;
 	}
 
 	@Override
-	long solve(Integer maxExponent, boolean printResults) {
+	public long solve(Integer maxExponent, boolean printResults) {
 		BigInteger sum = BigInteger.ZERO;
 
 		// calculate the sum with no fancy techniques
@@ -42,7 +42,7 @@ public class P048 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 048: Self powers";
 	}
 

@@ -8,7 +8,7 @@ public class P039 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		int[] trisByP = new int[1001];
 
 		// iterate through all possible three digit values with
@@ -37,7 +37,7 @@ public class P039 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 039: Integer right triangles";
 	}
 

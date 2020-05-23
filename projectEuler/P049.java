@@ -18,7 +18,7 @@ public class P049 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(10000);
 		List<Integer> primes = pf.getPrimes();
 
@@ -67,7 +67,7 @@ public class P049 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 049: Prime permutations";
 	}
 }

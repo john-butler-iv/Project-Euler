@@ -35,6 +35,7 @@ public class P054 extends Problem {
 		return true;
 	}
 
+	@Override
 	public long solve(boolean printResults) {
 
 		// data is stored as an array list with each element being one round.
@@ -350,7 +351,7 @@ public class P054 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 054: Poker hands";
 	}
 }
