@@ -8,7 +8,7 @@ class P009 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 
 		for (int a = 1; a < 997; a++) {
 			for (int b = a + 1; b < 998; b++) {
@@ -45,7 +45,7 @@ class P009 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 009: Special Pythagoean Triplet";
 	}
 

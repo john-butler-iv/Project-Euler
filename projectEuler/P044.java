@@ -10,7 +10,7 @@ public class P044 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		int k = 1;
 		long K = EulerTools.pentagonL(k);
 
@@ -38,7 +38,7 @@ public class P044 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 044: Pentagon numbers";
 	}
 

@@ -31,12 +31,12 @@ public class P084 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 4;
 	}
 
 	@Override
-	long solve(Integer faces, boolean printResults) {
+	public long solve(Integer faces, boolean printResults) {
 		int[] endingSpot = new int[BOARD_SIZE];
 
 		// int cc = CollectionTools.shuffle(CC1);
@@ -204,7 +204,7 @@ public class P084 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 084: Monopoly Odds";
 	}
 

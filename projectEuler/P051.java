@@ -3,7 +3,7 @@ package projectEuler;
 public class P051 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 8;
 	}
 
@@ -13,7 +13,7 @@ public class P051 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	long solve(Integer numPrimes, boolean printResults) {
+	public long solve(Integer numPrimes, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(200000);
 
 		// counts how many primes the base will generate
@@ -68,7 +68,7 @@ public class P051 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 051: Prime digit replacements";
 	}
 

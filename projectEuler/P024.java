@@ -22,7 +22,7 @@ class P024 extends Problem {
     }
 
     @Override
-    long solve(boolean printResults) {
+    public long solve(boolean printResults) {
         String permutation = "0123456789";
         int permNum = 1;
 
@@ -36,7 +36,7 @@ class P024 extends Problem {
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Problem 024: Lexicographic Permutations";
     }
 

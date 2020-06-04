@@ -5,12 +5,12 @@ import java.util.List;
 public class P050 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 1000000;
 	}
 
 	@Override
-	long solve(Integer maxPrime, boolean printResults) {
+	public long solve(Integer maxPrime, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(maxPrime);
 		List<Integer> primes = pf.getPrimes();
 
@@ -55,7 +55,7 @@ public class P050 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 050: Consecutive prime sum";
 	}
 

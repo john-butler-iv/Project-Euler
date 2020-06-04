@@ -12,7 +12,7 @@ public class P053 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		int total = 0;
 
 		int[] line = new int[102]; // line of pascal's triangle
@@ -42,7 +42,7 @@ public class P053 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 053: Combinatoric selections";
 	}
 

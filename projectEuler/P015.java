@@ -3,12 +3,12 @@ package projectEuler;
 class P015 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 20;
 	}
 
 	@Override
-	long solve(Integer latticeSize, boolean printResults) {
+	public long solve(Integer latticeSize, boolean printResults) {
 		long[][] lattice = new long[latticeSize + 1][latticeSize + 1];
 		for (int i = 0; i < lattice.length; i++) {
 			lattice[0][i] = 1;
@@ -37,7 +37,7 @@ class P015 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 015: Lattice Paths";
 	}
 

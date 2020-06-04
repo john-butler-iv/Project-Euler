@@ -21,7 +21,7 @@ class P001 extends ParameterizedProblem<Long> {
 	}
 
 	@Override
-	long solve(Long maxN, boolean printResults) {
+	public long solve(Long maxN, boolean printResults) {
 		long sum = 0;
 
 		for (long i = 1; i < maxN; i++)

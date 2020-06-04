@@ -8,11 +8,11 @@ abstract class Problem implements Consumer<Object> {
 		solve(false);
 	}
 
-	abstract boolean test();
+	public abstract boolean test();
 
-	abstract long solve(boolean printResults);
+	public abstract long solve(boolean printResults);
 
-	abstract String getTitle();
+	public abstract String getTitle();
 
 	public int getNumber() {
 		return Integer.valueOf(getTitle().substring(9, 12));

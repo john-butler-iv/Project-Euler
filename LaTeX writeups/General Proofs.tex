@@ -1,0 +1,98 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=0.75in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+							% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{xcolor}
+\usepackage{framed}
+
+
+\definecolor{shadecolor}{RGB}{0,113,186}
+\usepackage{xparse}
+\NewDocumentCommand{\DIV}{om}{%
+\IfValueT{#1}{\setcounter{#2}{\numexpr#1-1\relax}}%
+\csname #2\endcsname
+}
+
+
+\title{General Proofs}
+\author{John Butler}
+\date{}							% Activate to display a given date or no date
+
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Even and Odd Proofs}
+	\subsection{Lemma: $\forall n \in \mathbb{N}$, $\exists k \in \mathbb{N}: n = 2k$ or $n =2k + 1$}
+		Proof by induction over $n$:
+		\begin{center}
+		\begin{tabular}{c|c}
+			\underline{case $n = 0$:}&\underline{case $n = 1$:}\\
+			$0 = 2\cdot 0$&$1 = 0 + 1$\\
+			&$1 = 2\cdot 0 + 1$\\
+			Let $k  =0$& Let $k = 0$\\
+			$0 = 2k$&$1 = 2k + 1$
+		\end{tabular}
+		\end{center}
+			Assume $n - 1 = 2k$, or $n - 1 = 2k + 1$\\
+		\begin{center}
+		\begin{tabular}{c|c}
+			\underline{case $n - 1 = 2k$:}&\underline{case $n - 1 = 2k + 1$:}\\
+			$n = 2k + 1$&$n = 2k + 2$\\
+			&$n = 2(k + 1)$\\
+			&Let $k' = k + 1$\\
+			&$n = 2k'$
+		\end{tabular}
+		\end{center}
+
+	\subsection{Theorem: $o$ is odd $\iff \exists n \in \mathbb{N} : o =2n + 1$, and $e$ is even $\iff \exists n \in \mathbb{N} : e = 2n$}
+		\begin{align*}
+			\text{Suppose } e & \text{ is even.}\\
+			\iff e & \text{ is divisible by } 2\\
+			\iff \frac{e}{2} &= n \text{ for some } n \in \mathbb{N}\\
+			\iff e &= 2n
+		\end{align*}
+		\begin{align*}
+			\text{Suppose } o & \text{ is odd.}\\
+			\iff o & \text{ is not divisible by } 2\\
+			\iff o& \text{ is not even.}\\
+			\iff o &\ne 2n\\
+			\iff o &= 2n + 1 \text{ by lemma 1.1}
+		\end{align*}
+
+	\subsection{Theorem: An odd number plus an even number equals an odd number, and an odd number plus an odd number equals an even number}
+		\begin{align*}
+			\text{Consider an odd number}&\text{ plus an even number.}\\
+			\iff & (2n_1+1) + (2n_2) \text{ for some } n_1, n_2 \in \mathbb{N}\\
+			= &\ 2n_1 + 2n_2 + 1\\
+			= &\ 2(n_1 + n_2) + 1\\
+			\text{Let } n_3 =& n_1 + n_2\\
+			= &\ 2n_3 + 1\\
+			\text{which }& \text{is odd by lemma 2}.\\
+			\therefore \text{ an odd plus an }&\text{even equals an odd.}
+		\end{align*}
+		\begin{align*}
+			\text{Now consider an odd number}&\text{ plus an odd number.}\\
+			\iff & (2n_1+1) + (2n_2+1) \text{ for some } n_1, n_2 \in \mathbb{N}\\
+			= &\ 2n_1 + 2n_2 + 1 + 1\\
+			= &\ 2n_1 + 2n_2 + 2\\
+			= &\ 2(n_1 + n_2 + 1)\\
+			\text{Let } n_3 = & n_1 + n_2 + 1\\
+			= &\ 2n_3\\
+			\text{which }& \text{is even by theorem 1.2}.\\
+			\therefore \text{ an odd plus an }&\text{odd equals an even.}
+		\end{align*}
+
+
+
+\end{document}

@@ -5,12 +5,12 @@ import java.math.BigInteger;
 class P020 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 100;
 	}
 
 	@Override
-	long solve(Integer n, boolean printResults) {
+	public long solve(Integer n, boolean printResults) {
 		BigInteger fact = EulerTools.factorial(BigInteger.valueOf(n));
 		String str = fact.toString();
 
@@ -35,7 +35,7 @@ class P020 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 020: Factorial Digit Sum";
 	}
 

@@ -21,7 +21,7 @@ abstract class ProblemTimer extends Timer {
 		return ids;
 	}
 
-	long time(int problemID) {
+	public long time(int problemID) {
 		if (getProblem(problemID) == null)
 			return -1;
 		return Timer.time(getProblem(problemID), null, DEFUALT_TRIALS, false);
@@ -34,7 +34,7 @@ abstract class ProblemTimer extends Timer {
 		return problem.test();
 	}
 
-	void report(int problemID) {
+	public void report(int problemID) {
 		Problem problem = getProblem(problemID);
 
 		if (problem == null) {
@@ -53,7 +53,7 @@ abstract class ProblemTimer extends Timer {
 		System.out.println(title + " finished in " + time + "ms.");
 	}
 
-	long[] time(int[] problemIDs) {
+	public long[] time(int[] problemIDs) {
 		long[] times = new long[problemIDs.length];
 		for (int i = 0; i < problemIDs.length; i++)
 			times[i] = time(problemIDs[i]);
@@ -61,7 +61,7 @@ abstract class ProblemTimer extends Timer {
 		return times;
 	}
 
-	boolean[] test(int[] problemIDs) {
+	public boolean[] test(int[] problemIDs) {
 		boolean[] tests = new boolean[problemIDs.length];
 		for (int i = 0; i < problemIDs.length; i++)
 			tests[i] = test(problemIDs[i]);
@@ -69,24 +69,24 @@ abstract class ProblemTimer extends Timer {
 		return tests;
 	}
 
-	void report(int[] problemIDs) {
+	public void report(int[] problemIDs) {
 		for (int i = 0; i < problemIDs.length; i++)
 			report(problemIDs[i]);
 	}
 
-	long[] timeInRange() {
+	public long[] timeInRange() {
 		return time(getAllIDs());
 	}
 
-	boolean[] testInRange() {
+	public boolean[] testInRange() {
 		return test(getAllIDs());
 	}
 
-	void reportInRange() {
+	public void reportInRange() {
 		report(getAllIDs());
 	}
 
-	long[] timeAll() {
+	public long[] timeAll() {
 		// get the times
 		long[] prevTimes = previousTimer.timeAll();
 		long[] currTimes = timeInRange();
@@ -102,8 +102,9 @@ abstract class ProblemTimer extends Timer {
 		return allTimes;
 	}
 
-	void reportAll() {
+	public void reportAll() {
 		previousTimer.reportAll();
 		reportInRange();
 	}
+
 }

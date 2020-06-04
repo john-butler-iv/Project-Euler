@@ -5,12 +5,12 @@ import java.util.HashSet;
 class P029 extends ParameterizedProblem<Integer> {
 
     @Override
-    Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
         return 100;
     }
 
     @Override
-    long solve(Integer maxValue, boolean printResults) {
+    public long solve(Integer maxValue, boolean printResults) {
         HashSet<Double> set = new HashSet<Double>();
         for (int a = 2; a <= maxValue; a++)
             for (int b = 2; b <= maxValue; b++)
@@ -32,7 +32,7 @@ class P029 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    String getTitle() {
+	public String getTitle() {
         return "Problem 029: Distinct Powers";
     }
 

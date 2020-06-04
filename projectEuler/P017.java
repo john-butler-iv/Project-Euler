@@ -3,12 +3,12 @@ package projectEuler;
 class P017 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 1000;
 	}
 
 	@Override
-	long solve(Integer maxN, boolean printResults) {
+	public long solve(Integer maxN, boolean printResults) {
 		int total = 0;
 
 		for (int i = 1; i <= maxN; ++i)
@@ -91,7 +91,7 @@ class P017 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 017: Number Letter Counts";
 	}
 

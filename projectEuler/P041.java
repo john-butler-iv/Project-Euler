@@ -5,11 +5,12 @@ public class P041 extends Problem {
 	@Override
 	public boolean test() {
 		PrimeFinder pf = new PrimeFinder(2144);
-		return pf.isPrime(2143) && EulerTools.isPandigital("2143");
+		// we aren't checking for pandigital we don't have a good way to check if a number is n-digit pandigital
+		return pf.isPrime(2143);
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		// floor plus one ensures that we get all factors of every number, even if
 		// 987,654,321 is a square.
 		int limit = (int) Math.sqrt(987654321) + 1;
@@ -33,7 +34,7 @@ public class P041 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 041: Pandigital prime";
 	}
 }

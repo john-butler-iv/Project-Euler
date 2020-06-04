@@ -5,13 +5,13 @@ class P014 extends Problem {
 	private long[] lengthCache;
 
 	public boolean test() {
+		initCache(41);
 		return collatzLength(13) == 10;
 	}
 
 	@Override
-	long solve(boolean printResults) {
-		lengthCache = new long[1000000];
-		lengthCache[1] = 1;
+	public long solve(boolean printResults) {
+		initCache(1000000);
 
 		long biggestLength = 0;
 		int biggestStart = 0;
@@ -31,8 +31,14 @@ class P014 extends Problem {
 		return biggestStart;
 	}
 
+	private void initCache(int size){
+		lengthCache = new long[size];
+		lengthCache[1] = 1;
+	}
+
 	/**
 	 * Figures out how many iterations of the collatz sequence it takes n to reach 1
+	 * Make sure the lengthCache is initialized and lengthCache[1] = 1
 	 * 
 	 * @param n the starting value of the collatz sequence
 	 * @return returns how long it takes the Collatz sequence to reach 1
@@ -53,7 +59,7 @@ class P014 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 014: Longest Collatz Sequence";
 	}
 

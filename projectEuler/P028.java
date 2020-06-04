@@ -3,12 +3,12 @@ package projectEuler;
 class P028 extends ParameterizedProblem<Integer> {
 
     @Override
-    Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
         return 1001;
     }
 
     @Override
-    long solve(Integer gridLength, boolean printResults) {
+    public long solve(Integer gridLength, boolean printResults) {
         // see my writeup for the derivation of this formula
         int diaLen = gridLength / 2;
         int total = diaLen * (16 * diaLen * diaLen + 30 * diaLen + 26) / 3 + 1;
@@ -29,7 +29,7 @@ class P028 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    String getTitle() {
+	public String getTitle() {
         return "Problem 028: Number Spiral Diagonals";
     }
 

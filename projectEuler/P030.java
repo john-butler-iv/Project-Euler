@@ -3,12 +3,12 @@ package projectEuler;
 class P030 extends ParameterizedProblem<Integer> {
 
     @Override
-    Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
         return 5;
     }
 
     @Override
-    long solve(Integer exponent, boolean printResults) {
+	public long solve(Integer exponent, boolean printResults) {
         // the overall sum; the answer we're looking for
         int sum = 0;
         // the sum for any individual number
@@ -43,7 +43,7 @@ class P030 extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Problem 030: Digit Fifth Powers";
     }
 

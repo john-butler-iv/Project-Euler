@@ -8,7 +8,7 @@ public class P046 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(1000);
 
 		for (int c = 3; c < pf.limit(); c += 2) {
@@ -43,7 +43,7 @@ public class P046 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 046: Goldbach's other conjecture";
 	}
 

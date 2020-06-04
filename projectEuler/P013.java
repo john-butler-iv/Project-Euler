@@ -34,7 +34,7 @@ class P013 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		BigInteger sum = BigInteger.ZERO;
 
 		for (int i = 0; i < nums.length; ++i)
@@ -49,7 +49,7 @@ class P013 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 013: Large Sum";
 	}
 

@@ -2,9 +2,9 @@ package projectEuler;
 
 abstract class ParameterizedProblem <T> extends Problem {
 	
-	abstract T getDefaultParameter();
+	public abstract T getDefaultParameter();
 
-	abstract long solve(T parameter, boolean printResults);
+	public abstract long solve(T parameter, boolean printResults);
 
 	protected abstract T getTestParameter();
 

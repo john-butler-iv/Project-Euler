@@ -7,7 +7,7 @@ public class P043 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		long sum = 0;
 
 		for (String str = "0123456789"; !str.equals("9876543210"); str = CollectionTools.permute(str))
@@ -45,7 +45,7 @@ public class P043 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 043: Sub-string divisibility";
 	}
 }

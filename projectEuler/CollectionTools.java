@@ -209,12 +209,18 @@ public class CollectionTools {
 		if(i == j)
 			return str;
 		// by using substrings, like I am, i cannot be larger than j
-		int temp = i;
-		i = j;
-		j = temp;
+		if(i > j){
+			int temp = i;
+			i = j;
+			j = temp;
+		}
 
 		// rearrange the string such that i and j get swapped
-		return str.substring(0, i) + str.charAt(j) + str.substring(i + 1, j) + str.charAt(i) + str.substring(j + 1);
+		String returnVar = str.substring(0, i) + str.charAt(j) + str.substring(i + 1, j) + str.charAt(i);
+		if(j < str.length() - 1)
+			returnVar +=  str.substring(j + 1);
+
+		return returnVar;
 	}
 
 	/**
@@ -298,8 +304,8 @@ public class CollectionTools {
 	 */
 	public static String reverse(String str, int startingIndex){
 		String returnStr = str;
-		for(int i = 0; i < (startingIndex + str.length()) / 2; i++)
-			returnStr = swap(str, i, str.length() - 1 - i);
+		for(int i = startingIndex; i < (startingIndex + str.length()) / 2; i++)
+			returnStr = swap(returnStr, i, str.length() - 1 - i);
 
 		return returnStr;
 	}

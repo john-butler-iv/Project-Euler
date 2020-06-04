@@ -9,7 +9,7 @@ class P038 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		// want to search backward, since the largest number will be closer to the end
 		// than the beginning
 		for (int i = 9999; i > 999; i--) {
@@ -36,8 +36,8 @@ class P038 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
-		return "Pandigital Multiples";
+	public String getTitle() {
+		return "Problem 038: Pandigital Multiples";
 	}
 
 }

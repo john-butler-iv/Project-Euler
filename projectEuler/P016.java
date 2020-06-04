@@ -5,12 +5,12 @@ import java.math.BigInteger;
 class P016 extends ParameterizedProblem<Integer> {
 
 	@Override
-	Integer getDefaultParameter() {
+	public Integer getDefaultParameter() {
 		return 1000;
 	}
 
 	@Override
-	long solve(Integer exponent, boolean printResults) {
+	public long solve(Integer exponent, boolean printResults) {
 		BigInteger largeNumber = EulerTools.TWO.pow(exponent);
 		String str = largeNumber.toString();
 
@@ -36,7 +36,7 @@ class P016 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 016: Power Digit Sum";
 	}
 

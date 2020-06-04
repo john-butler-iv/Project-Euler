@@ -3,18 +3,20 @@ package projectEuler;
 public class ProblemTimer51To100 extends ProblemTimer {
 
 	public static void main(String[] args) {
-		new ProblemTimer51To100().report(69 - 50 - 1);
+		//new ProblemTimer51To100().report(69 - 50 - 1);
+		new ProblemTimer51To100().reportAll();
 	}
 
 	public ProblemTimer51To100() {
+		previousTimer = new ProblemTimer1To50();
 		problems = new Problem[50];
 		problems[0] = new P051();
 		problems[1] = new P052();
 		problems[2] = new P053();
 		problems[3] = new P054();
-		// problems[4] = new P055();
-		// problems[5] = new P056();
-		// problems[6] = new P057();
+		problems[4] = new P055();
+		problems[5] = new P056();
+		problems[6] = new P057();
 		// problems[7] = new P058();
 		// problems[8] = new P059();
 		// problems[9] = new P060();

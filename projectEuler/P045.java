@@ -11,7 +11,7 @@ public class P045 extends Problem {
 	}
 
 	@Override
-	long solve(boolean printResults) {
+	public long solve(boolean printResults) {
 		// T285 = P165 = H144 was the last occurrence.
 		int t = 286;
 		int p = 166;
@@ -44,7 +44,7 @@ public class P045 extends Problem {
 	}
 
 	@Override
-	String getTitle() {
+	public String getTitle() {
 		return "Problem 045: Triangular, pentagonal, and hexagonal";
 	}
 

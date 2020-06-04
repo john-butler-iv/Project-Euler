@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.Iterator;
 
 class EulerTools {
-	public static final BigInteger TWO = new BigInteger("2");
+	public static final BigDecimal TWO = new BigDecimal("2.0");
 
 	/**
 	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... ),
@@ -36,6 +36,26 @@ class EulerTools {
 	}
 
 	/**
+	 * calculates the n'th Fibonacci number (0, 1, 1, ...) in constant time
+	 * i.e. fibonacci(0) returns 0 and fibonacci(1) returns 1
+	 *
+	 * @param n the index of the Fibonacci number to be calulated
+	 *
+	 * @return returns the nth Fibonacci number
+	 */
+	public static int fibonacci(int n){
+		// see write up for explaination of formula (Problem 2)
+		double rt5 = Math.sqrt(5);
+
+		double r1 = Math.pow(1 + rt5, n);
+		double r2 = Math.pow(1 - rt5, n);
+		double f = (r1 - r2) / (Math.pow(2, n) * rt5);
+
+		// round in case of floating point error
+		return (int) (f + 0.5);
+	}
+
+	/**
 	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... )
 	 * 
 	 * @return returns an Iterator which iterates over the Fibonacci numbers with no
@@ -60,6 +80,26 @@ class EulerTools {
 				return prevNum;
 			}
 		};
+	}
+
+	/**
+	 * calculates the n'th Fibonacci number (0, 1, 1, ...) in constant time
+	 * i.e. bigFibonacci(0) returns 0 and bigFibonacci(1) returns 1
+	 *
+	 * @param n the index of the Fibonacci number to be calulated
+	 *
+	 * @return returns the nth Fibonacci number
+	 */
+	public static BigInteger bigFibonacci(int n){
+		// I may want to change the MathContext
+		BigDecimal rt5 = new BigDecimal("5.0").sqrt(MathContext.DECIMAL128);
+
+		BigDecimal r1 = rt5.add(BigDecimal.ONE).pow(n);
+		BigDecimal r2 = rt5.subtract(BigDecimal.ONE).pow(n);
+		BigDecimal f = r1.subtract(r2).divide(rt5.multiply(TWO.pow(n)));
+
+		f.round(new MathContext(128, HALF_EVEN));
+		return f.toBigInteger();
 	}
 
 	/**
@@ -97,46 +137,6 @@ class EulerTools {
 				return false;
 
 		return true;
-	}
-
-	/**
-	 * finds i! = i * (i-1) * ... * 2 * 1
-	 * 
-	 * @param i the input to the factorial function
-	 * @return returns i!
-	 */
-	public static int factorial(int i) {
-		for (int j = i - 1; j > 1; j--)
-			i *= j;
-		return i;
-	}
-
-	/**
-	 * finds l! = l * (l-1) * ... * 2 * 1
-	 * 
-	 * @param l the input to the factorial function
-	 * @return returns l!
-	 */
-	public static long factorial(long l) {
-		for (long j = l - 1; j > 1; j--)
-			l *= j;
-		return l;
-	}
-
-	/**
-	 * finds bi! = bi * (bi-1) * ... * 2 * 1
-	 * 
-	 * @param bi the input to the factorial function
-	 * @return returns bi!
-	 */
-	public static BigInteger factorial(BigInteger bi) {
-		BigInteger cnt = new BigInteger(bi.toString());
-		cnt = cnt.subtract(BigInteger.ONE);
-		while (cnt.compareTo(BigInteger.ONE) > 0) {
-			bi = bi.multiply(cnt);
-			cnt = cnt.subtract(BigInteger.ONE);
-		}
-		return bi;
 	}
 
 	/**

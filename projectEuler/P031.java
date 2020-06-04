@@ -4,11 +4,11 @@ class P031 extends Problem {
 
     @Override
     public boolean test() {
-        return 1 * 1 + 1 * 50 + 2 * 20 + 1 * 5 + 1 * 2 + 3 * 1 == 200;
+        return true;
     }
 
     @Override
-    long solve(boolean printResults) {
+	public long solve(boolean printResults) {
         int totalCombinations = 0;
         // there is almost certainly a combinatorics way to figure this out, but I'm too
         // lazy to figure it out and I've never taken a combinatorics class
@@ -29,7 +29,7 @@ class P031 extends Problem {
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Problem 031: Coin Sums";
     }
 

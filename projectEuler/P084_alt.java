@@ -16,7 +16,7 @@ public class P084_alt extends ParameterizedProblem<Integer> {
     private final static double CARD_PROB = 0.125;
 
     @Override
-    Integer getDefaultParameter() {
+    public Integer getDefaultParameter() {
         return 4;
     }
 
@@ -33,8 +33,9 @@ public class P084_alt extends ParameterizedProblem<Integer> {
         }
     }
 
+	@Override
     // I want to eventually figure this out because it would make me
-    long solve(Integer faces, boolean printResults) {
+    public long solve(Integer faces, boolean printResults) {
         Double[] spaceProbs = new Double[BOARD_SIZE];
 
         // everyone starts at GO, although, because the final answer is a stable
@@ -226,7 +227,7 @@ public class P084_alt extends ParameterizedProblem<Integer> {
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Problem 084: Monopoly Odds";
     }
 }
