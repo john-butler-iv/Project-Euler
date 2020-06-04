@@ -1,6 +1,9 @@
 package projectEuler;
 
 class ProblemTimer1To50 extends ProblemTimer {
+	protected final static int MIN_PROBLEM = 1;
+	protected final static int MAX_PROBLEM = 50;
+
 	public ProblemTimer1To50() {
 		problems = new Problem[50];
 		problems[0] = new P001();
@@ -55,17 +58,7 @@ class ProblemTimer1To50 extends ProblemTimer {
 		problems[49] = new P050();
 	}
 
-	@Override
-	public long[] timeAll() {
-		return timeInRange();
-	}
-
-	@Override
-	public void reportAll() {
-		reportInRange();
-	}
-
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		new ProblemTimer1To50().reportAll();
 	}
 }

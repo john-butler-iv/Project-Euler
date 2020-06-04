@@ -3,12 +3,7 @@ package projectEuler;
 class P031 extends Problem {
 
     @Override
-    public boolean test() {
-        return true;
-    }
-
-    @Override
-	public long solve(boolean printResults) {
+    public long solve(boolean printResults) {
         int totalCombinations = 0;
         // there is almost certainly a combinatorics way to figure this out, but I'm too
         // lazy to figure it out and I've never taken a combinatorics class

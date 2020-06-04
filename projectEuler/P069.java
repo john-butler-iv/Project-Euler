@@ -10,10 +10,6 @@ public class P069 extends ParameterizedProblem<Integer> {
         return 1000000;
     }
 
-    public static void main(String[] args) {
-        new P069().solve(1000000, true);
-    }
-
     @Override
     public long solve(Integer maxN, boolean printResults) {
         // see write up for proof that any lowest maximal n/φ(n) must be product of

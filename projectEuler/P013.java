@@ -13,10 +13,6 @@ class P013 extends Problem {
 		nums = readData("p013.txt");
 	}
 
-	public boolean test() {
-		return true;
-	}
-
 	private static BigInteger[] readData(String filename) {
 		BigInteger[] nums = new BigInteger[100];
 		try {

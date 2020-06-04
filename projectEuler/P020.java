@@ -11,7 +11,7 @@ class P020 extends ParameterizedProblem<Integer> {
 
 	@Override
 	public long solve(Integer n, boolean printResults) {
-		BigInteger fact = EulerTools.factorial(BigInteger.valueOf(n));
+		BigInteger fact = EulerTools.factorial(n);
 		String str = fact.toString();
 
 		int sum = 0;
@@ -19,7 +19,7 @@ class P020 extends ParameterizedProblem<Integer> {
 			sum += c - '0';
 
 		if (printResults)
-			System.out.println(sum + " is the sum of " + n + "!.");
+			System.out.println(sum + " is the sum of the digits of " + n + "!.");
 
 		return sum;
 	}
