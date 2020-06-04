@@ -30,10 +30,8 @@
 \maketitle
 
 \tableofcontents
-\addtocontents{toc}{Problem Description}
-\addtocontents{toc}{Useful Theorems}
+\newpage
 
-%1
 \section{Problem Description}
 	Find the sum of all $F_n < 4,000,000$ such that $F_n$ is even, where
 	\[ F_n  = \begin{cases}
@@ -42,52 +40,8 @@
 		F_{n-1} + F_{n-2} & n \ge 2
 	\end{cases}	\]
 
-%2
 \section{Theorems whose results aid in my solution}
-	%2.1
-	
-	%2.2
-	\subsection{Lemma: $o$ is odd $\iff \exists n \in \mathbb{N} : o =2n + 1$, and $e$ is even $\iff \exists n \in \mathbb{N} : e = 2n$}
-		\begin{align*}
-			\text{Suppose } e & \text{ is even.}\\
-			\iff e & \text{ is divisible by } 2\\
-			\iff \frac{e}{2} &= n \text{ for some } n \in \mathbb{N}\\
-			\iff e &= 2n
-		\end{align*}
-		\begin{align*}
-			\text{Suppose } o & \text{ is odd.}\\
-			\iff o & \text{ is not divisible by } 2\\
-			\iff o& \text{ is not even.}\\
-			\iff o &\ne 2n\\
-			\iff o &= 2n + 1 \text{ by lemma 1}
-		\end{align*}
-
-	%2.3
-	\subsection{Lemma: An odd number plus an even number equals an odd number, and an odd number plus an odd number equals an even number}
-		\begin{align*}
-			\text{Consider an odd number}&\text{ plus an even number.}\\
-			\iff & (2n_1+1) + (2n_2) \text{ for some } n_1, n_2 \in \mathbb{N}\\
-			= & 2n_1 + 2n_2 + 1\\
-			= & 2(n_1 + n_2) + 1\\
-			\text{Let } n_3 =& n_1 + n_2\\
-			= & 2n_3 + 1\\
-			\text{which }& \text{is odd by lemma 2}.\\
-			\therefore \text{ an odd plus an }&\text{even equals an odd } \square
-		\end{align*}
-		\begin{align*}
-			\text{Now consider an odd number}&\text{ plus an odd number.}\\
-			\iff & (2n_1+1) + (2n_2+1) \text{ for some } n_1, n_2 \in \mathbb{N}\\
-			= & 2n_1 + 2n_2 + 1 + 1\\
-			= & 2n_1 + 2n_2 + 2\\
-			= & 2(n_1 + n_2 + 1)\\
-			\text{Let } n_3 = & n_1 + n_2 + 1\\
-			= & 2n_3\\
-			\text{which }& \text{is even by lemma 2}.\\
-			\therefore \text{ an odd plus an }&\text{odd equals an even } \square
-		\end{align*}
-
-	%2.4
-	\subsection{Theorem: only every third Fibonacci number is even}
+	\subsection{Only every third Fibonacci number is even}
 		Proof by induction:\\
 		case $n \in \{0, 1, 2\}$
 		\begin{center}
@@ -110,8 +64,7 @@
 		\end{center}
 		Therefore the first of each three subsequent Fibonacci numbers are even.
 
-	%2.5
-	\subsection{Theorem: $F_n = \frac{(1 + \sqrt 5)^n - (1 - \sqrt 5)^n}{2^n\sqrt 5}$}
+	\subsection{$F_n = \frac{(1 + \sqrt 5)^n - (1 - \sqrt 5)^n}{2^n\sqrt 5}$}
 		\begin{align*}
 			\text{Assume }F_n &= cr^n.\\
 			F_n  &= F_{n-1} + F_{n - 2}\\
@@ -123,7 +76,9 @@
 			\therefore r &= \frac{1 \pm \sqrt{(-1)^2 - 4\cdot 1 \cdot (-1)}}{2} \text{ using the quadratic formula}\\
 			  &= \frac{1\pm \sqrt{5}}{2}\\
 			\text{Say }r_1 &= \frac{1+\sqrt 5}{2}\\
-			\text{and } r_2 &= \frac{1 - \sqrt 5}{2}\\
+			\text{and } r_2 &= \frac{1 - \sqrt 5}{2}
+		\end{align*}
+		\begin{align*}
 			\text{Now assume }F_n &= \alpha r_1^n + \beta r_2^n\\
 			F_0 &= 0\\
 			\therefore 0& = \alpha r_1^0 + \beta r_2^0\\
@@ -143,15 +98,17 @@
 			\therefore F_n &= \frac{1}{\sqrt 5}\cdot \left(\frac{1 + \sqrt 5}{2}\right)^n - \frac{1}{\sqrt 5} \cdot\left( \frac{1 - \sqrt 5}{2}\right)^n\\
 			&= \frac{(1 + \sqrt 5)^n - (1 - \sqrt 5)^n}{2^n\sqrt 5}
 		\end{align*}
-%3
+
 \section{Application to Code}
 	Now that we know that every third Fibonacci number is even, we don't have to bother checking if a number is even. Instead, since we know that $F_0 = 0$ is the first Fibonacci number which is even, we can add $F_0$ to our sum, then compute $F_1$, $F_2$, and then add $F_3=2$ to our sum, and so on. Granted, checking if a number is even is computationally light.\\
 
-	Additionally, $F_0$ doesn't affect our sum, so we can start with $F_3=2$; Project Euler doesn't even mention $F_0$ or $F_1$.
+	Additionally, $F_0$ doesn't affect our sum, so we can start with $F_3=2$; Project Euler begins the Fibonacci sequence at $F_2$ in the problem description, reinforcing this fact.  
 
-%4
+
 \section{Comlexity Analysis/ Further Optimizations}
-	For this section, assume that $n$ is the index of the maximum Fibonacci number we must execute, and $L$ is the limit ($4,000,000$)
-	Considering the definition, it calculating the Fibonacci numbers would seem to be most natural to use a top-down recurrsive algorithm, but this would be incredibly slow, $O(2^n)$ for \textit{each} number, meaning we end up with a time complexity of $O(n2^n)$. It doesn't help that this is the example used by many introductory programming courses for recursion, so this is what many people write first. There are of course optimizations you can apply, such as providing a memo so we don't have to recompute $F_{n-1}$ and $F_{n-2}$, or any previous numbers, but that has linear space complexity. Not only that, but once don't even need to store $F_{n-3}$, since we're always only computing the next number.\\
-	The algorithm I'm using uses a bottom up approach, which has an overall space complexity of $O(1)$ and a time complexity of $O(n)$. The idea is to store only $F_{n-1}$ and $F_{n-2}$, so that we can compute $F_n$. After that we shift over what we're storing, so that we forget $F_{n-2}$ and keep $F_n$ and $F_{n-1}$ in order to calculate $F_{n+1}$.
+	For this section, assume that $n$ is the index of the maximum Fibonacci number we must execute, and $L$ is the limit ($4,000,000$)\\
+
+	Considering the definition, it calculating the Fibonacci numbers would seem to be most natural to use a top-down recurrsive algorithm, but this would be incredibly slow, $O(2^n)$ for \textit{each} number, meaning we end up with a time complexity of $O(n2^n)$. Of course, this is a common example used by programming courses for recursion, so this may be many peoples' first approach. There are certainly optimizations to this algorithm, such as storing the result of previous computations, so we don't have to recompute $F_{n-1}$ and $F_{n-2}$, bringing time complexity down to $O(1)$, but there is still a linear space complexity. We don't need to store $F_{n-3}$, since we're always only computing the next number. Fully optimized this way, the time complexity should be $O(n)$ and the space complexity should be $O(1)$\\
+
+	The algorithm I'm using uses a bottom up approach, which also has a space complexity of $O(1)$ and a time complexity of $O(n)$. The idea is to store only $F_{n-1}$ and $F_{n-2}$, so that we can compute $F_n$. After that we shift over what we're storing, so that we forget $F_{n-2}$ and keep $F_n$ and $F_{n-1}$ in order to calculate $F_{n+1}$.
 \end{document}  

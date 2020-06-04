@@ -1,10 +1,6 @@
-Problem Description
-Useful Theorems
-\contentsline {section}{\numberline {1}Problem Description}{1}%
-\contentsline {section}{\numberline {2}Theorems whose results aid in my solution}{1}%
-\contentsline {subsection}{\numberline {2.1}Lemma: $o$ is odd $\DOTSB \tmspace +\thickmuskip {.2777em}\DOTSB \Leftarrow \joinrel \Rightarrow \tmspace +\thickmuskip {.2777em}\exists n \in \mathbb {N} : o =2n + 1$, and $e$ is even $\DOTSB \tmspace +\thickmuskip {.2777em}\DOTSB \Leftarrow \joinrel \Rightarrow \tmspace +\thickmuskip {.2777em}\exists n \in \mathbb {N} : e = 2n$}{1}%
-\contentsline {subsection}{\numberline {2.2}Lemma: An odd number plus an even number equals an odd number, and an odd number plus an odd number equals an even number}{1}%
-\contentsline {subsection}{\numberline {2.3}Theorem: only every third Fibonacci number is even}{2}%
-\contentsline {subsection}{\numberline {2.4}Theorem: $F_n = \frac {(1 + \sqrt 5)^n - (1 - \sqrt 5)^n}{2^n\sqrt 5}$}{3}%
-\contentsline {section}{\numberline {3}Application to Code}{4}%
-\contentsline {section}{\numberline {4}Comlexity Analysis/ Further Optimizations}{4}%
+\contentsline {section}{\numberline {1}Problem Description}{2}%
+\contentsline {section}{\numberline {2}Theorems whose results aid in my solution}{2}%
+\contentsline {subsection}{\numberline {2.1}Only every third Fibonacci number is even}{2}%
+\contentsline {subsection}{\numberline {2.2}$F_n = \frac {(1 + \sqrt 5)^n - (1 - \sqrt 5)^n}{2^n\sqrt 5}$}{2}%
+\contentsline {section}{\numberline {3}Application to Code}{3}%
+\contentsline {section}{\numberline {4}Comlexity Analysis/ Further Optimizations}{3}%
