@@ -11,7 +11,7 @@ class P016 extends ParameterizedProblem<Integer> {
 
 	@Override
 	public long solve(Integer exponent, boolean printResults) {
-		BigInteger largeNumber = EulerTools.TWO.pow(exponent);
+		BigInteger largeNumber = BigInteger.TWO.pow(exponent);
 		String str = largeNumber.toString();
 
 		int sum = 0;

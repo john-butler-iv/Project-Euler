@@ -1,10 +1,18 @@
 package projectEuler;
 
-import java.math.BigInteger;
+import java.math.*;
 import java.util.Iterator;
 
 class EulerTools {
 	public static final BigDecimal TWO = new BigDecimal("2.0");
+
+	public static BigInteger factorial(BigInteger n){
+		BigInteger returnVar = BigInteger.ONE;
+		for(BigInteger bi = BigInteger.TWO; bi.compareTo(n) <= 0; bi = bi.add(BigInteger.ONE))
+			returnVar = returnVar.multiply(bi);
+		
+		return returnVar;
+	}
 
 	/**
 	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... ),
@@ -98,7 +106,7 @@ class EulerTools {
 		BigDecimal r2 = rt5.subtract(BigDecimal.ONE).pow(n);
 		BigDecimal f = r1.subtract(r2).divide(rt5.multiply(TWO.pow(n)));
 
-		f.round(new MathContext(128, HALF_EVEN));
+		f.round(new MathContext(128, RoundingMode.HALF_EVEN));
 		return f.toBigInteger();
 	}
 

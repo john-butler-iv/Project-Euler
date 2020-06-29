@@ -20,7 +20,7 @@ public class P057 extends ParameterizedProblem<Integer>{
 			//see write up for algorithm
 			
 			// figure out the next expansion
-			BigInteger newDen = num.add(EulerTools.TWO.multiply(den));
+			BigInteger newDen = num.add(BigInteger.TWO.multiply(den));
 			num = den;
 			den = newDen;
 
