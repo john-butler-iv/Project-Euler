@@ -6,11 +6,11 @@ import java.util.Iterator;
 class EulerTools {
 	public static final BigDecimal TWO = new BigDecimal("2.0");
 
-	public static BigInteger factorial(BigInteger n){
+	public static BigInteger factorial(BigInteger n) {
 		BigInteger returnVar = BigInteger.ONE;
-		for(BigInteger bi = BigInteger.TWO; bi.compareTo(n) <= 0; bi = bi.add(BigInteger.ONE))
+		for (BigInteger bi = BigInteger.TWO; bi.compareTo(n) <= 0; bi = bi.add(BigInteger.ONE))
 			returnVar = returnVar.multiply(bi);
-		
+
 		return returnVar;
 	}
 
@@ -44,14 +44,14 @@ class EulerTools {
 	}
 
 	/**
-	 * calculates the n'th Fibonacci number (0, 1, 1, ...) in constant time
-	 * i.e. fibonacci(0) returns 0 and fibonacci(1) returns 1
+	 * calculates the n'th Fibonacci number (0, 1, 1, ...) in constant time i.e.
+	 * fibonacci(0) returns 0 and fibonacci(1) returns 1
 	 *
 	 * @param n the index of the Fibonacci number to be calulated
 	 *
 	 * @return returns the nth Fibonacci number
 	 */
-	public static int fibonacci(int n){
+	public static int fibonacci(int n) {
 		// see write up for explaination of formula (Problem 2)
 		double rt5 = Math.sqrt(5);
 
@@ -91,14 +91,14 @@ class EulerTools {
 	}
 
 	/**
-	 * calculates the n'th Fibonacci number (0, 1, 1, ...) in constant time
-	 * i.e. bigFibonacci(0) returns 0 and bigFibonacci(1) returns 1
+	 * calculates the n'th Fibonacci number (0, 1, 1, ...) in constant time i.e.
+	 * bigFibonacci(0) returns 0 and bigFibonacci(1) returns 1
 	 *
 	 * @param n the index of the Fibonacci number to be calulated
 	 *
 	 * @return returns the nth Fibonacci number
 	 */
-	public static BigInteger bigFibonacci(int n){
+	public static BigInteger bigFibonacci(int n) {
 		// I may want to change the MathContext
 		BigDecimal rt5 = new BigDecimal("5.0").sqrt(MathContext.DECIMAL128);
 
@@ -145,6 +145,38 @@ class EulerTools {
 				return false;
 
 		return true;
+	}
+
+	/**
+	 * Computes all factorials up to and including maxFact where
+	 * factorialTable(n)[m] = m! if m <= n.
+	 * 
+	 * @param maxFact the upper limit of factorials to compute
+	 * @return returns an array of BigIntegers where factorialTable(n)[m] = m!
+	 */
+	public static BigInteger[] factorialTable(int maxFact) {
+		BigInteger[] factorials = new BigInteger[maxFact + 1];
+		factorials[0] = BigInteger.ONE;
+		for (int i = 0; i <= maxFact; i++)
+			factorials[i] = factorials[i - 1].multiply(BigInteger.valueOf(i));
+
+		return factorials;
+	}
+
+	/**
+	 * Computes n! = n * (n-1) * ... * 2 * 1. Designed for single use, if you wish
+	 * have many factorial values, use the factorialTable function.
+	 * 
+	 * @param n the number whose factorial we will compute
+	 * @return returns n! as a BigInteger
+	 */
+	public static BigInteger factorial(int n) {
+		BigInteger bi = BigInteger.ONE;
+
+		for (int i = 2; i <= n; i++)
+			bi = bi.multiply(BigInteger.valueOf(i));
+
+		return bi;
 	}
 
 	/**

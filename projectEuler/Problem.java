@@ -8,7 +8,7 @@ abstract class Problem implements Consumer<Object> {
 		solve(false);
 	}
 
-	public boolean test(){
+	public boolean test() {
 		return true;
 	}
 

@@ -3,11 +3,6 @@ package projectEuler;
 class P009 extends Problem {
 
 	@Override
-	public boolean test() {
-		return 3 * 3 + 4 * 4 == 5 * 5;
-	}
-
-	@Override
 	public long solve(boolean printResults) {
 
 		for (int a = 1; a < 997; a++) {

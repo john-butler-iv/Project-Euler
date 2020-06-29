@@ -1,11 +1,10 @@
 package projectEuler;
 
 public class ProblemTimer51To100 extends ProblemTimer {
+	protected final static int MIN_PROBLEM = 51;
+	protected final static int MAX_PROBLEM = 100;
 
-	public static void main(String[] args) {
-		//new ProblemTimer51To100().report(69 - 50 - 1);
-		new ProblemTimer51To100().reportAll();
-	}
+	protected static ProblemTimer instance = new ProblemTimer51To100();
 
 	public ProblemTimer51To100() {
 		previousTimer = new ProblemTimer1To50();
@@ -17,9 +16,9 @@ public class ProblemTimer51To100 extends ProblemTimer {
 		problems[4] = new P055();
 		problems[5] = new P056();
 		problems[6] = new P057();
-		// problems[7] = new P058();
-		// problems[8] = new P059();
-		// problems[9] = new P060();
+		problems[7] = new P058();
+		problems[8] = new P059();
+		problems[9] = new P060();
 		// problems[10] = new P061();
 		// problems[11] = new P062();
 		// problems[12] = new P063();

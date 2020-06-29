@@ -3,6 +3,18 @@ package projectEuler;
 class P034 extends Problem {
 
 	@Override
+	public boolean test() {
+		int digitSum = 0;
+
+		int[] digitFactorials = new int[] { 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880 };
+
+		for (char c : String.valueOf(145).toCharArray())
+			digitSum += digitFactorials[c - '0'];
+
+		return digitSum == 145;
+	}
+
+	@Override
 	public long solve(boolean printResults) {
 
 		/* find factorials: */

@@ -5,10 +5,6 @@ import java.util.GregorianCalendar;
 
 class P019 extends Problem {
 
-	public boolean test() {
-		return true;
-	}
-
 	@Override
 	public long solve(boolean printResults) {
 		Calendar date = new GregorianCalendar();

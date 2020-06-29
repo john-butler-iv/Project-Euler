@@ -3,11 +3,6 @@ package projectEuler;
 class P033 extends Problem {
 	PrimeFinder pf;
 
-	public boolean test() {
-		// the provided test is unhelpful as this algorithm primarilly iterates through all fractions which can be digit-reduced.
-		return true;
-	}
-
 	private static class DigitReducableFraction {
 		// represents where in the fraction the reducable digit will be placed.
 		private enum Position {
