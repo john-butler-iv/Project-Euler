@@ -1,6 +1,7 @@
 package projectEuler;
 
 import java.util.List;
+import java.util.Map;
 
 public class CollectionTools {
 	private static String DEFAULT_PRINT_SEPARATOR = ", ";
@@ -53,6 +54,8 @@ public class CollectionTools {
 	 *                  list
 	 */
 	public static <T> void printList(List<T> list, String separator) {
+		if(list.isEmpty())
+			return;
 		for (int i = 0; i < list.size() - 1; i++)
 			System.out.print(list.get(i) + separator);
 		System.out.print(list.get(list.size() - 1));
@@ -96,6 +99,33 @@ public class CollectionTools {
 		printArr(arr, separator);
 		System.out.println();
 	}
+
+	public static <T> boolean inBounds(T[] arr, int i){
+		if(arr == null)
+			return false;
+		return i >= 0 && i < arr.length; 
+	}
+
+	public static <T> boolean inBounds(List<T> list, int i){
+		if(list == null)
+			return false;
+		return i >= 0 && i < list.size();
+	}
+	public static <T> boolean inBounds(T[][] mat, int r, int c){
+		if(mat == null)
+			return false;
+		if(mat.length == 0)
+			return false;
+		return r >= 0 && r < mat.length && c >= 0 && c < mat[0].length;
+	}
+	public static boolean inBounds(int[][] mat, int r, int c){
+		if(mat == null)
+			return false;
+		if(mat.length == 0)
+			return false;
+		return r >= 0 && r < mat.length && c >= 0 && c < mat[0].length;
+	}
+
 
 	public static <T extends Comparable<T>> void quickSort(T[] arr) {
 		quickSort(arr, 0, arr.length - 1);
@@ -160,7 +190,7 @@ public class CollectionTools {
 	 * 
 	 * @param list an ascending list which may or may not contain t
 	 * @param t    a value which may be in list.
-	 * @return returns true if list contains t, false otherwise
+	 * @return true if list contains t, false otherwise
 	 */
 	public static <T extends Comparable<T>> boolean binaryContains(List<T> list, T t) {
 		return binaryContains(list, t, 0, list.size() - 1);
@@ -201,9 +231,9 @@ public class CollectionTools {
 	/**
 	 * swaps the chars at indices i and j in str, leaving all other chars unaltered.
 	 * 
-	 * @param String the String in which we're swapping two elements
-	 * @param i      the index of one element to be swapped
-	 * @param j      the index of one element to be swapped
+	 * @param str the String in which we're swapping two elements
+	 * @param i   the index of one element to be swapped
+	 * @param j   the index of one element to be swapped
 	 */
 	public static String swap(String str, int i, int j) {
 		if(i == j)
@@ -287,7 +317,7 @@ public class CollectionTools {
 	 *
 	 * @param str		the string which will be reversed.
 	 *
-	 * @return returns str, but reversed
+	 * @return str, but reversed
 	 */
 	public static String reverse(String str){
 		return reverse(str, 0);
@@ -300,7 +330,7 @@ public class CollectionTools {
 	 * @param str		the string which will be reversed.
 	 * @param startingIndex	the first index to be reversed.
 	 *
-	 * @return returns str, but reversed after startingIndex
+	 * @return str, but reversed after startingIndex
 	 */
 	public static String reverse(String str, int startingIndex){
 		String returnStr = str;
@@ -315,7 +345,7 @@ public class CollectionTools {
 	 * gives "0132"
 	 * 
 	 * @param str the string which will be permuted
-	 * @return returns the next permutation of str.
+	 * @return the next permutation of str.
 	 */
 	public static String permute(String str) {
 		if (str == null)
@@ -350,7 +380,7 @@ public class CollectionTools {
 	 * gives "3201"
 	 * 
 	 * @param str the string which will be permuted
-	 * @return returns the previous permutation of str.
+	 * @return the previous permutation of str.
 	 */
 	public static String prevPermute(String str) {
 		if (str == null)
@@ -382,34 +412,62 @@ public class CollectionTools {
 
 	/**
 	 * determines if str1 and str2 are permutations of each other, i.e.
-	 * arePermutations("123345", "543123") returns true
+	 * arePermutations("123345", "543123") returns true. This works the same as 
+	 * arePermutations(String, String, Map), but assumes no alphabet restrictions. 
+	 * For this reason, it is reccomended to use that function if there are significant 
+	 * restrictions to the strings' character space. i.e. if the strings are all numbers.
 	 * 
 	 * @param str1 one string which may or may be a permuted version of str2
 	 * @param str2 one string which may or may be a permuted version of str1
-	 * @return returns true if str1 and str2 are permutations of each other
+	 * @return true if str1 and str2 are permutations of each other
 	 */
 	public static boolean arePermutations(String str1, String str2) {
-		if (str1.length() != str2.length())
-			return false;
+		// count the characters in str1 
+		Integer[] set1 = new Integer[Character.MAX_VALUE];
+		for(char ch : str1.toCharArray())
+			set1[(int)ch]++;
 
-		for (char ch : str1.toCharArray()) {
+		// count the characters in str2
+		Integer[] set2 = new Integer[Character.MAX_VALUE];
+		for(char ch : str2.toCharArray())
+			set2[(int)ch]++;
 
-			// look for each character in str1, check that it's also in str2
-			boolean contained = false;
-			for (int j = 0; !contained && j < str2.length(); j++) {
-				if (ch == str2.charAt(j)) {
+		// chech if they have the same amount of each characters
+		return equals(set1, set2);
+	}
 
-					// if you find a match, remove it so that you don't look at it again
-					str2 = str2.substring(0, j) + str2.substring(j + 1);
-					contained = true;
-				}
-			}
+	/**
+	 * Determines if str1 and str2 are permuations of each other in linear time, i.e.
+	 * arePermutations("123345", "543123", <indexing>) returns true.
+	 *
+	 * @param str1     a string which may or may bot be a permuted verion of str2
+	 * @param str2     a string which may or may bot be a permuted verion of str1
+	 * @param indexing a mapping which maps each character that str1/str2 may have 
+	 *                 to an index ranging from 0 to indexing.size() - 1
+	 *
+	 * @return true if str1 and str2 are permutations of each other, otherwise false
+	 */
+	public static boolean arePermutations(String str1, String str2, Map<Character, Integer> indexing){
+		// initialize the character counter for str1
+		Integer[] set1 = new Integer[indexing.size()];
+		for(int i = 0; i < set1.length; i++)
+			set1[i] = 0;
 
-			// if there was no match, they are not permutations
-			if (!contained)
-				return false;
-		}
-		return str2.length() == 0;
+		// count each character in str1
+		for(char ch : str1.toCharArray())
+			set1[indexing.get(ch)]++;
+	
+		// initialize the character counter for str2
+		Integer[] set2 = new Integer[indexing.size()];
+		for(int i = 0; i < set2.length; i++)
+			set2[i] = 0;
+
+		// count each character in str2	
+		for(char ch : str2.toCharArray())
+			set2[indexing.get(ch)]++;
+
+		// if they have the same amount of each character, then they are permutations.
+		return equals(set1, set2);
 	}
 
 	/**
@@ -417,7 +475,7 @@ public class CollectionTools {
 	 * 
 	 * @param list1 one of the lists compared
 	 * @param list2 one of the lists compared
-	 * @return returns true if both lists have the same elements in the same order,
+	 * @return true if both lists have the same elements in the same order,
 	 *         false otherwise
 	 */
 	public static <T> boolean equals(List<T> list1, List<T> list2) {
@@ -442,7 +500,7 @@ public class CollectionTools {
 	 * 
 	 * @param arr1 one of the arrays compared
 	 * @param arr2 one of the arrays compared
-	 * @return returns true if both array have the same elements in the same order,
+	 * @return true if both array have the same elements in the same order,
 	 *         false otherwise
 	 */
 	public static <T> boolean equals(T[] arr1, T[] arr2) {
@@ -455,9 +513,13 @@ public class CollectionTools {
 		if (arr1.length != arr2.length)
 			return false;
 
-		for (int i = 0; i < arr1.length; i++)
-			if (!arr1[i].equals(arr2[i]))
+		for (int i = 0; i < arr1.length; i++){
+			if(arr1[i] == null && arr2[i] == null)
+				continue;
+			if(arr1[i] == null || !arr1[i].equals(arr2[i]))
 				return false;
+		}
+
 
 		return true;
 	}

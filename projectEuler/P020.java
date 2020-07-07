@@ -11,7 +11,7 @@ class P020 extends ParameterizedProblem<Integer> {
 
 	@Override
 	public long solve(Integer n, boolean printResults) {
-		BigInteger fact = EulerTools.factorial(n);
+		BigInteger fact = EulerTools.bigFactorial(n);
 		String str = fact.toString();
 
 		int sum = 0;

@@ -1,12 +1,48 @@
 package projectEuler;
 
+import java.lang.NumberFormatException;
+
 class ProblemTimer1To50 extends ProblemTimer {
-	protected final static int MIN_PROBLEM = 1;
-	protected final static int MAX_PROBLEM = 50;
+	public static void printUsage(){
+		System.out.println("Usage: java projectEuler.ProblemTimer1To50 <solve/report> <pid pid ...>");
+	}
+
+	public static void main(String[] args){
+		if(args.length < 2){
+			printUsage();
+			return;
+		}
+
+		ProblemTimer51To100 instance = new ProblemTimer51To100();
+		if(args[0].toLowerCase().equals("solve")){
+			for(int i = 1; i < args.length; i++){
+				try{
+					int pid = Integer.valueOf(args[i]);
+					if(pid > 50)
+						System.out.println("There is no problem numbered " + pid);
+					else if (pid <= 0)
+						System.out.println("There is no problem numbered " + pid);
+					else {
+						Problem problem = instance.problems[pid - 1];
+						if(problem == null)
+							System.out.println("There is no problem numbered " + pid);
+						else {
+							problem.solve(true);
+						}
+					}
+				} catch(NumberFormatException e){
+					System.out.println(args[i] + " is an invalid problem number");
+				}
+			}
+		} else if(args[0].toLowerCase().equals("report")){
+
+		} else printUsage();
+
+	}
+
 
 	public ProblemTimer1To50() {
 		problems = new Problem[50];
-		problems[0] = new P001();
 		problems[1] = new P002();
 		problems[2] = new P003();
 		problems[3] = new P004();
@@ -58,7 +94,4 @@ class ProblemTimer1To50 extends ProblemTimer {
 		problems[49] = new P050();
 	}
 
-	public static void main(String[] args) {
-		new ProblemTimer1To50().reportAll();
-	}
 }
