@@ -1,110 +1,10 @@
 package projectEuler;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class CollectionTools {
-	private static String DEFAULT_PRINT_SEPARATOR = ", ";
-
-	/**
-	 * Prints every element separated by a comma and a space
-	 * 
-	 * @param list the list whose elements will be printed
-	 */
-	public static <T> void printList(List<T> list) {
-		printList(list, DEFAULT_PRINT_SEPARATOR);
-	}
-
-	/**
-	 * Prints every element separated by a comma and a space
-	 * 
-	 * @param arr the list whose elements will be printed
-	 */
-	public static <T> void printArr(T[] arr) {
-		printArr(arr, DEFAULT_PRINT_SEPARATOR);
-	}
-
-	/**
-	 * Prints every element separated a comma and a space, and prints a new line
-	 * after the entire list
-	 * 
-	 * @param list the list whose elements will be printed
-	 */
-	public static <T> void printlnList(List<T> list) {
-		printList(list, DEFAULT_PRINT_SEPARATOR);
-		System.out.println();
-	}
-
-	/**
-	 * Prints every element separated a comma and a space, and prints a new line
-	 * after the entire array
-	 * 
-	 * @param arr the array whose elements will be printed
-	 */
-	public static <T> void printlnArr(T[] arr) {
-		printArr(arr, DEFAULT_PRINT_SEPARATOR);
-		System.out.println();
-	}
-
-	/**
-	 * Prints every element separated by the separator string
-	 * 
-	 * @param list      the list whose elements will be printed
-	 * @param separator the String that will show up between each element in the
-	 *                  list
-	 */
-	public static <T> void printList(List<T> list, String separator) {
-		if(list.isEmpty())
-			return;
-		for (int i = 0; i < list.size() - 1; i++)
-			System.out.print(list.get(i) + separator);
-		System.out.print(list.get(list.size() - 1));
-	}
-
-	/**
-	 * Prints every element separated by the separator string
-	 * 
-	 * @param arr       the array whose elements will be printed
-	 * @param separator the String that will show up between each element in the
-	 *                  list
-	 */
-	public static <T> void printArr(T[] arr, String separator) {
-		for (int i = 0; i < arr.length - 1; i++)
-			System.out.print(arr[i] + separator);
-		System.out.print(arr[arr.length - 1]);
-	}
-
-	/**
-	 * Prints every element separated by the separator string, and prints a new line
-	 * after the entire list
-	 * 
-	 * @param list      the list whose elements will be printed
-	 * @param separator the String that will show up between each element in the
-	 *                  list
-	 */
-	public static <T> void printlnList(List<T> list, String separator) {
-		printList(list, separator);
-		System.out.println();
-	}
-
-	/**
-	 * Prints every element separated by the separator string, and prints a new line
-	 * after the entire array
-	 * 
-	 * @param arr       the array whose elements will be printed
-	 * @param separator the String that will show up between each element in the
-	 *                  array
-	 */
-	public static <T> void printlnArr(T[] arr, String separator) {
-		printArr(arr, separator);
-		System.out.println();
-	}
-
-	public static <T> boolean inBounds(T[] arr, int i){
-		if(arr == null)
-			return false;
-		return i >= 0 && i < arr.length; 
-	}
 
 	public static <T> boolean inBounds(List<T> list, int i){
 		if(list == null)
@@ -124,94 +24,6 @@ public class CollectionTools {
 		if(mat.length == 0)
 			return false;
 		return r >= 0 && r < mat.length && c >= 0 && c < mat[0].length;
-	}
-
-
-	public static <T extends Comparable<T>> void quickSort(T[] arr) {
-		quickSort(arr, 0, arr.length - 1);
-	}
-
-	private static <T extends Comparable<T>> void quickSort(T[] arr, int start, int end) {
-		// if there are 5 or fewer elements, just bubble sort
-		if (end - start < 5) {
-			bubbleSort(arr, start, end);
-			return;
-		}
-		int trackerUp = start + 1;
-		int trackerDown = end;
-		int pivot = start;
-
-		while (trackerUp < trackerDown) {
-			// track up until you find an element for part.2
-			while (trackerUp < trackerDown && arr[pivot].compareTo(arr[trackerUp]) <= 0)
-				trackerUp++;
-
-			// if we couldn't find an element for partition 2,
-			if (trackerUp == trackerDown) {
-				// we've finished partitioning.
-				// i.e. move the pivot between the partitions and sort each partition.
-				swap(arr, trackerUp - 1, pivot);
-			}
-			// track down until you find an element for part.1
-			while (trackerDown > trackerUp && arr[pivot].compareTo(arr[trackerDown]) >= 0)
-				trackerDown++;
-
-			// if we couldn't find an element for partition 1,
-			if (trackerUp == trackerDown) {
-				// we've finished partitioning.
-				// i.e. move the pivot between the partitions and sort each partition.
-				swap(arr, trackerDown, pivot);
-			}
-
-			// swap them
-			swap(arr, trackerUp, trackerDown);
-		}
-	}
-
-	public static <T extends Comparable<T>> void bubbleSort(T[] arr) {
-		bubbleSort(arr, 0, arr.length - 1);
-	}
-
-	private static <T extends Comparable<T>> void bubbleSort(T[] arr, int start, int end) {
-		int lastSwap = end;
-		while (lastSwap > start) {
-			for (int i = start; i < lastSwap; i++) {
-				if (arr[i].compareTo(arr[i + 1]) > 0) {
-					swap(arr, i, i + 1);
-					lastSwap = i;
-				}
-			}
-		}
-	}
-
-	/**
-	 * Determines whether t is in list using the binary search algorithm with time
-	 * complexity O(log_2(list.size())). The list must be sorted in ascending order
-	 * 
-	 * @param list an ascending list which may or may not contain t
-	 * @param t    a value which may be in list.
-	 * @return true if list contains t, false otherwise
-	 */
-	public static <T extends Comparable<T>> boolean binaryContains(List<T> list, T t) {
-		return binaryContains(list, t, 0, list.size() - 1);
-	}
-
-	private static <T extends Comparable<T>> boolean binaryContains(List<T> list, T t, int start, int end) {
-		if (list.size() == 0)
-			return false;
-		if (start >= end)
-			return list.get(start).equals(t);
-
-		// if we found it here, we can stop
-		int midPoint = (start + end) / 2;
-
-		if (list.get(midPoint).equals(t))
-			return true;
-		// only need to check points greater than midpoint
-		if (list.get(midPoint).compareTo(t) < 0)
-			return binaryContains(list, t, midPoint + 1, end);
-		// to get here, t must be less than the value at midpoint
-		return binaryContains(list, t, start, midPoint - 1);
 	}
 
 	/**
@@ -423,17 +235,17 @@ public class CollectionTools {
 	 */
 	public static boolean arePermutations(String str1, String str2) {
 		// count the characters in str1 
-		Integer[] set1 = new Integer[Character.MAX_VALUE];
+		int[] set1 = new int[Character.MAX_VALUE];
 		for(char ch : str1.toCharArray())
 			set1[(int)ch]++;
 
 		// count the characters in str2
-		Integer[] set2 = new Integer[Character.MAX_VALUE];
+		int[] set2 = new int[Character.MAX_VALUE];
 		for(char ch : str2.toCharArray())
 			set2[(int)ch]++;
 
 		// chech if they have the same amount of each characters
-		return equals(set1, set2);
+		return Arrays.equals(set1, set2);
 	}
 
 	/**
@@ -449,7 +261,7 @@ public class CollectionTools {
 	 */
 	public static boolean arePermutations(String str1, String str2, Map<Character, Integer> indexing){
 		// initialize the character counter for str1
-		Integer[] set1 = new Integer[indexing.size()];
+		int[] set1 = new int[indexing.size()];
 		for(int i = 0; i < set1.length; i++)
 			set1[i] = 0;
 
@@ -458,7 +270,7 @@ public class CollectionTools {
 			set1[indexing.get(ch)]++;
 	
 		// initialize the character counter for str2
-		Integer[] set2 = new Integer[indexing.size()];
+		int[] set2 = new int[indexing.size()];
 		for(int i = 0; i < set2.length; i++)
 			set2[i] = 0;
 
@@ -467,60 +279,6 @@ public class CollectionTools {
 			set2[indexing.get(ch)]++;
 
 		// if they have the same amount of each character, then they are permutations.
-		return equals(set1, set2);
-	}
-
-	/**
-	 * determines whether the two lists are equal
-	 * 
-	 * @param list1 one of the lists compared
-	 * @param list2 one of the lists compared
-	 * @return true if both lists have the same elements in the same order,
-	 *         false otherwise
-	 */
-	public static <T> boolean equals(List<T> list1, List<T> list2) {
-		// can't compare if one of them is null
-		if (list1 == null || list2 == null)
-			// they they're both null, thye're equal
-			return list1 == list2;
-
-		// don't bother checking elements if they one has extra elements
-		if (list1.size() != list2.size())
-			return false;
-
-		for (int i = 0; i < list1.size(); i++)
-			if (!list1.get(i).equals(list2.get(i)))
-				return false;
-
-		return true;
-	}
-
-	/**
-	 * determines whether the two arrays are equal
-	 * 
-	 * @param arr1 one of the arrays compared
-	 * @param arr2 one of the arrays compared
-	 * @return true if both array have the same elements in the same order,
-	 *         false otherwise
-	 */
-	public static <T> boolean equals(T[] arr1, T[] arr2) {
-		// can't compare if one of them is null
-		if (arr1 == null || arr2 == null)
-			// they they're both null, thye're equal
-			return arr1 == arr2;
-
-		// don't bother checking elements if they one has extra elements
-		if (arr1.length != arr2.length)
-			return false;
-
-		for (int i = 0; i < arr1.length; i++){
-			if(arr1[i] == null && arr2[i] == null)
-				continue;
-			if(arr1[i] == null || !arr1[i].equals(arr2[i]))
-				return false;
-		}
-
-
-		return true;
+		return Arrays.equals(set1, set2);
 	}
 }

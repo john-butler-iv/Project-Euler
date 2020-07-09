@@ -2,6 +2,7 @@ package projectEuler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class P054 extends Problem {
@@ -335,7 +336,7 @@ public class P054 extends Problem {
 
 					// bubble sort is fine since hands are small
 					// sorts by value then suit
-					CollectionTools.bubbleSort(hand);
+					Arrays.sort(hand);
 				}
 			}
 			return rounds;
