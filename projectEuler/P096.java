@@ -16,10 +16,10 @@ public class P096 extends ParameterizedProblem<File> {
 
 		private final Tile[][] board;
 		private int currGroup;
-		// represents progress through group (there's 9 rows/columns/subgrids)
+		// represents progress through group (there's 9 rows/columns/subGrids)
 		private int groupId;
 
-		public TileIterator(final Tile[][] board) {
+		public TileIterator(Tile[][] board) {
 			this.board = board;
 			currGroup = SUBGRID;
 			groupId = 0;
@@ -37,13 +37,13 @@ public class P096 extends ParameterizedProblem<File> {
 
 		@Override
 		public Tile[] next() {
-			final Tile[] returnVar = new Tile[9];
+			Tile[] returnVar = new Tile[9];
 
 			int i = 0;
 			switch (currGroup) {
 				case SUBGRID:
-					final int r = (groupId / 3) * 3;
-					final int c = (groupId / 3) * 3;
+					int r = (groupId / 3) * 3;
+					int c = (groupId / 3) * 3;
 
 					// System.out.println("SUBGRID: groupId: " + groupId + ", r: " + r + " c: " +
 					// c);
@@ -77,7 +77,7 @@ public class P096 extends ParameterizedProblem<File> {
 		boolean[] hints;
 		int number;
 
-		public Tile(final int number) {
+		public Tile(int number) {
 			if (number != 0) {
 				this.number = number;
 				hints = new boolean[10];
@@ -89,14 +89,14 @@ public class P096 extends ParameterizedProblem<File> {
 			}
 		}
 
-		public Tile(final Tile tile) {
+		public Tile(Tile tile) {
 			this.number = tile.number;
 			this.hints = new boolean[tile.hints.length];
 			for (int i = 0; i < this.hints.length; i++)
 				this.hints[i] = tile.hints[i];
 		}
 
-		public boolean equals(final Tile tile) {
+		public boolean equals(Tile tile) {
 			if (this.number != tile.number)
 				return false;
 			return Arrays.mismatch(this.hints, tile.hints) == -1;
@@ -110,14 +110,14 @@ public class P096 extends ParameterizedProblem<File> {
 	}
 
 	@Override
-	public long solve(final File file, final boolean printResults) {
+	public long solve(File file, boolean printResults) {
 		try {
-			final Scanner scanner = new Scanner(file);
+			Scanner scanner = new Scanner(file);
 
 			Tile[][] board;
 			int sum = 0;
 
-			final int cnt = 1;
+			int cnt = 1;
 
 			while (scanner.hasNext()) {
 				board = new Tile[9][9];
@@ -126,10 +126,16 @@ public class P096 extends ParameterizedProblem<File> {
 				scanner.nextLine();
 
 				for (int i = 0; i < 9; i++) {
-					final String row = scanner.nextLine();
+					String row = scanner.nextLine();
 					for (int j = 0; j < 9; j++)
 						board[i][j] = new Tile(row.charAt(j) - '0');
 				}
+
+				for(int r = 0; r < 9; r++)
+					for(int c = 0; c < 9; c++)
+						if(board[r][c].number != 0)
+							setNum(board, r, c, board[r][c].number);
+
 
 				board = solveBoard(board);
 
@@ -140,13 +146,14 @@ public class P096 extends ParameterizedProblem<File> {
 			if (printResults)
 				System.out.println(sum + " is the sum of the first three digits of all of the SuDoku puzzles");
 			return sum;
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
 	}
 
-	private void printBoard(final Tile[][] board) {
+	private void printBoard(Tile[][] board) {
+		System.out.println("============");
 		for (int r = 0; r < board.length; r++) {
 			for (int c = 0; c < board[0].length; c++) {
 				System.out.print(board[r][c].number);
@@ -157,28 +164,32 @@ public class P096 extends ParameterizedProblem<File> {
 			if (r % 3 == 2)
 				System.out.println();
 		}
+		System.out.println("============");
 	}
 
-	private enum Status {
-		UNSOLVED, SOLVED, INVALID;
-	}
+	private enum Status { UNSOLVED, SOLVED, INVALID; }
 
-	private Status status(final Tile[][] board) {
-		final TileIterator it = new TileIterator(board);
+	private Status status(Tile[][] board) {
+		TileIterator it = new TileIterator(board);
 
 		boolean solved = true;
 
 		boolean[] encountered;
 		while (it.hasNext()) {
 			encountered = new boolean[10];
-			final Tile[] group = it.next();
+			Tile[] group = it.next();
 
-			for (final Tile tile : group) {
+			for (Tile tile : group) {
 				if (tile.number == 0)
 					solved = false;
 				else {
-					if (encountered[tile.number])
+					if (encountered[tile.number]){
+						System.out.println("Invalid Tile numbered " + tile.number + " in group:");
+						for(Tile tile1 : group)
+							System.out.print(tile1.number + ",");
+						System.out.println();
 						return Status.INVALID;
+					}
 
 					encountered[tile.number] = true;
 				}
@@ -188,14 +199,14 @@ public class P096 extends ParameterizedProblem<File> {
 		return solved ? Status.SOLVED : Status.UNSOLVED;
 	}
 
-	private Tile[][] copy(final Tile[][] board) {
-		final Tile[][] newBoard = new Tile[board.length][board[0].length];
+	private Tile[][] copy(Tile[][] board) {
+		Tile[][] newBoard = new Tile[board.length][board[0].length];
 		for (int i = 0; i < newBoard.length; i++)
 			newBoard[i] = Arrays.copyOf(board[i], board[i].length);
 		return newBoard;
 	}
 
-	private boolean equal(final Tile[][] b1, final Tile[][] b2) {
+	private boolean equal(Tile[][] b1, Tile[][] b2) {
 		for (int r = 0; r < b1.length; r++)
 			for (int c = 0; c < b1[0].length; c++)
 				if (!b1[r][c].equals(b2[r][c]))
@@ -203,11 +214,13 @@ public class P096 extends ParameterizedProblem<File> {
 		return true;
 	}
 
-	private Tile[] getSubGrid(final Tile[][] board, final int r, final int c) {
-		final int subR = r / 3;
-		final int subC = c / 3;
+	private Tile[] getSubGrid(Tile[][] board, int r, int c) {
+		System.out.println("I'm sorry?" + r + c);
+		printBoard(board);
+		int subR = r / 3;
+		int subC = c / 3;
 
-		final Tile[] subGrid = new Tile[8];
+		Tile[] subGrid = new Tile[9];
 		int i = 0;
 
 		for (int r1 = subR; r1 < subR + 3; r1++) {
@@ -221,36 +234,60 @@ public class P096 extends ParameterizedProblem<File> {
 		return subGrid;
 	}
 
-	private Tile[][] solveBoard(final Tile[][] board) {
+	private void setNumber(Tile[][] board, int r, int c, int num){
+		board[r][c].number = num;
+
+		// remove hints in square
+		Tile[] subGrid = getSubGrid(board,r , c);
+		for(int i = 0; i < subGrid.length; i++)
+			subGrid[i].hints[num] = false;
+
+		// remove hints in row
+		for(int r1 = 0; r1 < board.length; r1++)
+			board[r1][c].hints[num] = false;
+
+		// remove hints in col.
+		for(int c1 = 0; c1 < board[0].length; c1++)
+			board[r][c1].hints[num] = false;
+	}
+	
+	private Tile[][] solveBoard(Tile[][] board) {
 		if (board == null)
 			return null;
-		printBoard(board);
-		final Status status = status(board);
+		if(board[0][0].number == 5)
+			return null;
+		Status status = status(board);
 		if (status == Status.SOLVED)
 			return board;
-		if (status == Status.INVALID)
+		if (status == Status.INVALID){
+			System.out.println("INVALID BOARD:");
+			printBoard(board);
 			return null;
+		}
 
-		final TileIterator it = new TileIterator(board);
+		TileIterator it = new TileIterator(board);
 
 		Tile[][] orig;
 		do {
+			System.out.println("Standard elimination:");
+			printBoard(board);
 			orig = copy(board);
 
-			/* * * * * * * * * * * */
-			/* eliminate hints */
-			/* * * * * * * * * * * */
+			/*
+			/* * * * * * * * * * * * /
+			/* eliminate hints * /
+			/* * * * * * * * * * * * /
 			it.reset();
 			while (it.hasNext()) {
-				final Tile[] group = it.next();
+				Tile[] group = it.next();
 
 				// records what numbers are commited i.e. what needs to be removed
-				final boolean[] importantHints = new boolean[10];
+				boolean[] importantHints = new boolean[10];
 				// records how many tiles have any specific number as a
-				final int[] numHinters = new int[10];
+				int[] numHinters = new int[10];
 				// contains tiles whose number == 0, organized by what hints they have
-				final Tile[][] hinters = new Tile[10][9];
-				for (final Tile tile : group) {
+				Tile[][] hinters = new Tile[10][9];
+				for (Tile tile : group) {
 					if (tile.number == 0) {
 						// store in hinters based on hints
 						for (int i = 1; i < tile.hints.length; i++) {
@@ -272,7 +309,7 @@ public class P096 extends ParameterizedProblem<File> {
 						hinters[hint][i].hints[hint] = false;
 				}
 			}
-
+			*/
 			/* * * * * * * * * * * * * */
 			/* do basic number solving */
 			/* * * * * * * * * * * * * */
@@ -290,6 +327,7 @@ public class P096 extends ParameterizedProblem<File> {
 						if (board[r][c].hints[i]) {
 							if (foundHint) {
 								hint = 0;
+								foundHint = false;
 								break;
 							} else {
 								foundHint = true;
@@ -299,7 +337,7 @@ public class P096 extends ParameterizedProblem<File> {
 					}
 
 					if (foundHint)
-						board[r][c].number = hint;
+						setNum(board, r, c, hint);
 				}
 			}
 
@@ -310,9 +348,9 @@ public class P096 extends ParameterizedProblem<File> {
 			while (it.hasNext()) {
 				encountered = new int[10];
 				relevantTiles = new Tile[10];
-				final Tile[] group = it.next();
+				Tile[] group = it.next();
 
-				for (final Tile tile : group) {
+				for (Tile tile : group) {
 					// if the number is already commited we don't care about it.
 					if (tile.number != 0)
 						continue;
@@ -328,11 +366,13 @@ public class P096 extends ParameterizedProblem<File> {
 				// actually assign number if applicable
 				for (int i = 1; i <= 9; i++)
 					if (encountered[i] == 1)
+						// TODO refactor so that I keep track of r,c rather than a reference to the tile
 						relevantTiles[i].number = i;
 			}
 		} while (!equal(orig, board));
 
-		// guess and check O(n!)
+
+		// guess and check O((n^2)!)
 		for (int r = 0; r < board.length; r++) {
 			for (int c = 0; c < board.length; c++) {
 				if (board[r][c].number != 0)
@@ -340,11 +380,14 @@ public class P096 extends ParameterizedProblem<File> {
 				for (int i = 1; i <= 9; i++) {
 					if (!board[r][c].hints[i])
 						continue;
+					System.out.println("guessing " + i);
 					Tile[][] attempt = copy(board);
+					setNumber(attempt, r, c, i);
 					attempt[r][c].number = i;
 					attempt = solveBoard(attempt);
 					if (attempt != null)
 						return attempt;
+					
 					board[r][c].hints[i] = false;
 				}
 			}
@@ -352,7 +395,7 @@ public class P096 extends ParameterizedProblem<File> {
 		return board;
 	}
 
-	private int getNum(final Tile[][] board) {
+	private int getNum(Tile[][] board) {
 		return board[0][0].number * 100 + board[0][1].number * 10 + board[0][2].number;
 	}
 
