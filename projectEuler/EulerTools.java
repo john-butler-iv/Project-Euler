@@ -413,4 +413,59 @@ class EulerTools {
 		return d == (int) d;
 	}
 
+	/**
+	 *	Finds the Euclidean distance between the two points i.e. sqrt( (x2 - x1)^2 + (y2 - y1)^2 )
+	 *
+	 *	@param x1 the x-coordinate of the first point
+	 *	@param y1 the y-coordinate of the first point
+	 *	@param x2 the x-coordinate of the second point
+	 *	@param y2 the y-coordinate of the second point
+	 *
+	 *	@return the Euclidean distance betweeen the points given
+	 */
+	public static double distForm(double x1, double y1, double x2, double y2){
+		double deltaX = x2 - x1;
+		double deltaY = y2 - y1;
+		return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+	}
+
+	/**
+	 *	Finds the square of the Euclidean distance between the two points i.e. (x2 - x1)^2 + (y2 - y1)^2.
+	 *	If the exact distance is not needed, for example finding shortest distance, it may be enough to 
+	 *	use this function and not have to compute sqrt.
+	 *
+	 *	@param x1 the x-coordinate of the first point
+	 *	@param y1 the y-coordinate of the first point
+	 *	@param x2 the x-coordinate of the second point
+	 *	@param y2 the y-coordinate of the second point
+	 *
+	 *	@return the square of the Euclidean distance betweeen the points given
+	 */
+	public static double squareDistForm(double x1, double y1, double x2, double y2){
+		double deltaX = x2 - x1;
+		double deltaY = y2 - y1;
+		return deltaX*deltaX + deltaY*deltaY;
+	}
+
+	/**
+	 * Finds the angle in radians between the rays pa and pc using the law of cosines
+	 * 
+	 * @param ax x-coordinate of a point on one of the rays from point p.
+	 * @param ax y-coordinate of a point on one of the rays from point p.
+	 * @param px x value of the vertex
+	 * @param py y value of the vertex
+	 * @param cx x-coordinate of a point on the other ray from point p.
+	 * @param cy y-coordinate of a point on the other ray from point p.
+	 *
+	 * @return the angle in radians between the rays pa and pc. p is of course the vertex
+	 */
+	public static double findAngle(double ax, double ay, double px, double py, double cx, double cy) {
+		double pc = distForm(px, py, cx, cy); // side pc
+		double pa = distForm(px, py, ax, ay); // side pa
+		double ac = distForm(ax, ay, cx, cy); // side ac
+		double numerator = pc * pc + pa * pa - (ac * ac);
+		double denomonator = 2 * pa * pc;
+
+		return Math.acos(numerator / denomonator);
+	}
 }

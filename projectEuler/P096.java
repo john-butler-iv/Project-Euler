@@ -2,88 +2,27 @@ package projectEuler;
 
 import java.io.File;
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Iterator;
 
 public class P096 extends ParameterizedProblem<File> {
 
-	private class TileIterator implements Iterator<Tile[]> {
-		// could use an enum but this is less work
-		private final static int SUBGRID = 0;
-		private final static int ROW = 1;
-		private final static int COLUMN = 2;
-		private final static int END = 3;
-
-		private final Tile[][] board;
-		private int currGroup;
-		// represents progress through group (there's 9 rows/columns/subGrids)
-		private int groupId;
-
-		public TileIterator(Tile[][] board) {
-			this.board = board;
-			currGroup = SUBGRID;
-			groupId = 0;
-		}
-
-		@Override
-		public boolean hasNext() {
-			return currGroup != END;
-		}
-
-		public void reset() {
-			currGroup = SUBGRID;
-			groupId = 0;
-		}
-
-		@Override
-		public Tile[] next() {
-			Tile[] returnVar = new Tile[9];
-
-			int i = 0;
-			switch (currGroup) {
-				case SUBGRID:
-					int r = (groupId / 3) * 3;
-					int c = (groupId / 3) * 3;
-
-					// System.out.println("SUBGRID: groupId: " + groupId + ", r: " + r + " c: " +
-					// c);
-					for (int r1 = 0; r1 < 3; r1++)
-						for (int c1 = 0; c1 < 3; c1++)
-							returnVar[i++] = board[r + r1][c + c1];
-					break;
-				case ROW:
-					// System.out.println("ROW: groupId: " + groupId);
-					for (; i < 9; i++)
-						returnVar[i] = board[groupId][i];
-					break;
-				case COLUMN:
-					// System.out.println("COLUMN: groupId: " + groupId);
-					for (; i < 9; i++)
-						returnVar[i] = board[i][groupId];
-					break;
-			}
-
-			if (groupId >= 8) {
-				groupId = 0;
-				currGroup++;
-			} else
-				groupId++;
-
-			return returnVar;
-		}
-	}
-
-	private class Tile {
+	private static class Tile {
 		boolean[] hints;
 		int number;
 
+		public Tile() {
+			hints = new boolean[10];
+			for(int i = 0; i < hints.length; i++)
+				hints[i] = true;
+			number = 0;
+		}
+
 		public Tile(int number) {
-			if (number != 0) {
+			if(number != 0) {
 				this.number = number;
 				hints = new boolean[10];
 			} else {
 				hints = new boolean[10];
-				for (int i = 0; i < hints.length; i++)
+				for(int i = 0; i < hints.length; i++)
 					hints[i] = true;
 				this.number = 0;
 			}
@@ -92,325 +31,443 @@ public class P096 extends ParameterizedProblem<File> {
 		public Tile(Tile tile) {
 			this.number = tile.number;
 			this.hints = new boolean[tile.hints.length];
-			for (int i = 0; i < this.hints.length; i++)
+			for(int i = 0; i < this.hints.length; i++)
 				this.hints[i] = tile.hints[i];
 		}
 
+
+		public String toString() {
+			return String.valueOf(number);
+		}
+
 		public boolean equals(Tile tile) {
-			if (this.number != tile.number)
+			for(int i = 0; i < hints.length; i++)
+				if(this.hints[i] != tile.hints[i])
+					return false;
+			if(this.number != tile.number)
 				return false;
-			return Arrays.mismatch(this.hints, tile.hints) == -1;
+			return true;
 		}
 
 	}
 
-	@Override
-	public File getDefaultParameter() {
-		return new File("p096test.txt");
+	public File getDefaultParameter(){
+		return new File("p096.txt");
 	}
 
-	@Override
-	public long solve(File file, boolean printResults) {
+	public long solve(File boards, boolean printResults){
 		try {
-			Scanner scanner = new Scanner(file);
+			Scanner scanner = new Scanner(boards);
 
 			Tile[][] board;
 			int sum = 0;
 
 			int cnt = 1;
 
-			while (scanner.hasNext()) {
-				board = new Tile[9][9];
+			while(scanner.hasNext()) {
+				board = getBoard(scanner);
 
-				// we don't care about the grid number
-				scanner.nextLine();
-
-				for (int i = 0; i < 9; i++) {
-					String row = scanner.nextLine();
-					for (int j = 0; j < 9; j++)
-						board[i][j] = new Tile(row.charAt(j) - '0');
-				}
-
-				for(int r = 0; r < 9; r++)
-					for(int c = 0; c < 9; c++)
-						if(board[r][c].number != 0)
-							setNum(board, r, c, board[r][c].number);
-
-
-				board = solveBoard(board);
+				board = solve(board);
 
 				sum += getNum(board);
-				// int num = getNum(board);
-				// sum += num;
 			}
-			if (printResults)
-				System.out.println(sum + " is the sum of the first three digits of all of the SuDoku puzzles");
+
+			if(printResults)
+				System.out.println(sum + " is the sum of the first three digits of all solved boards.");
 			return sum;
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return 0;
 	}
 
-	private void printBoard(Tile[][] board) {
-		System.out.println("============");
-		for (int r = 0; r < board.length; r++) {
-			for (int c = 0; c < board[0].length; c++) {
-				System.out.print(board[r][c].number);
-				if (c % 3 == 2)
-					System.out.print("  ");
-			}
-			System.out.println();
-			if (r % 3 == 2)
-				System.out.println();
-		}
-		System.out.println("============");
-	}
 
-	private enum Status { UNSOLVED, SOLVED, INVALID; }
+	private static Tile[][] solve(Tile[][] board) {
+		while(!isSolved(board)) {
 
-	private Status status(Tile[][] board) {
-		TileIterator it = new TileIterator(board);
+			Tile[][] beginning;
+			do {
+				beginning = copy(board);
+				board = setHints(board);
+				board = setNumber(board);
 
-		boolean solved = true;
 
-		boolean[] encountered;
-		while (it.hasNext()) {
-			encountered = new boolean[10];
-			Tile[] group = it.next();
+				if(isSolved(board))
+					return board;
+				if(isInvalid(board))
+					return null;
 
-			for (Tile tile : group) {
-				if (tile.number == 0)
-					solved = false;
-				else {
-					if (encountered[tile.number]){
-						System.out.println("Invalid Tile numbered " + tile.number + " in group:");
-						for(Tile tile1 : group)
-							System.out.print(tile1.number + ",");
-						System.out.println();
-						return Status.INVALID;
-					}
+			} while(!equal(board, beginning));
 
-					encountered[tile.number] = true;
-				}
-			}
-		}
 
-		return solved ? Status.SOLVED : Status.UNSOLVED;
-	}
 
-	private Tile[][] copy(Tile[][] board) {
-		Tile[][] newBoard = new Tile[board.length][board[0].length];
-		for (int i = 0; i < newBoard.length; i++)
-			newBoard[i] = Arrays.copyOf(board[i], board[i].length);
-		return newBoard;
-	}
+			//we "guess and check" all the hints
+			Tile[][] attempt = copy(board);
 
-	private boolean equal(Tile[][] b1, Tile[][] b2) {
-		for (int r = 0; r < b1.length; r++)
-			for (int c = 0; c < b1[0].length; c++)
-				if (!b1[r][c].equals(b2[r][c]))
-					return false;
-		return true;
-	}
+			for(int r = 0; r < board.length; r++) {
+				for(int c = 0; c < board[0].length; c++)
+					if(attempt[r][c].number == 0)
 
-	private Tile[] getSubGrid(Tile[][] board, int r, int c) {
-		System.out.println("I'm sorry?" + r + c);
-		printBoard(board);
-		int subR = r / 3;
-		int subC = c / 3;
+						for(int i = 1; i < attempt[r][c].hints.length; i++)
+							if(attempt[r][c].hints[i]) {
 
-		Tile[] subGrid = new Tile[9];
-		int i = 0;
+								attempt[r][c].number = i;
+								attempt = solve(attempt);
 
-		for (int r1 = subR; r1 < subR + 3; r1++) {
-			for (int c1 = subC; c1 < subC + 3; c1++) {
-				if (r1 == r && c1 == c)
-					continue;
-				subGrid[i++] = board[r1][c1];
-			}
-		}
-
-		return subGrid;
-	}
-
-	private void setNumber(Tile[][] board, int r, int c, int num){
-		board[r][c].number = num;
-
-		// remove hints in square
-		Tile[] subGrid = getSubGrid(board,r , c);
-		for(int i = 0; i < subGrid.length; i++)
-			subGrid[i].hints[num] = false;
-
-		// remove hints in row
-		for(int r1 = 0; r1 < board.length; r1++)
-			board[r1][c].hints[num] = false;
-
-		// remove hints in col.
-		for(int c1 = 0; c1 < board[0].length; c1++)
-			board[r][c1].hints[num] = false;
-	}
-	
-	private Tile[][] solveBoard(Tile[][] board) {
-		if (board == null)
-			return null;
-		if(board[0][0].number == 5)
-			return null;
-		Status status = status(board);
-		if (status == Status.SOLVED)
-			return board;
-		if (status == Status.INVALID){
-			System.out.println("INVALID BOARD:");
-			printBoard(board);
-			return null;
-		}
-
-		TileIterator it = new TileIterator(board);
-
-		Tile[][] orig;
-		do {
-			System.out.println("Standard elimination:");
-			printBoard(board);
-			orig = copy(board);
-
-			/*
-			/* * * * * * * * * * * * /
-			/* eliminate hints * /
-			/* * * * * * * * * * * * /
-			it.reset();
-			while (it.hasNext()) {
-				Tile[] group = it.next();
-
-				// records what numbers are commited i.e. what needs to be removed
-				boolean[] importantHints = new boolean[10];
-				// records how many tiles have any specific number as a
-				int[] numHinters = new int[10];
-				// contains tiles whose number == 0, organized by what hints they have
-				Tile[][] hinters = new Tile[10][9];
-				for (Tile tile : group) {
-					if (tile.number == 0) {
-						// store in hinters based on hints
-						for (int i = 1; i < tile.hints.length; i++) {
-							if (!tile.hints[i])
-								continue;
-							hinters[i][numHinters[i]++] = tile;
-						}
-					} else {
-						// record that we have to strip hints for this number
-						importantHints[tile.number] = true;
-					}
-				}
-
-				// strip required hints
-				for (int hint = 1; hint <= 9; hint++) {
-					if (!importantHints[hint])
-						continue;
-					for (int i = 0; i < numHinters[hint]; i++)
-						hinters[hint][i].hints[hint] = false;
-				}
-			}
-			*/
-			/* * * * * * * * * * * * * */
-			/* do basic number solving */
-			/* * * * * * * * * * * * * */
-			// only one hint per tile
-			for (int r = 0; r < board.length; r++) {
-				for (int c = 0; c < board[0].length; c++) {
-					// if we already know what the number is, we don't have to find it.
-					if (board[r][c].number != 0)
-						continue;
-					boolean foundHint = false;
-					int hint = 0;
-
-					// count the hints
-					for (int i = 1; i <= 9; i++) {
-						if (board[r][c].hints[i]) {
-							if (foundHint) {
-								hint = 0;
-								foundHint = false;
-								break;
-							} else {
-								foundHint = true;
-								hint = i;
+								if(attempt == null) {
+									board[r][c].hints[i] = false;
+									attempt = copy(board);
+								} else if(isSolved(attempt))
+									return attempt;
 							}
+			}
+		}
+		return null;
+	}
+
+	private static Tile[][] setHints(Tile[][] board) {
+		//set column hints
+		for(int c = 0; c < board[0].length; c++) {
+			boolean[] numbers = new boolean[10];
+			//find numbers in col
+			for(int r = 0; r < board.length; r++)
+				if(board[r][c].number != 0)
+					numbers[board[r][c].number] = true;
+
+
+			//set hints
+			for(int r = 0; r < board.length; r++)
+				for(int i = 0; i < numbers.length; i++)
+					if(numbers[i])
+						board[r][c].hints[i] = false;
+		}
+
+		//set row hints
+		for(int r = 0; r < board.length; r++) {
+			boolean[] numbers = new boolean[10];
+			//find numbers in col
+			for(int c = 0; c < board[0].length; c++)
+				if(board[r][c].number != 0)
+					numbers[board[r][c].number] = true;
+
+			//set hints
+			for(int c = 0; c < board.length; c++)
+				for(int i = 0; i < numbers.length; i++)
+					if(numbers[i])
+						board[r][c].hints[i] = false;
+		}
+		//set sub-board hints
+		for(int R = 0; R < 3; R++) {
+			for(int C = 0; C < 3; C++) {
+				boolean[] numbers = new boolean[10];
+				//find numbers in sub grid
+				for(int r = 0; r < 3; r++)
+					for(int c = 0; c < 3; c++)
+						if(board[R * 3 + r][C * 3 + c].number != 0)
+							numbers[board[R * 3 + r][C * 3 + c].number] = true;
+
+				//set hints
+				for(int r = 0; r < 3; r++)
+					for(int c = 0; c < 3; c++)
+						for(int i = 0; i < numbers.length; i++)
+							if(numbers[i])
+								board[R * 3 + r][C * 3 + c].hints[i] = false;
+
+
+			}
+		}
+
+		//TODO maybe check for lines of hints
+
+		return board;
+	}
+
+	private static Tile[][] setNumber(Tile[][] board) {
+		boolean doneDid = false;
+
+		//if only one possibility, set it to be that
+		for(int r = 0; r < board.length; r++) {
+			for(int c = 0; c < board[0].length; c++) {
+				if(board[r][c].number == 0) {
+					int cnt = 0;
+					int index = -1;
+					for(int i = 1; i < board[r][c].hints.length; i++) {
+						if(board[r][c].hints[i]) {
+							cnt++;
+							index = i;
 						}
 					}
-
-					if (foundHint)
-						setNum(board, r, c, hint);
+					if(cnt == 1)
+						if(!doneDid) {
+							board[r][c].number = index;
+							doneDid = true;
+						}
 				}
 			}
+		}
 
-			// only one hint in a group
-			it.reset();
-			Tile[] relevantTiles;
-			int[] encountered;
-			while (it.hasNext()) {
-				encountered = new int[10];
-				relevantTiles = new Tile[10];
-				Tile[] group = it.next();
+		//if only one in zone, do that
+		//for columns
 
-				for (Tile tile : group) {
-					// if the number is already commited we don't care about it.
-					if (tile.number != 0)
-						continue;
-					// count all of the hints
-					for (int i = 1; i <= 9; i++) {
-						if (!tile.hints[i])
-							continue;
-						encountered[i]++;
-						relevantTiles[i] = tile;
+
+		for(int c = 0; c < board[0].length; c++) {
+			int[] numbersCnt = new int[10];
+			int[] previousIndex = new int[10];
+
+			for(int r = 0; r < board.length; r++)
+				for(int i = 0; i < board[r][c].hints.length; i++)
+					if(board[r][c].number == 0)
+						if(board[r][c].hints[i]) {
+							numbersCnt[i]++;
+							previousIndex[i] = r;
+						}
+
+			for(int i = 1; i < numbersCnt.length; i++)
+				if(numbersCnt[i] == 1 && !doneDid) {
+					board[previousIndex[i]][c].number = i;
+					doneDid = true;
+				}
+		}
+
+		//for rows
+		for(int r = 0; r < board.length; r++) {
+			int[] numbersCnt = new int[10];
+			int[] previousIndex = new int[10];
+
+			for(int c = 0; c < board[0].length; c++)
+				for(int i = 0; i < board[r][c].hints.length; i++)
+					if(board[r][c].number == 0)
+						if(board[r][c].hints[i]) {
+							numbersCnt[i]++;
+							previousIndex[i] = c;
+						}
+			for(int i = 0; i < numbersCnt.length; i++)
+				if(numbersCnt[i] == 1)
+					if(!doneDid) {
+						board[r][previousIndex[i]].number = i;
+						doneDid = true;
 					}
-				}
+		}
 
-				// actually assign number if applicable
-				for (int i = 1; i <= 9; i++)
-					if (encountered[i] == 1)
-						// TODO refactor so that I keep track of r,c rather than a reference to the tile
-						relevantTiles[i].number = i;
-			}
-		} while (!equal(orig, board));
+		//for sub-boards
+		for(int R = 0; R < 3; R++) {
+			for(int C = 0; C < 3; C++) {
+				int[] numbersCnt = new int[10];
+				int[] previousR = new int[10];
+				int[] previousC = new int[10];
 
 
-		// guess and check O((n^2)!)
-		for (int r = 0; r < board.length; r++) {
-			for (int c = 0; c < board.length; c++) {
-				if (board[r][c].number != 0)
-					continue;
-				for (int i = 1; i <= 9; i++) {
-					if (!board[r][c].hints[i])
-						continue;
-					System.out.println("guessing " + i);
-					Tile[][] attempt = copy(board);
-					setNumber(attempt, r, c, i);
-					attempt[r][c].number = i;
-					attempt = solveBoard(attempt);
-					if (attempt != null)
-						return attempt;
-					
-					board[r][c].hints[i] = false;
-				}
+				for(int r = 0; r < 3; r++)
+					for(int c = 0; c < 3; c++)
+						if(board[R * 3 + r][C * 3 + c].number == 0)
+							for(int i = 0; i < board[R * 3 + r][C * 3 + c].hints.length; i++)
+								if(board[R * 3 + r][C * 3 + c].hints[i]) {
+									numbersCnt[i]++;
+									previousR[i] = R * 3 + r;
+									previousC[i] = C * 3 + c;
+								}
+				for(int i = 0; i < numbersCnt.length; i++)
+					if(numbersCnt[i] == 1)
+						if(!doneDid) {
+							board[previousR[i]][previousC[i]].number = i;
+							doneDid = true;
+						}
+
 			}
 		}
 		return board;
 	}
 
-	private int getNum(Tile[][] board) {
-		return board[0][0].number * 100 + board[0][1].number * 10 + board[0][2].number;
+	private static boolean equal(Tile[][] board1, Tile[][] board2) {
+		if(board1.length != board2.length || board1[0].length != board2[0].length)
+			return false;
+
+		for(int r = 0; r < board1.length; r++)
+			for(int c = 0; c < board1[0].length; c++)
+				if(!board1[r][c].equals(board2[r][c]))
+					return false;
+
+		return true;
+	}
+
+	private static Tile[][] copy(Tile[][] board) {
+		Tile[][] newBoard = new Tile[board.length][board[0].length];
+		for(int r = 0; r < board.length; r++)
+			for(int c = 0; c < board.length; c++)
+				newBoard[r][c] = new Tile(board[r][c]);
+		return newBoard;
+	}
+
+	private static Tile[][] getBoard(Scanner scanner) {
+		Tile[][] board = new Tile[9][9];
+		String gridNumber = scanner.nextLine();
+		for(int i = 0; i < 9; i++) {
+			String row = scanner.nextLine();
+			for(int j = 0; j < 9; j++)
+				board[i][j] = new Tile(row.charAt(j) - '0');
+		}
+
+		return board;
+	}
+
+	private static boolean isInvalid(Tile[][] board) {
+		if(board == null)
+			return true;
+
+		//check for doubles in same area
+
+		//check cols
+		for(int c = 0; c < board[0].length; c++) {
+			boolean[] numbers = new boolean[10];
+			for(int r = 0; r < board.length; r++)
+				if(board[r][c].number != 0) {
+					if(numbers[board[r][c].number])
+						return true;
+					numbers[board[r][c].number] = true;
+				}
+
+		}
+
+		//check rows
+		for(int r = 0; r < board.length; r++) {
+			boolean[] numbers = new boolean[10];
+			for(int c = 0; c < board[0].length; c++)
+				if(board[r][c].number != 0) {
+					if(numbers[board[r][c].number])
+						return true;
+					numbers[board[r][c].number] = true;
+				}
+
+		}
+		//check sub-boards
+		for(int R = 0; R < 3; R++) {
+			for(int C = 0; C < 3; C++) {
+				boolean[] numbers = new boolean[10];
+				for(int r = 0; r < 3; r++)
+					for(int c = 0; c < 3; c++)
+						if(board[R * 3 + r][C * 3 + c].number != 0) {
+							if(numbers[board[R * 3 + r][C * 3 + c].number])
+								return true;
+
+							numbers[board[R * 3 + r][C * 3 + c].number] = true;
+						}
+			}
+		}
+
+		//check for tiles with no hints
+		for(int r = 0; r < board.length; r++) {
+			for(int c = 0; c < board[0].length; c++) {
+				int cnt = 0;
+				for(int i = 1; i < board[r][c].hints.length; i++) {
+					if(board[r][c].number != 0 || board[r][c].hints[i]) {
+						cnt++;
+						break;
+					}
+				}
+				if(cnt == 0)
+					return true;
+			}
+		}
+
+		//check for areas with no possibility of getting a number
+
+		//check cols
+		for(int c = 0; c < board[0].length; c++) {
+			boolean[] numbers = new boolean[10];
+			for(int r = 0; r < board.length; r++)
+				if(board[r][c].number != 0)
+					numbers[board[r][c].number] = true;
+				else {
+					for(int i = 1; i < board[r][c].hints.length; i++) {
+						if(board[r][c].hints[i])
+							numbers[i] = true;
+					}
+				}
+			for(int i = 1; i < numbers.length; i++) {
+				if(!numbers[i])
+					return false;
+			}
+		}
+
+		//check rows
+		for(int r = 0; r < board.length; r++) {
+			boolean[] numbers = new boolean[10];
+			for(int c = 0; c < board[0].length; c++)
+				if(board[r][c].number != 0)
+					numbers[board[r][c].number] = true;
+				else {
+					for(int i = 1; i < board[r][c].hints.length; i++) {
+						if(board[r][c].hints[i])
+							numbers[i] = true;
+					}
+				}
+			for(int i = 1; i < numbers.length; i++) {
+				if(!numbers[i])
+					return false;
+
+			}
+		}
+		//check sub-boards
+		for(int R = 0; R < 3; R++) {
+			for(int C = 0; C < 3; C++) {
+				boolean[] numbers = new boolean[10];
+				for(int r = 0; r < 3; r++)
+					for(int c = 0; c < 3; c++) {
+						if(board[R * 3 + r][C * 3 + c].number != 0)
+							numbers[board[R * 3 + r][C * 3 + c].number] = true;
+						else {
+							for(int i = 1; i < board[R * 3 + r][C * 3 + c].hints.length; i++) {
+								if(board[R * 3 + r][C * 3 + c].hints[i])
+									numbers[i] = true;
+							}
+						}
+						for(int i = 1; i < numbers.length; i++) {
+							if(!numbers[i])
+								return false;
+						}
+					}
+			}
+		}
+		return false;
+	}
+
+	private static boolean isSolved(Tile[][] board) {
+		if(board == null)
+			return false;
+		if(board.length != 9 || board[0].length != 9)
+			return false;
+
+		//clever idea if I'm not just randomly guessing, but that's not how I decided to go about it
+		//return board[0][0].number != 0 && board[0][1].number != 0 && board[0][2].number != 0;
+
+		for(int r = 0; r < board.length; r++) {
+			for(int c = 0; c < board[0].length; c++) {
+				if(board[r][c].number == 0)
+					return false;
+			}
+		}
+
+		return !isInvalid(board);
+	}
+
+	private static int getNum(Tile[][] board) {
+		if(isSolved(board))
+			return Integer.valueOf(board[0][0].number + "" + board[0][1].number + "" + board[0][2].number);
+		return 0;
 	}
 
 	@Override
-	public File getTestParameter() {
+	public File getTestParameter(){
 		return new File("p096test.txt");
 	}
 
 	@Override
-	public long getTestSolution() {
-		return 483;
+	public long getTestSolution(){
+		return 485;
 	}
 
 	@Override
-	public String getTitle() {
+	public String getTitle(){
 		return "Problem 096: Su Doku";
 	}
 }
