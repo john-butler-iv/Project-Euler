@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 class EulerTools {
 	public static final BigDecimal TWO = new BigDecimal("2.0");
+	public static final double DEFAULT_EPSILON = 0.000001;
 
 	/**
 	 * Finds n! = 1 * 2 * ... * n. If that doesn't fit in an int, result is undefined.
@@ -467,5 +468,12 @@ class EulerTools {
 		double denomonator = 2 * pa * pc;
 
 		return Math.acos(numerator / denomonator);
+	}
+
+	public static boolean epsilonEquals(double d1, double d2, double epsilon){
+		return Math.abs(d1 - d2) <= epsilon;
+	}
+	public static boolean epsilonEquals(double d1, double d2){
+		return epsilonEquals(d1, d2, DEFAULT_EPSILON);
 	}
 }

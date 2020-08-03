@@ -1,0 +1,75 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=0.75in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{xcolor}
+\usepackage{framed}
+
+
+\definecolor{shadecolor}{RGB}{0,113,186}
+\usepackage{xparse}
+\NewDocumentCommand{\DIV}{om}{%
+  \IfValueT{#1}{\setcounter{#2}{\numexpr#1-1\relax}}%
+  \csname #2\endcsname
+}
+
+
+\title{Project Euler, Problem 144:\\\large{Investigating Multiple Reflections of a Laser Beam}}
+\author{John Butler}
+\date{}							% Activate to display a given date or no date
+
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Problem Description}
+	
+\section{Theorems whose results aid in my solution}
+
+\subsection{The ellipse $4x^2 + y^2 = 100$ can be rewritten as $y = \pm \sqrt{100 - 4x^2}$}
+	\begin{align*}
+		4x^2 + y^2 &= 100\\
+		y^2 &= 100 - 4x^2\\
+		y &= \pm \sqrt{100 - 4x^2}
+	\end{align*}
+
+\subsection{Given some line, $y=mx+b$ that intersects the ellipse $4x^2+y^2=100$, then the x coordinates of the 
+intersection points are at $$x_{+,-} = \frac{-2bm \pm \sqrt{(2bm)^2 - 4(4+m^2)(b^2 - 100)}}{2(4 + m^2)}$$ 
+meaning the points lie at $(x_+,mx_++b)$ and $(x_-, mx_- + b)$}
+	\begin{align*}
+		4x^2 + y^2 = 100 &\iff y = \pm \sqrt{100-4x^2 }\\
+		\text{The intersections happens when the line}&\text{ and ellipse have the same $x$ and $y$ coordinates.}\\
+		\therefore mx+b = y &= \pm \sqrt{100 - 4x^2}\\
+		mx+b  &= \pm \sqrt{100 - 4x^2}\\
+		(mx+b)^2 &= (\pm\sqrt{100 - 4x^2})^2\\
+		m^2x^2 + 2bmx + b^2 &= 100 - 4x^2\\
+		(m^2 + 4)x^2 + (2bm)x + (b^2 - 100) &= 0\\
+		\text{We can solve for }&x\text{ using the quadradic formula}\\
+		x_{+,-} &= \frac{-2bm \pm \sqrt{(2bm)^2 - 4(4+m^2)(b^2 - 100)}}{2(4 + m^2)}\\
+		\text{The intersection point are on the line,}&\text{ so if we plug in each $x$, we get:}\\
+		y_+ &= mx_++b\\
+		\text{and }y_- &= mx_- + b\\
+		\text{So the intersection points are }&(x_+,mx_++b) \text{ and }(x_-, mx_- + b)
+	\end{align*}
+
+\subsection{Lemma: if $m$ is the slope of a line, and $\theta$ is the angle between that line and the x-axis,
+then $$\tan\theta = m$$}
+
+\subsection{If $m_{l_1}, m_{l_2}, m_t$ are the slopes of the incoming line, reflected line, 
+and tangent line, respectively, then $$m_{l_2} = \tan\left(2\times \arctan(m_t) - \arctan(m_{l_1})\right)$$}
+\section{Application to Code}
+
+\section{Complexity Analysis / Further Optimizations}
+
+
+\end{document}  
