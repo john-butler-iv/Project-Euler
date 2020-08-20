@@ -8,7 +8,16 @@ public class P301 extends ParameterizedProblem<Integer>{
 	
 	@Override
 	public long solve(Integer maxN, boolean printResults){
-		return 0;
+		int cnt = 0;
+
+		for(int num = maxN; num > 0; --num)
+			//I honestly don't really understand the formula, I just found it on Wikipedia
+			if((num ^ (2*num) ^ (3*num)) == 0)
+				++cnt;
+
+		if(printResults)
+			System.out.println("There are " + cnt + " n <= " + maxN + " such that X(n, 2n, 3n) = 0.");
+		return cnt;
 	}
 
 	@Override

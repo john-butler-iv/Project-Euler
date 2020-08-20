@@ -15,12 +15,14 @@ class ProblemTimer1To50 extends ProblemTimer {
 
 		ProblemTimer51To100 instance = new ProblemTimer51To100();
 		if(args[0].toLowerCase().equals("solve")){
+			if(args[1].toLowerCase().equals("all")){
+				instance.solveAll();
+				return;
+			}
 			for(int i = 1; i < args.length; i++){
 				try{
 					int pid = Integer.valueOf(args[i]);
-					if(pid > 50)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid <= 0)
+					if(pid > 50 || pid <= 0)
 						System.out.println("There is no problem numbered " + pid);
 					else {
 						Problem problem = instance.problems[pid - 1];
@@ -35,7 +37,23 @@ class ProblemTimer1To50 extends ProblemTimer {
 				}
 			}
 		} else if(args[0].toLowerCase().equals("report")){
-
+			if(args[1].toLowerCase().equals("all")){
+				instance.reportAll();
+				return;
+			}
+			for(int i = 1; i < args.length; i++){
+				try{
+					int pid = Integer.valueOf(args[i]);
+					if(pid > 50)
+						System.out.println("There is no problem numbered " + pid);
+					else if (pid <= 0)
+						System.out.println("There is no problem numbered " + pid);
+					else 
+						instance.report(pid - 1);
+				} catch(NumberFormatException e){
+					System.out.println(args[i] + " is an invalid problem number");
+				}
+			}
 		} else printUsage();
 
 	}

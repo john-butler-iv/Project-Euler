@@ -234,6 +234,9 @@ public class CollectionTools {
 	 * @return true if str1 and str2 are permutations of each other
 	 */
 	public static boolean arePermutations(String str1, String str2) {
+		if(str1.length() != str2.length())
+			return false;
+
 		// count the characters in str1 
 		int[] set1 = new int[Character.MAX_VALUE];
 		for(char ch : str1.toCharArray())
@@ -245,6 +248,21 @@ public class CollectionTools {
 			set2[(int)ch]++;
 
 		// chech if they have the same amount of each characters
+		return Arrays.equals(set1, set2);
+	}
+
+	public static boolean areNumPermutations(String str1, String str2){
+		if(str1.length() != str2.length())
+			return false;
+		
+		int[] set1 = new int[10];
+		for(int i = 0; i < str1.length(); i++)
+			set1[str1.charAt(i) - '0']++;
+		
+		int[] set2 = new int[10];
+		for(int i = 0; i < str2.length(); i++)
+			set2[str2.charAt(i) - '0']++;
+
 		return Arrays.equals(set1, set2);
 	}
 
@@ -260,6 +278,9 @@ public class CollectionTools {
 	 * @return true if str1 and str2 are permutations of each other, otherwise false
 	 */
 	public static boolean arePermutations(String str1, String str2, Map<Character, Integer> indexing){
+		if(str1.length() != str2.length())
+			return false;
+
 		// initialize the character counter for str1
 		int[] set1 = new int[indexing.size()];
 		for(int i = 0; i < set1.length; i++)

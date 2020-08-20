@@ -163,7 +163,7 @@ class PrimeFinder {
 
 		// since we remove each prime factor of n, we'll know we've finished because
 		// there are no more factors i.e. n = 1
-		for (int i = 0; n != 1; i++) {
+		for (int i = 0; n > 1; i++) {
 			while (n % primes.get(i) == 0) {
 				factors.add(primes.get(i));
 				n /= primes.get(i);
@@ -253,6 +253,13 @@ class PrimeFinder {
 	 * @return returns the greatest common denomonator between a and b
 	 */
 	public int gcd(int a, int b) {
+		if(a == 1 || b == 1)
+			return 1;
+		if(a == 0)
+			return b;
+		if(b == 0)
+			return a;
+
 		List<Integer> aFactors = primeFactorize(a);
 		List<Integer> bFactors = primeFactorize(b);
 

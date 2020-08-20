@@ -2,7 +2,7 @@
 \contentsline {section}{\numberline {2}Theorems whose results aid in my solution}{2}%
 \contentsline {subsection}{\numberline {2.1}The ellipse $4x^2 + y^2 = 100$ can be rewritten as $y = \pm \sqrt {100 - 4x^2}$}{2}%
 \contentsline {subsection}{\numberline {2.2}Given some line, $y=mx+b$ that intersects the ellipse $4x^2+y^2=100$, then the x coordinates of the intersection points are at $$x_{+,-} = \frac {-2bm \pm \sqrt {(2bm)^2 - 4(4+m^2)(b^2 - 100)}}{2(4 + m^2)}$$ meaning the points lie at $(x_+,mx_++b)$ and $(x_-, mx_- + b)$}{2}%
-\contentsline {subsection}{\numberline {2.3}Lemma: if $m$ is the slope of a line, and $\theta $ is the angle between that line and the x-axis, then $$\qopname \relax o{tan}\theta = m$$}{2}%
-\contentsline {subsection}{\numberline {2.4}If $m_{l_1}, m_{l_2}, m_t$ are the slopes of the incoming line, reflected line, and tangent line, respectively, then $$m_{l_2} = \qopname \relax o{tan}\left (2\times \qopname \relax o{arctan}(m_t) - \qopname \relax o{arctan}(m_{l_1})\right )$$}{2}%
-\contentsline {section}{\numberline {3}Application to Code}{2}%
-\contentsline {section}{\numberline {4}Complexity Analysis / Further Optimizations}{2}%
+\contentsline {subsection}{\numberline {2.3}Lemma: if $m$ is the slope of a line, and $\theta $ is the angle between that line and the x-axis, then $$\qopname \relax o{tan}\theta = m$$}{3}%
+\contentsline {subsection}{\numberline {2.4}If $m_i, m_r, m_t$ are the slopes of the incoming line, reflected line, and tangent line, respectively, then $$m_r = \qopname \relax o{tan}\left (2\times \qopname \relax o{arctan}(m_t) - \qopname \relax o{arctan}(m_i)\right )$$}{3}%
+\contentsline {section}{\numberline {3}Application to Code}{4}%
+\contentsline {section}{\numberline {4}Complexity Analysis / Further Optimizations and Considerations}{4}%

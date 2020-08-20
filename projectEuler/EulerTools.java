@@ -24,6 +24,21 @@ class EulerTools {
 	}
 
 	/**
+	 * Computes all factorials up to and including maxFact where
+	 * factorialTable(n)[m] = m! if m <= n.
+	 * 
+	 * @param maxFact the upper limit of factorials to compute
+	 * @return an array of ints where factorialTable(n)[m] = m!
+	 */
+	public static int[] factorialTable(int maxFact){
+		int[] table = new int[maxFact + 1];
+		table[0] = 1;
+		for(int i = 1; i < table.length; i++)
+			table[i] = i * table[i - 1];
+		return table;
+	}
+
+	/**
 	 * Finds n! = 1 * 2 * ... * n. Meant for one off uses. If you want to find many factorials,
 	 * use bigFactorialIterator() or factorialIterator().
 	 *
@@ -230,7 +245,7 @@ class EulerTools {
 	 * @param maxFact the upper limit of factorials to compute
 	 * @return an array of BigIntegers where factorialTable(n)[m] = m!
 	 */
-	public static BigInteger[] factorialTable(int maxFact) {
+	public static BigInteger[] bigFactorialTable(int maxFact) {
 		BigInteger[] factorials = new BigInteger[maxFact + 1];
 		factorials[0] = BigInteger.ONE;
 		for (int i = 0; i <= maxFact; i++)
@@ -475,5 +490,10 @@ class EulerTools {
 	}
 	public static boolean epsilonEquals(double d1, double d2){
 		return epsilonEquals(d1, d2, DEFAULT_EPSILON);
+	}
+
+	public static int choose(int n, int k, int[] factorials){
+		return factorials[n] / (factorials[k]*factorials[n-k]);
+
 	}
 }

@@ -72,7 +72,7 @@ class P018 extends ParameterizedProblem<String> {
 
 	@Override
 	protected String getTestParameter() {
-		return "p018text.txt";
+		return "p018test.txt";
 	}
 
 	@Override
