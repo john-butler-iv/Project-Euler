@@ -10,7 +10,7 @@ public class P315 extends Problem {
 
 		//TODO optimize search
 		int index = 0;
-		while(pf.get(index) < 10000000)
+		while(primes.get(index) < 10000000)
 			index++;
 
 		//	000
