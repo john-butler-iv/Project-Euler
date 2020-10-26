@@ -93,6 +93,28 @@
 			\therefore \text{ an odd plus an }&\text{odd equals an even.}
 		\end{align*}
 
+\section{}
+\subsection{$\sum\limits_{n=1}^{N}n= \frac{N(N+1)}{2}$}
+	Proof by induction:\\
+	Case $N=1$:
+	\begin{align*}
+		\sum\limits_{n=1}^{N}n &= \sum\limits_{n=1}^{1}n \\
+		&= 1\\
+		&= \frac 2 2\\
+		&= \frac{1\cdot(1 + 1)}{2}\\
+		&= \frac{N(N+1)}{2}
+	\end{align*}
+	Assume $\sum\limits_{n=1}^{N}n= \frac{N(N+1)}{2}$:
+	\begin{align*}
+		\sum_{n=1}^N n &= \frac{N(N+1)} 2\\
+		\left(\sum_{n = 1}^N n\right) + (N + 1) &= \frac {N(N+1)} 2 + (N+1)\\
+		\sum_{n = 1}^{N+1} n &= \frac {N ( N+1)} 2 + \frac{2(N + 1)} 2\\
+		\sum_{n = 1}^{N+1} n &= \frac {N ( N+1) + 2(N + 1)} 2\\
+		\sum_{n = 1}^{N+1} n &= \frac {(N+1)\cdot (N + 2)} 2\\
+		\sum_{n = 1}^{N+1} n &= \frac{(N+1)\cdot ((N+1) + 1)} 2
+	\end{align*}
+
+	Therefore by induction, $\forall N \in \mathbb{N}, \sum\limits_{n=1}^{N}n= \frac{N(N+1)}{2}$
 
 
 \end{document}

@@ -26,7 +26,7 @@ class EulerTools {
 	/**
 	 * Computes all factorials up to and including maxFact where
 	 * factorialTable(n)[m] = m! if m <= n.
-	 * 
+	 *
 	 * @param maxFact the upper limit of factorials to compute
 	 * @return an array of ints where factorialTable(n)[m] = m!
 	 */
@@ -62,7 +62,7 @@ class EulerTools {
 		return new Iterator<Integer>() {
 			int fact = 1;
 			int index = 0;
-			
+
 			@Override
 			public boolean hasNext() {
 				return fact > 0;
@@ -88,7 +88,7 @@ class EulerTools {
 			BigInteger fact = BigInteger.ONE;
 			BigInteger index = BigInteger.ZERO;
 
-			@Override 
+			@Override
 			public boolean hasNext() {
 				return true;
 			}
@@ -109,7 +109,7 @@ class EulerTools {
 	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... ),
 	 * but behavior is only defined while the numbers can fit in an int. hasNext()
 	 * will return false after the final valid Fibonacci number has been generated.
-	 * 
+	 *
 	 * @return an Iterator which iterates over all Fibonacci numbers which
 	 *         can fit in an int.
 	 */
@@ -156,7 +156,7 @@ class EulerTools {
 
 	/**
 	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... )
-	 * 
+	 *
 	 * @return an Iterator which iterates over the Fibonacci numbers with no
 	 *         limit.
 	 */
@@ -204,7 +204,7 @@ class EulerTools {
 	/**
 	 * Determines whether the string passed is pandigital, that is only contains the
 	 * digits 1-9 each exactly once.
-	 * 
+	 *
 	 * @param str a string which may or may not be pandigital
 	 * @return true if str is pandigital, false otherwise.
 	 */
@@ -224,7 +224,7 @@ class EulerTools {
 	/**
 	 * Determines whether str is a palindrome i.e. it is the same forwards and
 	 * backwards
-	 * 
+	 *
 	 * @param str a String which may or may not be a palindrome
 	 * @return true if str is a palindrome, false otherwise
 	 */
@@ -241,7 +241,7 @@ class EulerTools {
 	/**
 	 * Computes all factorials up to and including maxFact where
 	 * factorialTable(n)[m] = m! if m <= n.
-	 * 
+	 *
 	 * @param maxFact the upper limit of factorials to compute
 	 * @return an array of BigIntegers where factorialTable(n)[m] = m!
 	 */
@@ -257,7 +257,7 @@ class EulerTools {
 	/**
 	 * Computes n! = n * (n-1) * ... * 2 * 1. Designed for single use, if you wish
 	 * have many factorial values, use the factorialTable function.
-	 * 
+	 *
 	 * @param n the number whose factorial we will compute
 	 * @return n! as a BigInteger
 	 */
@@ -272,7 +272,7 @@ class EulerTools {
 
 	/**
 	 * Finds the nth triangular number, where triangle(1) = 1
-	 * 
+	 *
 	 * @param n the index of the triangle number
 	 * @return the nth triangular number
 	 */
@@ -282,7 +282,7 @@ class EulerTools {
 
 	/**
 	 * Finds the nth triangular number, where triangleL(1) = 1
-	 * 
+	 *
 	 * @param n the index of the triangle number
 	 * @return the nth triangular number
 	 */
@@ -292,7 +292,7 @@ class EulerTools {
 
 	/**
 	 * finds the nth pentagonal number, where pentagon(1) = 1
-	 * 
+	 *
 	 * @param n the index of the pentagonal number
 	 * @return the nth pentagonal number
 	 */
@@ -301,7 +301,7 @@ class EulerTools {
 	}
 	/**
 	 * finds the nth pentagonal number, where pentagonL(1) = 1
-	 * 
+	 *
 	 * @param n the index of the pentagonal number
 	 * @return the nth pentagonal number
 	 */
@@ -311,7 +311,7 @@ class EulerTools {
 
 	/**
 	 * finds the nth hexagonal number, where hexagon(1) = 1
-	 * 
+	 *
 	 * @param n the index of the hexagonal number
 	 * @return the nth hexagonal number
 	 */
@@ -321,7 +321,7 @@ class EulerTools {
 
 	/**
 	 * finds the nth hexagonal number, where hexagonL(1) = 1
-	 * 
+	 *
 	 * @param n the index of the hexagonal number
 	 * @return the nth hexagonal number
 	 */
@@ -362,7 +362,7 @@ class EulerTools {
 
 	/**
 	 * Determines whether tri is or is not a triangular number
-	 * 
+	 *
 	 * @param t a number which may or may not be a triangular number
 	 * @return true if t is a triangular number, false otherwise
 	 */
@@ -373,7 +373,7 @@ class EulerTools {
 
 	/**
 	 * determines if s is a perfect square
-	 * 
+	 *
 	 * @param s a number which may or may not be a perfect square
 	 * @return true if s is a perfect square, false otherwise
 	 */
@@ -399,7 +399,7 @@ class EulerTools {
 
 	/**
 	 * Determines if p is a pentagonal number
-	 * 
+	 *
 	 * @param p a number which may or may not be pentagonal
 	 * @return true if p is pentagonal, false otherwise
 	 */
@@ -410,7 +410,7 @@ class EulerTools {
 	/**
 	 * computes the next Collatz number based on the starting input: n → n/2 (n is
 	 * even) n → 3n + 1 (n is odd)
-	 * 
+	 *
 	 * @param n the "seed" value for the Collatz sequence
 	 * @return the next Collatz number after n
 	 */
@@ -420,7 +420,7 @@ class EulerTools {
 
 	/**
 	 * determines if d can be expressed as an int without any data loss
-	 * 
+	 *
 	 * @param d a double which is potentially an integer
 	 * @return true if d can be expressed as an int without any data loss,
 	 *         false otherwise
@@ -447,7 +447,7 @@ class EulerTools {
 
 	/**
 	 *	Finds the square of the Euclidean distance between the two points i.e. (x2 - x1)^2 + (y2 - y1)^2.
-	 *	If the exact distance is not needed, for example finding shortest distance, it may be enough to 
+	 *	If the exact distance is not needed, for example finding shortest distance, it may be enough to
 	 *	use this function and not have to compute sqrt.
 	 *
 	 *	@param x1 the x-coordinate of the first point
@@ -465,7 +465,7 @@ class EulerTools {
 
 	/**
 	 * Finds the angle in radians between the rays pa and pc using the law of cosines
-	 * 
+	 *
 	 * @param ax x-coordinate of a point on one of the rays from point p.
 	 * @param ax y-coordinate of a point on one of the rays from point p.
 	 * @param px x value of the vertex
@@ -496,4 +496,4 @@ class EulerTools {
 		return factorials[n] / (factorials[k]*factorials[n-k]);
 
 	}
-}
+	}

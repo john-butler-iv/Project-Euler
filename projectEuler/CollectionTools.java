@@ -160,7 +160,7 @@ public class CollectionTools {
 	 * @return the next permutation of str.
 	 */
 	public static String permute(String str) {
-		if (str == null)
+		if (str == null || str.equals(""))
 			return null;
 
 		// assigns the pivot to before the last "run" in the string

@@ -302,16 +302,46 @@ class PrimeFinder {
 	 * @return returns φ(n) <=> how many numbers below n are coprime with n
 	 */
 	public int totient(int n) {
-		int totientValue = n;
-		List<Integer> factors = uniquePrimeFactorize(n);
-		int denomonator = 1;
-		for (int i = 0; i < factors.size(); i++) {
-			denomonator *= factors.get(i);
-			totientValue -= n / denomonator;
+		// there can be overflow, so I convert to a long before converting back
+		long totientValue = n;
+		for(int prime : uniquePrimeFactorize(n)){
+			totientValue *= prime - 1;
+			totientValue /= prime;
 		}
-		return totientValue;
+		return (int)totientValue;
 	}
 
+	/**
+	 * Computes all totients from 1 to n-1, inclusive using a sieve algorithm. This is faster than repeatedly 
+	 * using totient(int). As a result, if you need all totient values, use this method instead.
+	 * static totientTable(n)[i] = totient(i) for all i.
+	 *
+	 * @param n the limit to what totients are calculated
+	 */
+	public static int[] totientTable(int n){
+		int[] totientTable = new int[n];
+		for(int i = 1; i < totientTable.length; i++)
+			totientTable[i] = i;
+
+
+		for(int i = 2; i < totientTable.length; i++){
+			// check if i is prime
+			if(totientTable[i] == i){
+				// totient(prime) = prime - 1
+				totientTable[i]--;
+
+				for(int j = 2 * i; j < totientTable.length; j+= i){
+					// there can be overflow here, so I convert to a long to ensure that doesn't happen.
+					long updatedTotient = totientTable[j] * (long)(i - 1);
+					updatedTotient /= i;
+
+					totientTable[j] = (int) updatedTotient;
+				}
+			}
+		}
+
+		return totientTable;
+	}
 	/**
 	 * counts the number of divisors of n, including 1 and n
 	 * 
