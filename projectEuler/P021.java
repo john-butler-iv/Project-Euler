@@ -2,6 +2,7 @@ package projectEuler;
 
 class P021 extends Problem {
 
+	@Override
 	public boolean test() {
 		PrimeFinder pf = new PrimeFinder(200);
 		int sigI = pf.sigma(220);

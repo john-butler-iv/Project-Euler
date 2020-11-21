@@ -43,21 +43,21 @@ class P022 extends Problem {
 			return totalScores(new int[] { 0, 0 })[SCORE];
 		}
 
-		private int[] totalScores(int[] score_pos) {
+		private int[] totalScores(int[] scorePos) {
 			// by using an in order traversal, I guaruntee the name are positioned right
 			// left
 			if (left != null)
-				score_pos = left.totalScores(score_pos);
+				scorePos = left.totalScores(scorePos);
 
 			// this
-			score_pos[POSITION]++;
-			score_pos[SCORE] += this.score(score_pos[POSITION]);
+			scorePos[POSITION]++;
+			scorePos[SCORE] += this.score(scorePos[POSITION]);
 
 			// right
 			if (right != null)
-				score_pos = right.totalScores(score_pos);
+				scorePos = right.totalScores(scorePos);
 
-			return score_pos;
+			return scorePos;
 		}
 
 		public int score(int position) {
@@ -73,6 +73,7 @@ class P022 extends Problem {
 		}
 	}
 
+	@Override
 	public boolean test() {
 		NameTree tree = new NameTree("COLIN");
 		return tree.score(938) == 49714;
@@ -81,6 +82,8 @@ class P022 extends Problem {
 	@Override
 	public long solve(boolean printResults) {
 		NameTree tree = readData("p022.txt");
+		if (tree == null)
+			return -1;
 
 		int totalScore = tree.totalScores();
 
@@ -100,6 +103,7 @@ class P022 extends Problem {
 			while (scanner.hasNext())
 				tree.insert(scanner.next().toUpperCase());
 
+			scanner.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

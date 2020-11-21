@@ -33,7 +33,7 @@ public class P046 extends Problem {
 		}
 
 		if (printResults)
-			System.out.println("could not find a counter example. Maybe the prime limit is too small");
+			System.out.println("could not find a counter example. Maybe the prime limit is too small?");
 		return -1;
 	}
 

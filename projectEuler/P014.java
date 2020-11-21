@@ -4,6 +4,7 @@ class P014 extends Problem {
 
 	private long[] lengthCache;
 
+	@Override
 	public boolean test() {
 		initCache(41);
 		return collatzLength(13) == 10;
@@ -31,7 +32,7 @@ class P014 extends Problem {
 		return biggestStart;
 	}
 
-	private void initCache(int size){
+	private void initCache(int size) {
 		lengthCache = new long[size];
 		lengthCache[1] = 1;
 	}

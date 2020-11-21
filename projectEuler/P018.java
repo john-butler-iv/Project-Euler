@@ -14,6 +14,8 @@ class P018 extends ParameterizedProblem<String> {
 	@Override
 	public long solve(String treeFilename, boolean printResults) {
 		int[] tree = readData(treeFilename);
+		if (tree == null)
+			return -1;
 		int[] sums = new int[tree.length];
 
 		// using an inductive algorithm
@@ -33,13 +35,11 @@ class P018 extends ParameterizedProblem<String> {
 	}
 
 	private static int leftChild(int i) {
-		int child = i + layerNumber(i) + 1;
-		return child;
+		return i + layerNumber(i) + 1;
 	}
 
 	private static int rightChild(int i) {
-		int child = leftChild(i) + 1;
-		return child;
+		return leftChild(i) + 1;
 	}
 
 	private static int layerNumber(int n) {
@@ -60,9 +60,9 @@ class P018 extends ParameterizedProblem<String> {
 			input.close();
 			return tree;
 		} catch (FileNotFoundException e) {
-			System.out.println("Could not find file \"" + filename + "\"");
+			System.err.println("Could not find file \"" + filename + "\"");
+			return null;
 		}
-		return null;
 	}
 
 	@Override

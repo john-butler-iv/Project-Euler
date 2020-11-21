@@ -19,29 +19,29 @@ public class P043 extends Problem {
 	}
 
 	private static long satisfiesConditions(String str) {
-		int subStr = Integer.valueOf(str.substring(1, 4));
+		int subStr = Integer.parseInt(str.substring(1, 4));
 		if (subStr % 2 != 0)
 			return 0;
-		subStr = Integer.valueOf(str.substring(2, 5));
+		subStr = Integer.parseInt(str.substring(2, 5));
 		if (subStr % 3 != 0)
 			return 0;
-		subStr = Integer.valueOf(str.substring(3, 6));
+		subStr = Integer.parseInt(str.substring(3, 6));
 		if (subStr % 5 != 0)
 			return 0;
-		subStr = Integer.valueOf(str.substring(4, 7));
+		subStr = Integer.parseInt(str.substring(4, 7));
 		if (subStr % 7 != 0)
 			return 0;
-		subStr = Integer.valueOf(str.substring(5, 8));
+		subStr = Integer.parseInt(str.substring(5, 8));
 		if (subStr % 11 != 0)
 			return 0;
-		subStr = Integer.valueOf(str.substring(6, 9));
+		subStr = Integer.parseInt(str.substring(6, 9));
 		if (subStr % 13 != 0)
 			return 0;
-		subStr = Integer.valueOf(str.substring(7));
+		subStr = Integer.parseInt(str.substring(7));
 		if (subStr % 17 != 0)
 			return 0;
 
-		return Long.valueOf(str);
+		return Long.parseLong(str);
 	}
 
 	@Override

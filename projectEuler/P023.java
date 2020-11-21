@@ -14,7 +14,7 @@ class P023 extends ParameterizedProblem<Integer> {
     @Override
     public long solve(Integer maxNum, boolean printResults) {
         PrimeFinder pf = new PrimeFinder(maxNum + 1);
-        List<Integer> abundantNums = new ArrayList<Integer>();
+        List<Integer> abundantNums = new ArrayList<>();
         // find all relavent abundant numbers
         abundantNums.add(12);
         for (int i = 13; i <= maxNum; i++)

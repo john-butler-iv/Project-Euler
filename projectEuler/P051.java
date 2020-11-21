@@ -7,11 +7,6 @@ public class P051 extends ParameterizedProblem<Integer> {
 		return 8;
 	}
 
-	public static void main(String[] args) {
-		new P051().solve(8, true);
-		System.out.println(new P051().test());
-	}
-
 	@Override
 	public long solve(Integer numPrimes, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(200000);
@@ -39,7 +34,7 @@ public class P051 extends ParameterizedProblem<Integer> {
 			for (int digit = 0; digit <= 9; digit++) {
 
 				// A is the digit we're replacing, so replace the A's with the current digit
-				int num = Integer.valueOf(basePattern.replace('a', (char) (digit + '0')));
+				int num = Integer.parseInt(basePattern.replace('a', (char) (digit + '0')));
 
 				// check if the converted digit works
 				if (pf.isPrime(num)) {

@@ -1,11 +1,9 @@
 package projectEuler;
 
-import java.lang.NumberFormatException;
-
 public class ProblemTimer51To100 extends ProblemTimer {
 
 	public static void printUsage() {
-		System.out.println("Usage: java projectEuler.ProblemTimer51To100 <solve/report> <pid pid ...>");
+		System.err.println("Usage: java projectEuler.ProblemTimer51To100 <solve/report> <pid pid ...>");
 	}
 
 	public static void main(String[] args) {
@@ -15,8 +13,8 @@ public class ProblemTimer51To100 extends ProblemTimer {
 		}
 
 		ProblemTimer51To100 instance = new ProblemTimer51To100();
-		if (args[0].toLowerCase().equals("solve")) {
-			if (args[1].toLowerCase().equals("all")) {
+		if (args[0].equalsIgnoreCase("solve")) {
+			if (args[1].equalsIgnoreCase("all")) {
 				instance.solveAll();
 				return;
 			}
@@ -39,14 +37,14 @@ public class ProblemTimer51To100 extends ProblemTimer {
 					System.out.println(args[i] + " is an invalid problem number");
 				}
 			}
-		} else if (args[0].toLowerCase().equals("report")) {
-			if (args[1].toLowerCase().equals("all")) {
+		} else if (args[0].equalsIgnoreCase("report")) {
+			if (args[1].equalsIgnoreCase("all")) {
 				instance.reportAll();
 				return;
 			}
 			for (int i = 1; i < args.length; i++) {
 				try {
-					int pid = Integer.valueOf(args[i]);
+					int pid = Integer.parseInt(args[i]);
 					if (pid > 100)
 						System.out.println("There is no problem numbered " + pid);
 					else if (pid <= 0)

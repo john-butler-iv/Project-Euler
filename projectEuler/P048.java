@@ -15,9 +15,6 @@ public class P048 extends ParameterizedProblem<Integer> {
 
 		// calculate the sum with no fancy techniques
 
-		// \iff
-		// for(int i = 1; i < parameter; i++)
-		// sum += Math.pow(i, i);
 		for (BigInteger i = BigInteger.ONE; i.intValue() < maxExponent; i = i.add(BigInteger.ONE))
 			sum = sum.add(i.pow(i.intValue()));
 

@@ -11,6 +11,7 @@ class P011 extends Problem {
 		grid = readData("p011.txt");
 	}
 
+	@Override
 	public boolean test() {
 		return sumDir(6, 8, 1, 1) == 1788696;
 	}
@@ -26,7 +27,7 @@ class P011 extends Problem {
 
 			input.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("cannot find file " + fileName);
+			System.err.println("cannot find file " + fileName);
 			return null;
 		}
 
@@ -76,5 +77,4 @@ class P011 extends Problem {
 	public String getTitle() {
 		return "Problem 011: Largest Product in a Grid";
 	}
-
 }

@@ -23,7 +23,7 @@ class P013 extends Problem {
 
 			input.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("cannot find file " + filename);
+			System.err.println("cannot find file " + filename);
 		}
 
 		return nums;

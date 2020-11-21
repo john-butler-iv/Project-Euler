@@ -6,7 +6,7 @@ class P031 extends Problem {
     public long solve(boolean printResults) {
         int totalCombinations = 0;
         // there is almost certainly a combinatorics way to figure this out, but I'm too
-        // lazy to figure it out and I've never taken a combinatorics class
+        // lazy to figure it out and I've never properly learned combinatorics
         for (int p1 = 0; p1 <= 200; p1++)
             for (int p2 = 0; p2 <= 200; p2 += 2)
                 for (int p5 = 0; p5 <= 200; p5 += 5)

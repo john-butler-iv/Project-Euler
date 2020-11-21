@@ -5,13 +5,12 @@ import java.util.ArrayList;
 class P026 extends ParameterizedProblem<Integer> {
 
     @Override
-	public Integer getDefaultParameter() {
+    public Integer getDefaultParameter() {
         return 1000;
     }
 
-    public @Override
-    long solve(Integer maxD, boolean printResults) {
-
+    @Override
+    public long solve(Integer maxD, boolean printResults) {
         int largestLength = -1;
         int largestD = -1;
 

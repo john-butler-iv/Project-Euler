@@ -23,7 +23,7 @@ class P038 extends Problem {
 				if (printResults)
 					System.out
 							.println(str + " is the largest pandigital concatenation of an integer and its multiples.");
-				return Long.valueOf(str);
+				return Long.parseLong(str);
 			}
 		}
 

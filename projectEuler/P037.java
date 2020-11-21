@@ -11,8 +11,8 @@ class P037 extends Problem {
 		String primeStr = String.valueOf(3797);
 
 		for (int k = 0; k < primeStr.length(); k++) {
-			int truncLeft = Integer.valueOf(primeStr.substring(0, k + 1));
-			int truncRight = Integer.valueOf(primeStr.substring(k));
+			int truncLeft = Integer.parseInt(primeStr.substring(0, k + 1));
+			int truncRight = Integer.parseInt(primeStr.substring(k));
 
 			if (!(pf.isPrime(truncLeft) && pf.isPrime(truncRight)))
 				return false;
@@ -35,8 +35,8 @@ class P037 extends Problem {
 			String primeStr = String.valueOf(prime);
 
 			for (int k = 0; k < primeStr.length(); k++) {
-				int truncLeft = Integer.valueOf(primeStr.substring(0, k + 1));
-				int truncRight = Integer.valueOf(primeStr.substring(k));
+				int truncLeft = Integer.parseInt(primeStr.substring(0, k + 1));
+				int truncRight = Integer.parseInt(primeStr.substring(k));
 
 				if (!(pf.isPrime(truncLeft) && pf.isPrime(truncRight))) {
 					truncatable = false;

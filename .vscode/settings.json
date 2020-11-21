@@ -4,6 +4,12 @@
 		"**/.classpath": true,
 		"**/.factorypath": true,
 		"**/.project": true,
-		"**/.settings": true
+		"**/.settings": true,
+
+		"**/projectEuler/*.class": true,
+
+		"**/LaTeX writeups/*/*.aux": true,
+		"**/LaTeX writeups/*/*.log": true,
+		"**/LaTeX writeups/*/*.toc": true
 	}
 }
