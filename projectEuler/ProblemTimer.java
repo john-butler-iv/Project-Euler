@@ -97,8 +97,10 @@ abstract class ProblemTimer extends Timer {
 	 *         Object).
 	 */
 	public static long time(Problem problem) {
-		if (!test(problem))
+		if (!test(problem)) {
+			System.out.println(problem.getTitle() + " did not solve its test correctly");
 			return -1L;
+		}
 
 		long time = Timer.time(problem, null, Timer.DEFUALT_TRIALS, false);
 
@@ -120,8 +122,10 @@ abstract class ProblemTimer extends Timer {
 	 * @return the solution to the problem passed
 	 */
 	public static long solve(Problem problem) {
-		if (!test(problem))
+		if (!test(problem)) {
+			System.out.println(problem.getTitle() + " did not solve its test correctly");
 			return -1L;
+		}
 		System.out.print(problem.getTitle() + " : ");
 		return problem.solve(true);
 	};
