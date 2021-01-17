@@ -27,7 +27,7 @@ abstract class ProblemTimer extends Timer {
 		Function<Problem, Long> function;
 		if (args[0].toLowerCase().equals("solve"))
 			function = ProblemTimer.solve;
-		else if (args[1].toLowerCase().equals("time")) {
+		else if (args[0].toLowerCase().equals("time")) {
 			function = ProblemTimer.time;
 		} else {
 			printUsage();
@@ -36,9 +36,9 @@ abstract class ProblemTimer extends Timer {
 
 		// determine which problems to use
 		Problem[] problems = null;
-		if (args[2].toLowerCase().equals("range")) {
+		if (args[1].toLowerCase().equals("range")) {
 			problems = instance.problems;
-		} else if (!args[2].toLowerCase().equals("all")) { // we leave problems = null for "all"
+		} else if (!args[1].toLowerCase().equals("all")) { // we leave problems = null for "all"
 			problems = new Problem[args.length - 1];
 
 			for (int i = 1; i < args.length; i++) {
@@ -68,7 +68,7 @@ abstract class ProblemTimer extends Timer {
 
 		if (pid < minPid)
 			return previousTimer.getProblem(pid);
-		return problems[minPid - pid];
+		return problems[pid - minPid];
 	}
 
 	/**
@@ -122,7 +122,7 @@ abstract class ProblemTimer extends Timer {
 	public static long solve(Problem problem) {
 		if (!test(problem))
 			return -1L;
-		System.out.println(problem.getTitle() + " : ");
+		System.out.print(problem.getTitle() + " : ");
 		return problem.solve(true);
 	};
 
@@ -138,7 +138,7 @@ abstract class ProblemTimer extends Timer {
 		List<T> out = new ArrayList<T>(relProbs.length);
 
 		for (int i = 0; i < relProbs.length; i++)
-			out.set(i, func.apply(relProbs[i]));
+			out.add(func.apply(relProbs[i]));
 
 		return out;
 	}

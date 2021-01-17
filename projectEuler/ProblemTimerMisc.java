@@ -21,8 +21,10 @@ public class ProblemTimerMisc extends ProblemTimer {
 				return problems[4];
 			case 301:
 				return problems[5];
+			default:
+				break;
 		}
-		return null;
+		return previousTimer.getProblem(pid);
 	}
 
 	public static void main(String[] args) {
