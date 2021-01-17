@@ -14,7 +14,7 @@ abstract class ProblemTimer extends Timer {
 	protected int minPid;
 
 	public static void printUsage() {
-		System.err.println("Usage: java projectEuler.ProblemTimer <solve / time> <pid [pid] [... ] / all / range>");
+		System.err.println("Usage: java projectEuler.ProblemTimer <solve / time> <pid [pid] [...] / all / range>");
 	}
 
 	protected static void main(String[] args, ProblemTimer instance) {
