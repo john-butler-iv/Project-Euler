@@ -1,28 +1,56 @@
 package projectEuler;
 
 public class P101 extends Problem {
-	public long solve(boolean printResults){
-		long[] u = new long[11];
-		for(int i = 1; i <= u.length; i++)
-			u[i - 1] = (long)(1 - i + Math.pow(i, 2) - Math.pow(i, 3) + Math.pow(i, 4) - Math.pow(i, 5) + Math.pow(i, 6)
-				- Math.pow(i, 7) + Math.pow(i, 8) - Math.pow(i, 9) + Math.pow(i, 10));
-
-		long[][] superMat = new long[11][11];
-		for(int i = 0; i < superMat.length; i++)
-			for(int j = 0; j < superMat[0].length; j++)
-				superMat[i][j] = (long)Math.pow(i,j);
-
-		for(int degree = 0; degree < 10; degree++){
-			// invert submat sized degree+1, 
-			// find coefficients (inverted * u subVect sized degree+1)
-			// caclulate degree+1 of new poly
-			// calculate of u[degree]
+	private static long lagrange(int x, int pts, long[] real_vals) {
+		long total = 0;
+		for (int i = 1; i <= pts; i++) {
+			// to avoid float imprecision, I only divide at the end,
+			// and if I do everything right, I should end with an integer anyways
+			long num = real_vals[i];
+			long den = 1;
+			// two for loops is the easiest way I thought of to do prod_{j \ne i}
+			for (int j = 1; j < i; j++) {
+				num *= (x - j);
+				den *= (i - j);
+			}
+			for (int j = i + 1; j <= pts; j++) {
+				num *= (x - j);
+				den *= (i - j);
+			}
+			total += num / den;
 		}
-		// TODO 
-		return 0;
+		return total;
 	}
 
-	public String getTitle(){
+	private static long u(int x) {
+		long mult = 1;
+		long total = 0;
+		for (int i = 0; i <= 10; i++) {
+			total += mult;
+			mult *= -x;
+		}
+		return total;
+	}
+
+	public long solve(boolean printResults) {
+		long us[] = new long[12];
+		for (int i = 1; i < us.length; i++)
+			us[i] = u(i);
+
+		long total = 0;
+		for (int i = 1; i <= 10; i++) {
+			// I just happen to know that the FIT is always the first point that we don't
+			// actively acheive
+			long l = lagrange(i + 1, i, us);
+			total += l;
+		}
+
+		if (printResults)
+			System.out.println(total + " is the sum of the FITs of the BOPs of u_n");
+		return total;
+	}
+
+	public String getTitle() {
 		return "Problem 101: Optimum Polynomial";
 	}
 

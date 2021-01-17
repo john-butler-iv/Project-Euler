@@ -1,70 +1,21 @@
 package projectEuler;
 
-import java.lang.NumberFormatException;
-
 public class ProblemTimer51To100 extends ProblemTimer {
 
 	public static void printUsage() {
-		System.out.println("Usage: java projectEuler.ProblemTimer51To100 <solve/report> <pid pid ...>");
+		System.out
+				.println("Usage: java projectEuler.ProblemTimer51To100 <solve/report> <pid [pid] [...] / all / range>");
 	}
 
 	public static void main(String[] args) {
-		if (args.length < 2) {
-			printUsage();
-			return;
-		}
-
-		ProblemTimer51To100 instance = new ProblemTimer51To100();
-		if (args[0].toLowerCase().equals("solve")) {
-			if (args[1].toLowerCase().equals("all")) {
-				instance.solveAll();
-				return;
-			}
-			for (int i = 1; i < args.length; i++) {
-				try {
-					int pid = Integer.valueOf(args[i]);
-					if (pid > 100)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid < 51)
-						ProblemTimer1To50.main(new String[] { "solve", args[i] });
-					else {
-						Problem problem = instance.problems[pid - 51];
-						if (problem == null)
-							System.out.println("There is no problem numbered " + pid);
-						else {
-							problem.solve(true);
-						}
-					}
-				} catch (NumberFormatException e) {
-					System.out.println(args[i] + " is an invalid problem number");
-				}
-			}
-		} else if (args[0].toLowerCase().equals("report")) {
-			if (args[1].toLowerCase().equals("all")) {
-				instance.reportAll();
-				return;
-			}
-			for (int i = 1; i < args.length; i++) {
-				try {
-					int pid = Integer.valueOf(args[i]);
-					if (pid > 100)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid <= 0)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid < 51)
-						ProblemTimer1To50.main(new String[] { "report", args[i] });
-					else
-						instance.report(pid - 51);
-				} catch (NumberFormatException e) {
-					System.out.println(args[i] + " is an invalid problem number");
-				}
-			}
-		} else
-			printUsage();
-
+		ProblemTimer.main(args, new ProblemTimer51To100());
 	}
 
 	public ProblemTimer51To100() {
+		minPid = 51;
+		maxPid = 100;
+		previousTimer = new ProblemTimer1To50();
+
 		problems = new Problem[50];
 		problems[0] = new P051();
 		problems[1] = new P052();
