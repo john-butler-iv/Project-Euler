@@ -20,20 +20,7 @@ public class P084_alt extends ParameterizedProblem<Integer> {
         return 4;
     }
 
-    public static void main(String[] args) {
-        P084 p = new P084();
-        p.solve(4, true);
-        long ans = 101524;
-        for (int i = 0; i < 500; i++) {
-            // System.out.println(i);
-            long currAns = p.solve(4, false);
-            if (ans != currAns)
-                System.out.println(i + " has an inconsistancy: " + currAns);
-
-        }
-    }
-
-	@Override
+    @Override
     // I want to eventually figure this out because it would make me
     public long solve(Integer faces, boolean printResults) {
         Double[] spaceProbs = new Double[BOARD_SIZE];

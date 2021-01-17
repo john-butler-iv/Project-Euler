@@ -7,11 +7,6 @@ public class P051 extends ParameterizedProblem<Integer> {
 		return 8;
 	}
 
-	public static void main(String[] args) {
-		new P051().solve(8, true);
-		System.out.println(new P051().test());
-	}
-
 	@Override
 	public long solve(Integer numPrimes, boolean printResults) {
 		PrimeFinder pf = new PrimeFinder(200000);

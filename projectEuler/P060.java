@@ -7,12 +7,10 @@ import java.util.HashSet;
 public class P060 extends ParameterizedProblem<Integer> {
 
 	private static class PrimePairDesc {
-		int prime;
 		HashSet<Integer> pairIndicesSet;
 		ArrayList<Integer> pairIndices;
 
-		public PrimePairDesc(int prime) {
-			this.prime = prime;
+		public PrimePairDesc() {
 			this.pairIndicesSet = new HashSet<>();
 			this.pairIndices = new ArrayList<>();
 		}
@@ -38,10 +36,6 @@ public class P060 extends ParameterizedProblem<Integer> {
 		return 5;
 	}
 
-	public static void main(String[] args) {
-		ProblemTimer51To100.main(args);
-	}
-
 	@Override
 	public long solve(Integer setSize, boolean printResults) {
 		pf = new PrimeFinder(2000000000);
@@ -49,7 +43,7 @@ public class P060 extends ParameterizedProblem<Integer> {
 		ArrayList<PrimePairDesc> primePairs = new ArrayList<>();
 
 		for (int i = 0; i < primes.size(); i++) {
-			primePairs.add(new PrimePairDesc(primes.get(i)));
+			primePairs.add(new PrimePairDesc(/* primes.get(i) */));
 			for (int j = 0; j < i; j++) {
 				if (validPair(primes.get(i), primes.get(j))) {
 					primePairs.get(i).addConnection(j);

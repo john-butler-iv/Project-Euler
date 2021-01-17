@@ -4,10 +4,6 @@ import java.math.BigInteger;
 
 public class P055 extends Problem {
 
-	public static void main(String[] args) {
-		new P055().solve(true);
-	}
-
 	@Override
 	public boolean test() {
 		return !isLychrel(349);
