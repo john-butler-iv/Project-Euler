@@ -7,62 +7,14 @@ public class ProblemTimer51To100 extends ProblemTimer {
 	}
 
 	public static void main(String[] args) {
-		if (args.length < 2) {
-			printUsage();
-			return;
-		}
-
-		ProblemTimer51To100 instance = new ProblemTimer51To100();
-		if (args[0].equalsIgnoreCase("solve")) {
-			if (args[1].equalsIgnoreCase("all")) {
-				instance.solveAll();
-				return;
-			}
-			for (int i = 1; i < args.length; i++) {
-				try {
-					int pid = Integer.valueOf(args[i]);
-					if (pid > 100)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid < 51)
-						ProblemTimer1To50.main(new String[] { "solve", args[i] });
-					else {
-						Problem problem = instance.problems[pid - 51];
-						if (problem == null)
-							System.out.println("There is no problem numbered " + pid);
-						else {
-							problem.solve(true);
-						}
-					}
-				} catch (NumberFormatException e) {
-					System.out.println(args[i] + " is an invalid problem number");
-				}
-			}
-		} else if (args[0].equalsIgnoreCase("report")) {
-			if (args[1].equalsIgnoreCase("all")) {
-				instance.reportAll();
-				return;
-			}
-			for (int i = 1; i < args.length; i++) {
-				try {
-					int pid = Integer.parseInt(args[i]);
-					if (pid > 100)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid <= 0)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid < 51)
-						ProblemTimer1To50.main(new String[] { "report", args[i] });
-					else
-						instance.report(pid - 51);
-				} catch (NumberFormatException e) {
-					System.out.println(args[i] + " is an invalid problem number");
-				}
-			}
-		} else
-			printUsage();
-
+		ProblemTimer.main(args, new ProblemTimer51To100());
 	}
 
 	public ProblemTimer51To100() {
+		previousTimer = new ProblemTimer1To50();
+		minPid = 51;
+		maxPid = 100;
+
 		problems = new Problem[50];
 		problems[0] = new P051();
 		problems[1] = new P052();
@@ -107,7 +59,7 @@ public class ProblemTimer51To100 extends ProblemTimer {
 		problems[40] = new P091();
 		problems[41] = new P092();
 		// problems[42] = new P093();
-		// problems[43] = new P094();
+		problems[43] = new P094();
 		problems[44] = new P095();
 		problems[45] = new P096();
 		problems[46] = new P097();

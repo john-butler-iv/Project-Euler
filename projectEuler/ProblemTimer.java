@@ -1,6 +1,5 @@
 package projectEuler;
 
-import java.lang.NumberFormatException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -25,9 +24,9 @@ abstract class ProblemTimer extends Timer {
 
 		// determine the operation
 		Function<Problem, Long> function;
-		if (args[0].toLowerCase().equals("solve"))
+		if (args[0].equalsIgnoreCase("solve"))
 			function = ProblemTimer.solve;
-		else if (args[0].toLowerCase().equals("time")) {
+		else if (args[0].equalsIgnoreCase("time")) {
 			function = ProblemTimer.time;
 		} else {
 			printUsage();
@@ -36,9 +35,9 @@ abstract class ProblemTimer extends Timer {
 
 		// determine which problems to use
 		Problem[] problems = null;
-		if (args[1].toLowerCase().equals("range")) {
+		if (args[1].equalsIgnoreCase("range")) {
 			problems = instance.problems;
-		} else if (!args[1].toLowerCase().equals("all")) { // we leave problems = null for "all"
+		} else if (!args[1].equalsIgnoreCase("all")) { // we leave problems = null for "all"
 			problems = new Problem[args.length - 1];
 
 			for (int i = 1; i < args.length; i++) {
