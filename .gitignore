@@ -24,3 +24,5 @@ hs_err_pid*
 
 # Vim swp files
 *.swp
+.DS_Store
+.DS_Store

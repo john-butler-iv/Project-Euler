@@ -1,65 +1,20 @@
 package projectEuler;
 
-import java.lang.NumberFormatException;
-
 class ProblemTimer1To50 extends ProblemTimer {
-	public static void printUsage(){
-		System.out.println("Usage: java projectEuler.ProblemTimer1To50 <solve/report> <pid pid ...>");
+
+	public static void printUsage() {
+		System.out.println("Usage: java projectEuler.ProblemTimer1To50 <solve/report> <pid [pid] [...] / all / range>");
 	}
 
-	public static void main(String[] args){
-		if(args.length < 2){
-			printUsage();
-			return;
-		}
-
-		ProblemTimer51To100 instance = new ProblemTimer51To100();
-		if(args[0].toLowerCase().equals("solve")){
-			if(args[1].toLowerCase().equals("all")){
-				instance.solveAll();
-				return;
-			}
-			for(int i = 1; i < args.length; i++){
-				try{
-					int pid = Integer.valueOf(args[i]);
-					if(pid > 50 || pid <= 0)
-						System.out.println("There is no problem numbered " + pid);
-					else {
-						Problem problem = instance.problems[pid - 1];
-						if(problem == null)
-							System.out.println("There is no problem numbered " + pid);
-						else {
-							problem.solve(true);
-						}
-					}
-				} catch(NumberFormatException e){
-					System.out.println(args[i] + " is an invalid problem number");
-				}
-			}
-		} else if(args[0].toLowerCase().equals("report")){
-			if(args[1].toLowerCase().equals("all")){
-				instance.reportAll();
-				return;
-			}
-			for(int i = 1; i < args.length; i++){
-				try{
-					int pid = Integer.valueOf(args[i]);
-					if(pid > 50)
-						System.out.println("There is no problem numbered " + pid);
-					else if (pid <= 0)
-						System.out.println("There is no problem numbered " + pid);
-					else 
-						instance.report(pid - 1);
-				} catch(NumberFormatException e){
-					System.out.println(args[i] + " is an invalid problem number");
-				}
-			}
-		} else printUsage();
-
+	public static void main(String[] args) {
+		ProblemTimer.main(args, new ProblemTimer1To50());
 	}
-
 
 	public ProblemTimer1To50() {
+		previousTimer = null;
+		minPid = 1;
+		maxPid = 50;
+
 		problems = new Problem[50];
 		problems[1] = new P002();
 		problems[2] = new P003();

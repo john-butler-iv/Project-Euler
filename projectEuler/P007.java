@@ -7,10 +7,6 @@ class P007 extends ParameterizedProblem<Integer> {
 		return 10001;
 	}
 
-	public static void main(String[] args) {
-		new P007().solve(true);
-	}
-
 	@Override
 	public long solve(Integer primeIndex, boolean printResults) {
 

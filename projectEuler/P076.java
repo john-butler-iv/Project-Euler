@@ -1,16 +1,8 @@
 package projectEuler;
 
-/**
- * Author: John Butler
- * 
- * This Program was inspired by Mathologer's video titled 'The hardest "What comes next?" (Euler's pentagonal 
- * formula)', youtube.com/watch?v=iJ8pnCO0nTY, in which he encourages viewers to find the partition number of 666. 
- * According to my program, that number is 11956824258286445517629485
- */
-
 import java.util.*;
 
-public class P078 extends Problem {
+public class P076 extends ParameterizedProblem<Integer> {
 	/**
 	 * Keeps track of both the index needed to go back and whether to add or
 	 * subtract. It would be possible to refactor to add or subtract by any scalar
@@ -94,7 +86,12 @@ public class P078 extends Problem {
 		};
 	}
 
-	public long solve(boolean printResults) {
+	@Override
+	public Integer getDefaultParameter() {
+		return 100;
+	}
+
+	public long solve(Integer targetN, boolean printResults) {
 		// random access to previous partition numbers is critical, so we use an array
 		ArrayList<Integer> prevParts = new ArrayList<Integer>();
 		// we only ever iterate through the elements, so I use a linked list for
@@ -105,12 +102,9 @@ public class P078 extends Problem {
 		prevParts.add(1);
 		fibAdds.addLast(addIt.next());
 
-		long n = 0;
 		// represents p(n)
-		int p;
-		do {
-			n++;
-			p = 0;
+		for (int n = 1; n <= targetN; n++) {
+			int p = 0;
 
 			// we want to make sure we know all of the partition numbers we need to add, so
 			// we
@@ -126,22 +120,31 @@ public class P078 extends Problem {
 				if (currFib.sign == FibInfo.SUB)
 					partVal *= -1;
 
-				// because we're only checking divisiblity, we can take advantage of modular
-				// arithmatic
-				// to fit the value in an int
-				p = (p + partVal) % 1000000;
+				// this sequence grows really quickly, but still fits in an int through n = 100
+				p += partVal;
 			}
 
 			prevParts.add(p);
+		}
 
-		} while (p % 1000000 != 0);
+		long result = prevParts.get(prevParts.size() - 1) - 1;
 
 		if (printResults)
-			System.out.println(n + " is the least value of n for which p(n) is divisible by 1,000,000");
-		return n;
+			System.out.println("There are " + result + " unique ways to sum to " + targetN);
+		return result;
+	}
+
+	@Override
+	public Integer getTestParameter() {
+		return 5;
+	}
+
+	@Override
+	public long getTestSolution() {
+		return 6;
 	}
 
 	public String getTitle() {
-		return "Problem 078: Coin Partitions";
+		return "Problem 076: Counting Summations";
 	}
 }

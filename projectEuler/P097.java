@@ -31,7 +31,7 @@ public class P097 extends Problem {
 		prime = prime.remainder(numDigits);
 
 		if(printResults)
-			System.out.println(prime + " are the last 10 digits of 28433×2^7830457+1");
+			System.out.println(prime + " are the last 10 digits of 28433 * 2 ^ 7830457 + 1");
 		return prime.longValue();
 	}
 
