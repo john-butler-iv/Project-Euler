@@ -389,7 +389,7 @@ public class CollectionTools {
 
 	/**
 	 * Determines if str1 and str2 are permuations of each other in linear time,
-	 * i.e. arePermutations("123345", "543123", <indexing>) returns true.
+	 * i.e. arePermutations("123345", "543123", indexing) returns true.
 	 *
 	 * @param str1     a string which may or may bot be a permuted verion of str2
 	 * @param str2     a string which may or may bot be a permuted verion of str1
