@@ -8,16 +8,17 @@ class EulerTools {
 	public static final double DEFAULT_EPSILON = 0.000001;
 
 	/**
-	 * Finds n! = 1 * 2 * ... * n. If that doesn't fit in an int, result is undefined.
-	 * Meant for one off uses; if you want to find many factorials,
-	 * use bigFactorialIterator() or factorialIterator().
+	 * Finds n! = 1 * 2 * ... * n. If that doesn't fit in an int, result is
+	 * undefined. Meant for one off uses; if you want to find many factorials, use
+	 * bigFactorialIterator() or factorialIterator().
 	 *
 	 * @param n the factorial index
-	 * @return n! = 1 * 2 * ... * n if that fits an int, otherwise result is undefined.
+	 * @return n! = 1 * 2 * ... * n if that fits an int, otherwise result is
+	 *         undefined.
 	 */
-	public static int factorial(int n){
+	public static int factorial(int n) {
 		int fact = 1;
-		for(int i = 2; i <= n; i++)
+		for (int i = 2; i <= n; i++)
 			fact *= i;
 
 		return fact;
@@ -30,17 +31,17 @@ class EulerTools {
 	 * @param maxFact the upper limit of factorials to compute
 	 * @return an array of ints where factorialTable(n)[m] = m!
 	 */
-	public static int[] factorialTable(int maxFact){
+	public static int[] factorialTable(int maxFact) {
 		int[] table = new int[maxFact + 1];
 		table[0] = 1;
-		for(int i = 1; i < table.length; i++)
+		for (int i = 1; i < table.length; i++)
 			table[i] = i * table[i - 1];
 		return table;
 	}
 
 	/**
-	 * Finds n! = 1 * 2 * ... * n. Meant for one off uses. If you want to find many factorials,
-	 * use bigFactorialIterator() or factorialIterator().
+	 * Finds n! = 1 * 2 * ... * n. Meant for one off uses. If you want to find many
+	 * factorials, use bigFactorialIterator() or factorialIterator().
 	 *
 	 * @param n the factorial index
 	 * @return n! = 1 * 2 * ... * n as a BigInteger
@@ -56,9 +57,10 @@ class EulerTools {
 	/**
 	 * Creates an Iterator that finds 0!, 1!, etc. as long as it fits an int.
 	 *
-	 * @return an Iterator that finds 0!, then 1!, and so on until n! cannot fit in an int.
+	 * @return an Iterator that finds 0!, then 1!, and so on until n! cannot fit in
+	 *         an int.
 	 */
-	public static Iterator<Integer> factorialIterator(){
+	public static Iterator<Integer> factorialIterator() {
 		return new Iterator<Integer>() {
 			int fact = 1;
 			int index = 0;
@@ -78,13 +80,14 @@ class EulerTools {
 			}
 		};
 	}
+
 	/**
 	 * Creates an Iterator that finds 0!, 1!, etc. with no limit.
 	 *
 	 * @return an Iterator that returns 0!, then 1!, and so on with no limit.
 	 */
-	public static Iterator<BigInteger> bigFactorialIterator(){
-		return new Iterator<BigInteger>(){
+	public static Iterator<BigInteger> bigFactorialIterator() {
+		return new Iterator<BigInteger>() {
 			BigInteger fact = BigInteger.ONE;
 			BigInteger index = BigInteger.ZERO;
 
@@ -110,8 +113,8 @@ class EulerTools {
 	 * but behavior is only defined while the numbers can fit in an int. hasNext()
 	 * will return false after the final valid Fibonacci number has been generated.
 	 *
-	 * @return an Iterator which iterates over all Fibonacci numbers which
-	 *         can fit in an int.
+	 * @return an Iterator which iterates over all Fibonacci numbers which can fit
+	 *         in an int.
 	 */
 	public static Iterator<Integer> fibonacciIterator() {
 		return new Iterator<Integer>() {
@@ -157,8 +160,7 @@ class EulerTools {
 	/**
 	 * Creates an Iterator that iterates over the Fibonacci numbers (0, 1, 1, ... )
 	 *
-	 * @return an Iterator which iterates over the Fibonacci numbers with no
-	 *         limit.
+	 * @return an Iterator which iterates over the Fibonacci numbers with no limit.
 	 */
 	public static Iterator<BigInteger> bigFibonacciIterator() {
 		return new Iterator<BigInteger>() {
@@ -296,9 +298,10 @@ class EulerTools {
 	 * @param n the index of the pentagonal number
 	 * @return the nth pentagonal number
 	 */
-	public static int pentagon(int n){
+	public static int pentagon(int n) {
 		return n * (3 * n - 1) / 2;
 	}
+
 	/**
 	 * finds the nth pentagonal number, where pentagonL(1) = 1
 	 *
@@ -330,13 +333,13 @@ class EulerTools {
 	}
 
 	/**
-	 *	finds the nth heptagonal number, where heptagon(1) = 1
+	 * finds the nth heptagonal number, where heptagon(1) = 1
 	 *
-	 *	@param n the index of the heptagonal number
-	 *	@return the nth heptagonal number
+	 * @param n the index of the heptagonal number
+	 * @return the nth heptagonal number
 	 */
-	public static int heptagon(int n){
-		return n * (5*n  - 3) / 2;
+	public static int heptagon(int n) {
+		return n * (5 * n - 3) / 2;
 	}
 
 	/**
@@ -345,10 +348,9 @@ class EulerTools {
 	 * @param n the index of the heptagonal number
 	 * @return the nth octagonal number
 	 */
-	public static int octagon(int n){
+	public static int octagon(int n) {
 		return n * (3 * n - 2);
 	}
-
 
 	// LaTeX write up code that I drafted since I don't have an actual writeup.
 	// tri=\frac{n(n+1)}{2}\\
@@ -422,49 +424,72 @@ class EulerTools {
 	 * determines if d can be expressed as an int without any data loss
 	 *
 	 * @param d a double which is potentially an integer
-	 * @return true if d can be expressed as an int without any data loss,
-	 *         false otherwise
+	 * @return true if d can be expressed as an int without any data loss, false
+	 *         otherwise
 	 */
 	public static boolean isIntegral(double d) {
 		return d == (int) d;
 	}
 
 	/**
-	 *	Finds the Euclidean distance between the two points i.e. sqrt( (x2 - x1)^2 + (y2 - y1)^2 )
-	 *
-	 *	@param x1 the x-coordinate of the first point
-	 *	@param y1 the y-coordinate of the first point
-	 *	@param x2 the x-coordinate of the second point
-	 *	@param y2 the y-coordinate of the second point
-	 *
-	 *	@return the Euclidean distance betweeen the points given
+	 * determines if d is an integer within the bounds of error for float percision.
+	 * 
+	 * @param d a double which is potentially an integer
+	 * @return true if d is within EulerTools.DEFAULT_EPSILON of an integer
 	 */
-	public static double distForm(double x1, double y1, double x2, double y2){
-		double deltaX = x2 - x1;
-		double deltaY = y2 - y1;
-		return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+	public static boolean approxIntegral(double d) {
+		return approxIntegral(d, DEFAULT_EPSILON);
 	}
 
 	/**
-	 *	Finds the square of the Euclidean distance between the two points i.e. (x2 - x1)^2 + (y2 - y1)^2.
-	 *	If the exact distance is not needed, for example finding shortest distance, it may be enough to
-	 *	use this function and not have to compute sqrt.
-	 *
-	 *	@param x1 the x-coordinate of the first point
-	 *	@param y1 the y-coordinate of the first point
-	 *	@param x2 the x-coordinate of the second point
-	 *	@param y2 the y-coordinate of the second point
-	 *
-	 *	@return the square of the Euclidean distance betweeen the points given
+	 * determines if d is within epsilon of an integer
+	 * 
+	 * @param d a double which may be in range of an integer
+	 * @return true if d is within epsilon of an integer
 	 */
-	public static double squareDistForm(double x1, double y1, double x2, double y2){
-		double deltaX = x2 - x1;
-		double deltaY = y2 - y1;
-		return deltaX*deltaX + deltaY*deltaY;
+	public static boolean approxIntegral(double d, double epsilon) {
+		return Math.abs(d - (int) d) <= epsilon;
 	}
 
 	/**
-	 * Finds the angle in radians between the rays pa and pc using the law of cosines
+	 * Finds the Euclidean distance between the two points i.e. sqrt( (x2 - x1)^2 +
+	 * (y2 - y1)^2 )
+	 *
+	 * @param x1 the x-coordinate of the first point
+	 * @param y1 the y-coordinate of the first point
+	 * @param x2 the x-coordinate of the second point
+	 * @param y2 the y-coordinate of the second point
+	 *
+	 * @return the Euclidean distance betweeen the points given
+	 */
+	public static double distForm(double x1, double y1, double x2, double y2) {
+		double deltaX = x2 - x1;
+		double deltaY = y2 - y1;
+		return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+	}
+
+	/**
+	 * Finds the square of the Euclidean distance between the two points i.e. (x2 -
+	 * x1)^2 + (y2 - y1)^2. If the exact distance is not needed, for example finding
+	 * shortest distance, it may be enough to use this function and not have to
+	 * compute sqrt.
+	 *
+	 * @param x1 the x-coordinate of the first point
+	 * @param y1 the y-coordinate of the first point
+	 * @param x2 the x-coordinate of the second point
+	 * @param y2 the y-coordinate of the second point
+	 *
+	 * @return the square of the Euclidean distance betweeen the points given
+	 */
+	public static double squareDistForm(double x1, double y1, double x2, double y2) {
+		double deltaX = x2 - x1;
+		double deltaY = y2 - y1;
+		return deltaX * deltaX + deltaY * deltaY;
+	}
+
+	/**
+	 * Finds the angle in radians between the rays pa and pc using the law of
+	 * cosines
 	 *
 	 * @param ax x-coordinate of a point on one of the rays from point p.
 	 * @param ax y-coordinate of a point on one of the rays from point p.
@@ -473,7 +498,8 @@ class EulerTools {
 	 * @param cx x-coordinate of a point on the other ray from point p.
 	 * @param cy y-coordinate of a point on the other ray from point p.
 	 *
-	 * @return the angle in radians between the rays pa and pc. p is of course the vertex
+	 * @return the angle in radians between the rays pa and pc. p is of course the
+	 *         vertex
 	 */
 	public static double findAngle(double ax, double ay, double px, double py, double cx, double cy) {
 		double pc = distForm(px, py, cx, cy); // side pc
@@ -485,15 +511,16 @@ class EulerTools {
 		return Math.acos(numerator / denomonator);
 	}
 
-	public static boolean epsilonEquals(double d1, double d2, double epsilon){
+	public static boolean epsilonEquals(double d1, double d2, double epsilon) {
 		return Math.abs(d1 - d2) <= epsilon;
 	}
-	public static boolean epsilonEquals(double d1, double d2){
+
+	public static boolean epsilonEquals(double d1, double d2) {
 		return epsilonEquals(d1, d2, DEFAULT_EPSILON);
 	}
 
-	public static int choose(int n, int k, int[] factorials){
-		return factorials[n] / (factorials[k]*factorials[n-k]);
+	public static int choose(int n, int k, int[] factorials) {
+		return factorials[n] / (factorials[k] * factorials[n - k]);
 
 	}
-	}
+}
