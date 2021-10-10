@@ -19,8 +19,10 @@ public class ProblemTimerMisc extends ProblemTimer {
 				return problems[3];
 			case 206:
 				return problems[4];
-			case 301:
+			case 246:
 				return problems[5];
+			case 301:
+				return problems[6];
 			default:
 				break;
 		}
@@ -34,13 +36,14 @@ public class ProblemTimerMisc extends ProblemTimer {
 	public ProblemTimerMisc() {
 		previousTimer = new ProblemTimer51To100();
 
-		problems = new Problem[6];
+		problems = new Problem[7];
 		problems[0] = new P101();
 		problems[1] = new P102();
 		problems[2] = new P144();
 		problems[3] = new P205();
 		problems[4] = new P206();
-		problems[5] = new P301();
+		problems[5] = new P246();
+		problems[6] = new P301();
 	}
 
 }

@@ -4,6 +4,16 @@ import java.math.*;
 import java.util.Iterator;
 
 class EulerTools {
+	public class Point {
+		public double x;
+		public double y;
+
+		public Point(double x, double y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
+
 	public static final BigDecimal TWO = new BigDecimal("2.0");
 	public static final double DEFAULT_EPSILON = 0.000001;
 
@@ -521,6 +531,34 @@ class EulerTools {
 
 	public static int choose(int n, int k, int[] factorials) {
 		return factorials[n] / (factorials[k] * factorials[n - k]);
+	}
 
+	/**
+	 * Finds log_b (x)
+	 * 
+	 * @param x value to find log of
+	 * @param b base to use for the logarithm
+	 * @return log_b (x)
+	 */
+	public static double log(double x, double b) {
+		return Math.log(x) / Math.log(b);
+	}
+
+	/**
+	 * finds log_2(x)
+	 * 
+	 * @param x value to find log of
+	 * @return log_2 (x)
+	 */
+	public static double log2(double x) {
+		return log(x, 2);
+	}
+
+	public static double map(double val, double oldStart, double oldEnd, double newStart, double newEnd) {
+		return (val - oldStart) / (oldEnd - oldStart) * (newEnd - newStart) + newStart;
+	}
+
+	public static double findIntersectX(double x1, double y1, double m1, double x2, double y2, double m2) {
+		return (y2 - y1 - (m2 * x2 - m1 * x1)) / (m1 - m2);
 	}
 }
