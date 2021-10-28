@@ -38,14 +38,16 @@ class PrimeFinder {
 	}
 
 	private void sievePrimes() {
-		for (int i = 3; i < limit; i++)
+		for (int i = 3; i < limit; i++) {
 			add(i);
+		}
 
 		Prime tracer = head;
 		int calcLimit = (int) Math.sqrt(limit);
 		while (tracer.val < calcLimit) {
-			for (int j = 2 * tracer.val; j < limit; j += tracer.val)
+			for (int j = 2 * tracer.val; j < limit; j += tracer.val) {
 				remove(j);
+			}
 
 			tracer = tracer.next;
 		}
@@ -55,6 +57,7 @@ class PrimeFinder {
 		Prime entry = new Prime(i);
 		tail.next = entry;
 		entry.prev = tail;
+		tail = entry;
 		primes[i] = entry;
 	}
 
@@ -63,7 +66,10 @@ class PrimeFinder {
 			return;
 
 		primes[i].prev.next = primes[i].next;
-		primes[i].next.prev = primes[i].prev;
+		if (primes[i].next == null)
+			tail = tail.prev;
+		else
+			primes[i].next.prev = primes[i].prev;
 
 		primes[i] = null;
 	}

@@ -9,24 +9,24 @@ public class ProblemTimerMisc extends ProblemTimer {
 	@Override
 	protected Problem getProblem(int pid) {
 		switch (pid) {
-			case 101:
-				return problems[0];
-			case 102:
-				return problems[1];
-			case 144:
-				return problems[2];
-			case 202:
-				return problems[3];
-			case 205:
-				return problems[4];
-			case 206:
-				return problems[5];
-			case 246:
-				return problems[6];
-			case 301:
-				return problems[7];
-			default:
-				break;
+		case 101:
+			return problems[0];
+		case 102:
+			return problems[1];
+		case 144:
+			return problems[2];
+		case 202:
+			return problems[3];
+		case 205:
+			return problems[4];
+		case 206:
+			return problems[5];
+		case 246:
+			return problems[6];
+		case 301:
+			return problems[7];
+		default:
+			break;
 		}
 		return previousTimer.getProblem(pid);
 	}
@@ -38,7 +38,7 @@ public class ProblemTimerMisc extends ProblemTimer {
 	public ProblemTimerMisc() {
 		previousTimer = new ProblemTimer51To100();
 
-		problems = new Problem[7];
+		problems = new Problem[8];
 		problems[0] = new P101();
 		problems[1] = new P102();
 		problems[2] = new P144();
