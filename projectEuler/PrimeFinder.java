@@ -1,189 +1,93 @@
 package projectEuler;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class PrimeFinder {
-	private boolean[] primeTable;
-	private List<Integer> primes;
-	private LinkedHashSet<Integer> primeHash;
+	private class Prime {
+		Prime prev;
+		Prime next;
+		int val;
+
+		public Prime(int val) {
+			prev = null;
+			next = null;
+			this.val = val;
+		}
+	}
+
+	private Prime[] primes;
+	private Prime head;
+	private Prime tail;
+	private List<Integer> primeList;
 	private int limit;
 
-	/**
-	 * Finds all primes less than limit, non-inclusive. The most this algorithm can
-	 * generate under 1ms on my system is about 1.6 million. [out of date]
-	 * 
-	 * @param limit the upper-limit on which primes will be found, non-inclusive
-	 */
 	public PrimeFinder(int limit) {
-		if (limit <= 0)
-			limit = 1;
-
-		primeHash = new LinkedHashSet<Integer>();
-		//primeTable = new boolean[limit];
-		primes = new ArrayList<>();
-		this.limit = limit;
-		sieveLinkedPrimes();
-
-		for(int i = 0; i < primes.size(); i++){
-			System.out.println(primes.get(i));
-		} 
+		this(limit, true);
 	}
 
-	/**
-	 * [DEPRICATED]
-	 * This method is the one that actually finds all primes under limit, and
-	 * assigns the proper values to primeTable e and primes. I believe this is the
-	 * fastest known algorithm to find primes, but I could be mistaken. 
-	 * This implimentation of the algorithm has O(n sqrt n) time complexity (optimized from O(n^2)) and 
-	 * O(n) memory complexity.
-	 */
+	public PrimeFinder(int limit, boolean collectPrimes) {
+		this.primes = new Prime[limit];
+		this.limit = Math.max(limit, 2);
+
+		head = new Prime(2);
+		tail = head;
+
+		sievePrimes();
+		if (collectPrimes)
+			collectPrimes();
+	}
+
 	private void sievePrimes() {
-		// assume every number is prime unless we find factors
-		for (int i = 2; i < limit; i++){
-			primeTable[i] = true;
-		}
-		
-		// suppose we have p,q > sqrt(limit). wlog, additionally assume p <= q
-		// therefore pq > sqrt(limit) * sqrt(limit) = limit
-		// therefore p < sqrt(limit) or (p <= ) q < sqrt(limit),
-		// therefore i=p at some point, and we will have eliminated pq. 
-		// Any searching beyond sqrt(limit) is unfruitful.
+		for (int i = 3; i < limit; i++)
+			add(i);
 
-		// edge case: if pq = sqrt(limit), then we eliminated it when i=p<sqrt(limit)
+		Prime tracer = head;
 		int calcLimit = (int) Math.sqrt(limit);
-		for (int i = 2; i < calcLimit; i++) {
-			// if the number is composite, it is not prime, and thus we don't want to append
-			// it to our list, and any multiple of a composite number is a multiple of its
-			// composite factors, so we can safely skip it.
-			if (!primeTable[i])
-				continue;
+		while (tracer.val < calcLimit) {
+			for (int j = 2 * tracer.val; j < limit; j += tracer.val)
+				remove(j);
 
-			// if we make it here, we can be certain that i is prime
-			primes.add(i);
-
-			// any multiple of a prime is a composite number by definition.
-			for (int j = i + i; j < limit; j += i)
-				primeTable[j] = false;
-		}
-
-		// don't need to propigate value to factors, but still need to find the primes left behind
-		for(int i = calcLimit + 1 - calcLimit % 2; i < limit; i+=2){
-			if(primeTable[i]) primes.add(i);
+			tracer = tracer.next;
 		}
 	}
 
-	private void sieveLinkedPrimes(){
-		for(int i = 2; i < limit; i++)
-			primeHash.add(i);
-		
-
-		int calcLimit = (int) Math.sqrt(limit);
-		LinkedHashEntry<Integer> entry = primeHash.head;
-		while(entry.val < calcLimit) {
-			primeHash.add(entry.val);
-
-			for(int i = entry.val * 2; i < limit; i += entry.val)
-				primeHash.remove(i);
-			
-			entry = entry.next;
-		}
-
-		primes = primeHash.keys();
+	private void add(int i) {
+		Prime entry = new Prime(i);
+		tail.next = entry;
+		entry.prev = tail;
+		primes[i] = entry;
 	}
 
-	/**
-	 * Increases the limit to the new limit passed and appends all new primes found
-	 * to what has already been found. If a call to this function does not increase
-	 * the limit, nothing happens. There is overhead to call this function, so it is
-	 * preferable to start the instance with as many primes as you will need.
-	 * TODO refactor to only run up to sqrt and gather primes from old limit
-	 * 
-	 * @param newLimit the upper limit, under which, primes will be found and added
-	 *                 to the ones already known
-	 */
-	public void increaseLimit(int newLimit) {
-		// no new primes to find
-		if (newLimit <= limit)
+	private void remove(int i) {
+		if (primes[i] == null)
 			return;
 
-		// extend the old sieve into new territory
+		primes[i].prev.next = primes[i].next;
+		primes[i].next.prev = primes[i].prev;
 
-		int oldLimit = limit;
-		limit = newLimit;
-		boolean[] sieve = new boolean[limit];
-		// copy the data we already know
-		for (int i = 0; i < primeTable.length; i++)
-			sieve[i] = primeTable[i];
-
-		// extend the already computed sieve-work
-		// i.e. erase mulitples of primes in new territory
-		for (int i = oldLimit; i < newLimit; i++)
-			sieve[i] = true;
-		for (int i = 2; i < oldLimit; i++) {
-			if (!sieve[i])
-				continue;
-			// oldLimit - (oldLimit % i) is the largest number under the old limit which is
-			// a mulitple of i, so add i to get the first multiple of i above the old limit
-			int firstNew = oldLimit - (oldLimit % i) + i;
-			for (int j = firstNew; j < newLimit; j++)
-				sieve[j] = false;
-		}
-
-		// now, sieve using the same algorithm as sievePrimes()
-		for (int i = oldLimit; i < limit; i++) {
-			if (!sieve[i])
-				continue;
-			primes.add(i);
-			for (int j = i + i; j < limit; j += i)
-				sieve[j] = false;
-		}
-
-		primeTable = sieve;
+		primes[i] = null;
 	}
 
-	/**
-	 * This method determines if p is prime in constant time if p < limit, or in
-	 * O(sqrt(p)) time if p >= limit.
-	 * 
-	 * @param p the number which may or may not be prime
-	 * @return returns true if p is prime, and false if p is composite or p is not
-	 *         within the limit
-	 */
-	public boolean isPrime(int p) {
-		// negative numbers cannot be prime, and 0 and 1 are not prime.
-		if (p <= 1)
-			return false;
-
-		// if we have the value in the table, we can just look it up.
-		if (p < limit)
-			return primeTable[p];
-
-		// If we reach this point, we are forced to check the factors of p, but we'll
-		// only have to check up to sqrt(p), as if p has any factors, there will be one
-		// less than sqrt(p)
-		int sqrt = (int) Math.sqrt(p);
-
-		for (int prime : primes) {
-			// this is the best way I could think of for only checking as far as we need and
-			// not going out of bounds if p is too large.
-			if (sqrt < prime)
-				break;
-			// obviously, if a prime divides p, p is not prime.
-			// if a composite divides p, then its prime factors will aswell.
-			if (p % prime == 0)
-				return false;
+	private void collectPrimes() {
+		primeList = new ArrayList<Integer>();
+		Prime tracer = head;
+		while (tracer != null) {
+			primeList.add(tracer.val);
+			tracer = tracer.next;
 		}
+	}
 
-		// if there are still potential factors we have not considered,
-		if (sqrt >= limit)
-			// we don't know if any number past limit is prime, so we'll just check every
-			// number
-			for (int n = limit; n < sqrt; n++)
-				if (p % n == 0)
-					return false;
-
-		// if we have not found any factors, p must be prime.
+	public boolean isPrime(long n) {
+		if (n < limit)
+			return primes[(int) n] == null;
+		if (n >= limit * (long) limit) {
+			// can only definitively say a number is prime under this limit, but we'll try
+			// our best otherwise
+		}
+		//
+		for (int prime : primeList)
+			if (n % prime == 0)
+				return false;
 		return true;
 	}
 
@@ -200,23 +104,23 @@ class PrimeFinder {
 	public List<Integer> primeFactorize(long n) {
 		List<Integer> factors = new ArrayList<>();
 
-		// If n is prime, it saves a lot of time
+		// If n is prime, this check saves a lot of time
 		if (n < limit && isPrime((int) n)) {
 			factors.add((int) n);
 			return factors;
 		}
 
-		for (int prime : primes) {
+		for (int prime : primeList) {
 			while (n % prime == 0) {
 				factors.add(prime);
 				n /= prime;
 			}
-			// we can return early if acceptable
+			// we can return early if no more factors
 			if (n == 1)
 				break;
 		}
-		// if we don't remove all factors, there must be one beyond the scope of our
-		// search, so we add it if it fits in an int, otherwise, we ignore it.
+		// if we don't remove all factors, there must be at loast one beyond the scope
+		// of our search, so we add it if it fits in an int, otherwise, we ignore it.
 		if (n != 1 && n <= Integer.MAX_VALUE)
 			factors.add((int) n);
 		return factors;
@@ -239,13 +143,13 @@ class PrimeFinder {
 			return factors;
 		}
 		for (int i = 0; n != 1; i++) {
-			if (n % primes.get(i) == 0) {
-				factors.add(primes.get(i));
+			if (n % primeList.get(i) == 0) {
+				factors.add(primeList.get(i));
 				// this is so we don't add factors more than once, and it's written like this
 				// because we already checked the condition
 				do
-					n /= primes.get(i);
-				while (n % primes.get(i) == 0);
+					n /= primeList.get(i);
+				while (n % primeList.get(i) == 0);
 			}
 		}
 		return factors;
@@ -361,7 +265,8 @@ class PrimeFinder {
 	 * @return returns true if a and b are coprime, false otherwise
 	 */
 	public boolean areCoprime(int a, int b) {
-		// TODO refactor to "short circuit" when find a factor, like ^^^ for the long
+		// TODO refactor to "short circuit" when find a factor in common, like ^^^ for
+		// the long
 		// version
 		return gcd(a, b) == 1;
 	}
@@ -482,15 +387,6 @@ class PrimeFinder {
 	 * @return returns all primes less than the limit
 	 */
 	List<Integer> getPrimes() {
-		return primes;
-	}
-
-	/**
-	 * returns a table where getPrimeTable()[i] is true iff i is prime
-	 * 
-	 * @return returns a table to look up if a number is prime
-	 */
-	boolean[] getPrimeTable() {
-		return primeTable;
+		return primeList;
 	}
 }
