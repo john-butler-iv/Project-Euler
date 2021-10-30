@@ -126,7 +126,7 @@ abstract class ProblemTimer extends Timer {
 	 */
 	public static long solve(Problem problem) {
 		if (!test(problem)) {
-			System.out.println(problem.getTitle() + " did not solve its test correctly");
+			System.out.print(problem.getTitle() + " did not solve its test correctly.");
 			return -1L;
 		}
 		System.out.print(problem.getTitle() + " : ");

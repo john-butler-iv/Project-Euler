@@ -13,9 +13,13 @@ class PrimeFinder {
 			next = null;
 			this.val = val;
 		}
+
+		public String toString() {
+			return String.valueOf(val);
+		}
 	}
 
-	private class PrimePower {
+	public class PrimePower {
 		int prime;
 		int power;
 
@@ -46,19 +50,21 @@ class PrimeFinder {
 
 		head = new Prime(2);
 		tail = head;
+		primes[2] = head;
 
 		sievePrimes();
+
 		if (collectPrimes)
 			collectPrimes();
 	}
 
 	private void sievePrimes() {
-		for (int i = 3; i < limit; i++) {
+		for (int i = 3; i < limit; i += 2) {
 			add(i);
 		}
 
-		Prime tracer = head;
-		int calcLimit = (int) Math.sqrt(limit);
+		Prime tracer = head.next;
+		int calcLimit = (int) Math.ceil(Math.sqrt(limit));
 		while (tracer.val < calcLimit) {
 			for (int j = 2 * tracer.val; j < limit; j += tracer.val) {
 				remove(j);
@@ -100,7 +106,7 @@ class PrimeFinder {
 
 	public boolean isPrime(long n) {
 		if (n < limit)
-			return primes[(int) n] == null;
+			return primes[(int) n] != null;
 		if (n >= limit * (long) limit) {
 			// can only definitively say a number is prime under this limit, but we'll try
 			// our best otherwise
@@ -136,6 +142,7 @@ class PrimeFinder {
 				factors.add(prime);
 				n /= prime;
 			}
+
 			// we can return early if no more factors
 			if (n == 1)
 				break;
@@ -154,7 +161,7 @@ class PrimeFinder {
 	 * @param n the number to be factorized
 	 * @return the prime factors of n
 	 */
-	private List<PrimePower> primeFactorizeInternal(int n) {
+	public List<PrimePower> primePowerFactorize(int n) {
 		List<PrimePower> factors = new ArrayList<>();
 
 		if (isPrime(n)) {
