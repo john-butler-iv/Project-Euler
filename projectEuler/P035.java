@@ -20,7 +20,7 @@ class P035 extends ParameterizedProblem<Integer> {
 
 	@Override
 	public long solve(Integer maxPrime, boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(maxPrime);
+		PrimeFinder pf = new PrimeFinder(maxPrime, false);
 
 		int numCircularPrimes = 0;
 		for (int i = 0; i < maxPrime; i++) {

@@ -41,7 +41,7 @@ public class ProblemTimer51To100 extends ProblemTimer {
 		problems[22] = new P073();
 		problems[23] = new P074();
 		// problems[24] = new P075();
-		// problems[25] = new P076();
+		problems[25] = new P076();
 		// problems[26] = new P077();
 		problems[27] = new P078();
 		problems[28] = new P079();
@@ -52,14 +52,14 @@ public class ProblemTimer51To100 extends ProblemTimer {
 		problems[33] = new P084();
 		problems[34] = new P085();
 		problems[35] = new P086();
-		// problems[36] = new P087();
+		problems[36] = new P087();
 		// problems[37] = new P088();
 		problems[38] = new P089();
 		problems[39] = new P090();
 		problems[40] = new P091();
 		problems[41] = new P092();
 		problems[42] = new P093();
-		problems[43] = new P094();
+		// problems[43] = new P094();
 		problems[44] = new P095();
 		problems[45] = new P096();
 		problems[46] = new P097();

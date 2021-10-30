@@ -4,7 +4,7 @@ public class P046 extends Problem {
 
 	@Override
 	public long solve(boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(1000);
+		PrimeFinder pf = new PrimeFinder(1000, false);
 
 		for (int c = 3; c < pf.limit(); c += 2) {
 			if (pf.isPrime(c))

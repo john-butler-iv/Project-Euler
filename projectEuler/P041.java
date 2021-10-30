@@ -5,7 +5,8 @@ public class P041 extends Problem {
 	@Override
 	public boolean test() {
 		PrimeFinder pf = new PrimeFinder(2144);
-		// we aren't checking for pandigital we don't have a good way to check if a number is n-digit pandigital
+		// we aren't checking for pandigital we don't have a good way to check if a
+		// number is n-digit pandigital
 		return pf.isPrime(2143);
 	}
 
@@ -14,7 +15,7 @@ public class P041 extends Problem {
 		// floor plus one ensures that we get all factors of every number, even if
 		// 987,654,321 is a square.
 		int limit = (int) Math.sqrt(987654321) + 1;
-		PrimeFinder pf = new PrimeFinder(limit);
+		PrimeFinder pf = new PrimeFinder(limit, false);
 		String origStr = "987654321";
 		String str = origStr;
 
