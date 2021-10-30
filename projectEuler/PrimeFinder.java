@@ -4,6 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 class PrimeFinder {
+	private class PrimePower {
+		int prime;
+		int power;
+
+		public PrimePower(int prime) {
+			this.prime = prime;
+			this.power = 1;
+		}
+
+		public PrimePower(int prime, int power) {
+			this.prime = prime;
+			this.power = power;
+		}
+
+		public boolean equals(PrimePower that) {
+			return this.prime == that.prime && this.power == that.power;
+		}
+	}
+
 	private boolean[] primeTable;
 	private List<Integer> primes;
 	private int limit;
@@ -104,8 +123,8 @@ class PrimeFinder {
 	 * O(sqrt(p)) time if p >= limit.
 	 * 
 	 * @param p the number which may or may not be prime
-	 * @return returns true if p is prime, and false if p is composite or p is not
-	 *         within the limit
+	 * @return true if p is prime, and false if p is composite or p is not within
+	 *         the limit
 	 */
 	public boolean isPrime(int p) {
 		// negative numbers cannot be prime, and 0 and 1 are not prime.
@@ -149,7 +168,7 @@ class PrimeFinder {
 	 * containing {2, 2, 3}
 	 * 
 	 * @param n the number to be factorized
-	 * @return returns a sorted list of all prime factors of n
+	 * @return a sorted list of all prime factors of n
 	 */
 	public List<Integer> primeFactorize(int n) {
 		List<Integer> factors = new ArrayList<>();
@@ -174,11 +193,39 @@ class PrimeFinder {
 	}
 
 	/**
+	 * Finds all prime factors of n. For example, primeFactorizeInternal(12) returns
+	 * [{prime: 2, power: 2}, {prime: 3,power 1}]
+	 * 
+	 * @param n the number to be factorized
+	 * @return the prime factors of n
+	 */
+	private List<PrimePower> primeFactorizeInternal(int n) {
+		List<PrimePower> factors = new ArrayList<>();
+
+		if (isPrime(n)) {
+			factors.add(new PrimePower(n));
+			return factors;
+		}
+
+		for (int i = 0; n > 1; i++) {
+			int power = 0;
+			while (n % primes.get(i) == 0) {
+				power++;
+				n /= primes.get(i);
+			}
+			if (power > 0) {
+				factors.add(new PrimePower(primes.get(i), power));
+			}
+		}
+		return factors;
+	}
+
+	/**
 	 * finds all unique prime factors of n. For example, primeFactorize(12) returns
 	 * a List containing {2, 3}
 	 * 
 	 * @param n the number to be factorized
-	 * @return returns a sorted list of all unique prime factors of n
+	 * @return a sorted list of all unique prime factors of n
 	 */
 	public List<Integer> uniquePrimeFactorize(int n) {
 		List<Integer> factors = new ArrayList<>();
@@ -204,10 +251,10 @@ class PrimeFinder {
 
 	/**
 	 * Uses a somewhat optimized algorithm with time complexity O(sqrt(n)). Finds
-	 * all factors of n and returns them in an ascending list
+	 * all factors of n, including 1 and n, and returns them in an ascending list
 	 * 
 	 * @param n the number to be factorized
-	 * @return returns a list of the factors of n in ascending order
+	 * @return a list of the factors of n in ascending order
 	 */
 	public List<Integer> factorize(int n) {
 		/*
@@ -227,7 +274,8 @@ class PrimeFinder {
 		List<Integer> upperFactors = new ArrayList<>();
 		upperFactors.add(n);
 		double sqrt = Math.sqrt(n);
-		for (int i = 2; i < sqrt; i++) {
+		int limit = (int) Math.ceil(sqrt);
+		for (int i = 2; i < limit; i++) {
 			// if i is a factor, that means that n is an integer multiple of i, <=> n = ik,
 			// since k is an integer, k = n / i
 			if (n % i == 0) {
@@ -250,14 +298,14 @@ class PrimeFinder {
 	 * 
 	 * @param a one of the numbers compared
 	 * @param b one of the numbers compared
-	 * @return returns the greatest common denomonator between a and b
+	 * @return the greatest common denomonator between a and b
 	 */
 	public int gcd(int a, int b) {
-		if(a == 1 || b == 1)
+		if (a == 1 || b == 1)
 			return 1;
-		if(a == 0)
+		if (a == 0)
 			return b;
-		if(b == 0)
+		if (b == 0)
 			return a;
 
 		List<Integer> aFactors = primeFactorize(a);
@@ -288,7 +336,7 @@ class PrimeFinder {
 	 * 
 	 * @param a one potentially coprime number
 	 * @param b one potentially coprime number
-	 * @return returns true if a and b are coprime, false otherwise
+	 * @return true if a and b are coprime, false otherwise
 	 */
 	public boolean areCoprime(int a, int b) {
 		return gcd(a, b) == 1;
@@ -299,40 +347,41 @@ class PrimeFinder {
 	 * numbers are coprime with n, below n
 	 * 
 	 * @param n the input value
-	 * @return returns φ(n) <=> how many numbers below n are coprime with n
+	 * @return φ(n) <=> how many numbers below n are coprime with n
 	 */
 	public int totient(int n) {
 		// there can be overflow, so I convert to a long before converting back
 		long totientValue = n;
-		for(int prime : uniquePrimeFactorize(n)){
+		for (int prime : uniquePrimeFactorize(n)) {
 			totientValue *= prime - 1;
 			totientValue /= prime;
 		}
-		return (int)totientValue;
+		return (int) totientValue;
 	}
 
 	/**
-	 * Computes all totients from 1 to n-1, inclusive using a sieve algorithm. This is faster than repeatedly 
-	 * using totient(int). As a result, if you need all totient values, use this method instead.
-	 * static totientTable(n)[i] = totient(i) for all i.
+	 * Computes all totients from 1 to n-1, inclusive using a sieve algorithm. This
+	 * is faster than repeatedly using totient(int). As a result, if you need all
+	 * totient values, use this method instead. static totientTable(n)[i] =
+	 * totient(i) for all i.
 	 *
 	 * @param n the limit to what totients are calculated
 	 */
-	public static int[] totientTable(int n){
+	public static int[] totientTable(int n) {
 		int[] totientTable = new int[n];
-		for(int i = 1; i < totientTable.length; i++)
+		for (int i = 1; i < totientTable.length; i++)
 			totientTable[i] = i;
 
-
-		for(int i = 2; i < totientTable.length; i++){
+		for (int i = 2; i < totientTable.length; i++) {
 			// check if i is prime
-			if(totientTable[i] == i){
+			if (totientTable[i] == i) {
 				// totient(prime) = prime - 1
 				totientTable[i]--;
 
-				for(int j = 2 * i; j < totientTable.length; j+= i){
-					// there can be overflow here, so I convert to a long to ensure that doesn't happen.
-					long updatedTotient = totientTable[j] * (long)(i - 1);
+				for (int j = 2 * i; j < totientTable.length; j += i) {
+					// there can be overflow here, so I convert to a long to ensure that doesn't
+					// happen.
+					long updatedTotient = totientTable[j] * (long) (i - 1);
 					updatedTotient /= i;
 
 					totientTable[j] = (int) updatedTotient;
@@ -342,11 +391,12 @@ class PrimeFinder {
 
 		return totientTable;
 	}
+
 	/**
 	 * counts the number of divisors of n, including 1 and n
 	 * 
 	 * @param n a positive integer with some number of divisors
-	 * @return returns the number of divisors of n
+	 * @return the number of divisors of n
 	 */
 	public int divisors(int n) {
 		List<Integer> factors = primeFactorize(n);
@@ -372,7 +422,7 @@ class PrimeFinder {
 	 * including n itself
 	 * 
 	 * @param n the input to σ(n)
-	 * @return returns σ(n)
+	 * @return σ(n)
 	 */
 	public int sigma(int n) {
 		List<Integer> factors = factorize(n);
@@ -396,7 +446,7 @@ class PrimeFinder {
 	/**
 	 * a getter for the current limit
 	 * 
-	 * @return returns the limit to which primes have been found
+	 * @return the limit to which primes have been found
 	 */
 	public int limit() {
 		return limit;
@@ -405,7 +455,7 @@ class PrimeFinder {
 	/**
 	 * a getter for the primes found
 	 * 
-	 * @return returns all primes less than the limit
+	 * @return all primes less than the limit
 	 */
 	List<Integer> getPrimes() {
 		return primes;
@@ -414,7 +464,7 @@ class PrimeFinder {
 	/**
 	 * returns a table where getPrimeTable()[i] is true iff i is prime
 	 * 
-	 * @return returns a table to look up if a number is prime
+	 * @return a table to look up if a number is prime
 	 */
 	boolean[] getPrimeTable() {
 		return primeTable;

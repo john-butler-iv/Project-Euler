@@ -423,4 +423,35 @@ public class CollectionTools {
 		// if they have the same amount of each character, then they are permutations.
 		return Arrays.equals(set1, set2);
 	}
+
+	public static <E> void printArray(E[] arr) {
+		System.out.print("[");
+		for (int i = 0; i < arr.length - 1; i++) {
+			System.out.print(arr[i] + ", ");
+		}
+		if (arr.length != 0)
+			System.out.print(arr[arr.length - 1]);
+		System.out.print("]");
+	}
+
+	public static <E> void printlnArray(E[] arr) {
+		printArray(arr);
+		System.out.println();
+	}
+
+	public static <E> void printList(List<E> list) {
+		System.out.print("[");
+		for (int i = 0; i < list.size() - 1; i++) {
+			System.out.print(list.get(i) + ", ");
+		}
+		if (list.size() != 0)
+			System.out.print(list.get(list.size() - 1));
+		System.out.print("]");
+	}
+
+	public static <E> void printlnList(List<E> list) {
+		printList(list);
+		System.out.println();
+	}
+
 }
