@@ -14,16 +14,25 @@ class P005 extends ParameterizedProblem<Integer> {
 
 		int[] totalFactorsNeeded = new int[maxDivisor + 1];
 
-		for (int i = 2; i <= maxDivisor; i++) 
-			for (PrimeFinder.PrimePower pp : pf.primePowerFactorize(i)) 
-				totalFactorsNeeded[pp.prime] = Math.max(totalFactorsNeeded[pp.prime], pp.power);
+		for (int i = 2; i <= maxDivisor; i++) {
+
+			// find the multiplicity of each factor
+			int[] currFactorsNeeded = new int[totalFactorsNeeded.length];
+			for (int factor : pf.primeFactorize(i))
+				currFactorsNeeded[factor]++;
+
+			// check if it surpasses the need of the factors we are already considering
+			for (int j = 2; j < currFactorsNeeded.length; j++)
+				if (currFactorsNeeded[j] > totalFactorsNeeded[j])
+					totalFactorsNeeded[j] = currFactorsNeeded[j];
+
+		}
 
 		// multiplies all of the prime factors together
 		int product = 1;
-		for (int i = 2; i < totalFactorsNeeded.length; i++) {
+		for (int i = 2; i < totalFactorsNeeded.length; i++)
 			if (totalFactorsNeeded[i] != 0)
 				product *= Math.pow(i, totalFactorsNeeded[i]);
-		}
 
 		if (printResults)
 			System.out.println(

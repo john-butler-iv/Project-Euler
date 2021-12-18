@@ -15,7 +15,7 @@ public class P041 extends Problem {
 		// floor plus one ensures that we get all factors of every number, even if
 		// 987,654,321 is a square.
 		int limit = (int) Math.sqrt(987654321) + 1;
-		PrimeFinder pf = new PrimeFinder(limit, false);
+		PrimeFinder pf = new PrimeFinder(limit);
 		String origStr = "987654321";
 		String str = origStr;
 

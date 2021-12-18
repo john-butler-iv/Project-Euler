@@ -8,7 +8,7 @@ public class P058 extends ParameterizedProblem<Double> {
 
 	@Override
 	public long solve(Double goalRatio, boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(700000000, false);
+		PrimeFinder pf = new PrimeFinder(700000000);
 		int primes = 0;
 		int total = 1;
 

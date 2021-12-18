@@ -9,7 +9,7 @@ public class P051 extends ParameterizedProblem<Integer> {
 
 	@Override
 	public long solve(Integer numPrimes, boolean printResults) {
-		PrimeFinder pf = new PrimeFinder(200000, false);
+		PrimeFinder pf = new PrimeFinder(200000);
 
 		// counts how many primes the base will generate
 		int currPrimesFound = 0;
