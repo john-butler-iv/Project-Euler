@@ -59,7 +59,7 @@ public class ProblemTimer51To100 extends ProblemTimer {
 		problems[40] = new P091();
 		problems[41] = new P092();
 		problems[42] = new P093();
-		// problems[43] = new P094();
+		problems[43] = new P094();
 		problems[44] = new P095();
 		problems[45] = new P096();
 		problems[46] = new P097();

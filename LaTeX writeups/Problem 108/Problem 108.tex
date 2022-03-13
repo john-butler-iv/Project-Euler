@@ -1,0 +1,125 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=0.75in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{xcolor}
+\usepackage{framed}
+
+
+\definecolor{shadecolor}{RGB}{0,113,186}
+\usepackage{xparse}
+\NewDocumentCommand{\DIV}{om}{%
+  \IfValueT{#1}{\setcounter{#2}{\numexpr#1-1\relax}}%
+  \csname #2\endcsname
+}
+
+
+\title{Project Euler, Problem 108/110:\\\large{Diophantine Reciprocals}}
+\author{John Butler}
+\date{}							% Activate to display a given date or no date
+
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+  \item Analogous Equation\\
+  In this section, I will rearrange the equation to give us something of the form $y=f(x,n)$.
+  \begin{align*}
+    \frac1x+\frac1y&=\frac1n\\
+    \frac{x+y}{xy}&=\frac 1n\\
+    (x+y)n&=xy\\
+    xn+yn-xy&=0\\
+    y(n-x)&=-xn\\
+    y&=\frac{nx}{x-n}
+  \end{align*}
+  
+  \item Proof that the lines $x=n$ and $y=n$ are assymtotes of our new equation with $n$ held constant.\\
+
+    Let $x=n + \delta$. This means that $x = n$ is equivilant to $\delta = 0$, and so we get 
+    \begin{align*}
+      y &= \frac{n(n+\delta)}{(n + \delta) - n}\\
+      &=\frac{n^2+\delta n}{\delta}\\
+      &=\frac{n^2}\delta + \frac{\delta n} \delta\\
+      &=\frac{n^2}\delta + n)\\
+      &=\frac{n^2}\delta + n\\
+    \end{align*}
+    This is clearly asymtotic at $\delta=0$ and continuous everwhere else.
+
+    Now, clearly the original equation was symmetric, so our new, equivilant equation must be aswell, so the same reasoning must hold for $y=n$.
+
+  \item Symmetric Points\\
+    I claim that for every solution $(x,y)$ is a family of 4 ``symmetric points'' for any fixed $n$.
+    These points are $\left\{(x,y), (y,x), (2n-x,2n-y),(2n-y,2n-x) \right\}$.
+    Notice that when $x=y$, then $(x,y)=(y,x)$ and $(2n-x,2n-y)=(2n-y,2n-x)$, so there are technically only 2 distinct symmetric points in that case.
+
+    Assume that $(x,y)$ is a solution; that is $\frac1x + \frac 1y=\frac 1n$. But is $(2n-x,2n-y)$ a solution? Well if it is, then
+    \begin{align*}
+      \frac1{2n-x}+\frac1{2n-y}&=\frac 1n\\
+      \frac{2n-y}{(2n-x)(2n-y)} + \frac{2n-x}{(2n-x)(2n-y)}&=\frac 1n\\
+      \frac{2n-y + 2n-x}{(2n-x)(2n-y)}&=\frac 1n\\
+      \frac{4n-(x + y)}{(2n-x)(2n-y)}&=\frac 1n\\
+      n(4n-(x+y))&=(2n-x)(2n-y)\\
+      4n^2-n(x+y)&=4n^2-2nx-2ny + xy\\
+      4n^2-n(x+y)&=4n^2-2n(x-y) + xy\\
+      n(x+y)&=xy\\
+      \therefore \frac{n(x+y)}{nxy}&=\frac{xy}{nxy}\\
+      \frac{x+y}{xy}&=\frac{1}{n}\\
+      \frac1y+1x&=\frac1n \text{ which is true by assumption.}
+    \end{align*}
+    So $(2n-x,2n-y)$ is another solution.
+
+    For the other two points, as previously established, the equation is symmetric along $y=x$, so since $(x,y)$ and $(2n-x,2n-y)$ are solutions, so are $(y,x)$ and $(2n-y,2n-x)$,
+    giving us the four symmetric points that claimed. I do not have a formal proof that these are the only symmetric points, but by looking at the graph, it's pretty self evident.
+
+  \item search space restricts to just one "region"\\
+  Now this means that only finding solutions on one fourth of the curve will generate all valid results.  
+
+  \item Solutions $(x,y)$ where $x,y,n > 0$, then we will always have $x,y > n$.\\
+    Assume once again that $(x,y)$ is a valid solution for some fixed $n$.
+    
+    Assume for a moment that $x < n$ Then $\frac 1n = \frac 1x + \frac 1y > \frac 1n + \frac 1y$. But $y> 0$ so $\frac 1y > 0$, so $\frac 1n < \frac 1n+\frac 1y$.
+    This is a contradiction so $x > n$. A symmetric argument shows $y > n$.
+
+    \begin{align*}
+      \frac 1y + \frac 1x &= \frac 1n\\
+      \therefore \frac d{dx}\left(\frac 1y + \frac 1x\right) &= \frac d{dx}\frac 1n\\
+      \therefore -\frac 1{y^2}\frac{dy}{dx} - \frac 1{x^2}&=0\\
+      \therefore \frac{dy}{dx}&=-\frac{y^2}{x^2}\\
+      y^2,x^2 >* 0\\
+      \therefore -\frac{y^2}{x^2} < 0
+    \end{align*}
+    
+
+  \item If $(x,y)$ is a solution then is $(y,x)$ is also a positive solution, but not $(2n-x, 2n-y)$ and $(2n-y,2n-x)$\\
+    $(x,y)$ is a positive solution, so $x, y, n > 0$. It should be quite clear that $(y,x)$ fulfills the same solution.
+    Because $(x,y)$ is a positive solution, $x > n \equiv -x < -n \equiv 2n-x < 2n - n \equiv 2n-x < n$. Therefore $(2n-x,2n-y)$ and $(2n-y,2n-x)$ are not positive
+    solutions.
+
+  \item Finding all $(x, y)$ where $x \le y$ is enough to generate all unique solutions.\\
+    Let's assume that we've generated every solution $(x,y)$ such that $x \le y$. Let's say that there exists a $(x',y')$ is a solution where $x' > y'$. 
+    Then $(y',x')$ is a solution, but $y'< x'$, so we generated it by assumption, and $(x',y')$ is not unique.
+
+
+  \item actual algorithm!\\
+    Now I belive we have all of the major peices needed to compose our algorithm.
+    There will be an outer loop iterating over each $n$. 
+    Here we will reset the counter to 1, because $2n$ is always an integer, and is a special case where $(x,y)$ and $(y,x)$ are not distict solutions.
+    There will then be a secondary loop which iterates from $n+1$ to $2n-1$ if $xn$ divides $x-n$, then we've found a solution, 
+    and we can add one to the counter.
+
+
+  \item Performance Analysis\\
+    This algorithm has three major parts. The outer loop, the inner loop, and the check done each iteration. The check is done in $O(1)$ time (I think?),
+    The inner loop iterates $O(N)$ times where $N$ is the answer we're looking for, and the outer loop runs $O(N)$ times. Therefore the total runtime complexity is $O(N^2)$
+
+\end{enumerate}
+
+\end{document}  
