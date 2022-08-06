@@ -105,7 +105,7 @@ abstract class ProblemTimer extends Timer {
 			return -1L;
 		}
 
-		long time = Timer.time(problem, null, Timer.DEFUALT_TRIALS, false);
+		long time = Timer.time(problem, null, Timer.DEFUALT_TRIALS, true);
 
 		System.out.println(problem.getTitle() + " was solved in " + time + "ms");
 

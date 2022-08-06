@@ -2,6 +2,7 @@ package projectEuler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 class PrimeFinder {
 	private boolean[] primeTable;
@@ -24,6 +25,13 @@ class PrimeFinder {
 		sievePrimes();
 	}
 
+	private void sievePrimesMultithread(int maxConcurrentThreads, int workPerThread) {
+		ExecutorService pool = Executors.newFixedThreadPool(maxConcurrentThreads);
+
+		int sqrtLimit = (int) Math.sqrt(limit);
+
+	}
+
 	/**
 	 * This method is the one that actually finds all primes under limit, and
 	 * assigns the proper values to primeTable e and primes. I believe this is the
@@ -34,7 +42,7 @@ class PrimeFinder {
 		for (int i = 2; i < limit; i++)
 			primeTable[i] = true;
 
-		for (int i = 2; i < limit; i++) {
+		for (int i = 2; i < (int) Math.sqrt(limit); i++) {
 			// if the number is composite, it is not prime, and thus we don't want to append
 			// it to our list, and any multiple of a composite number is a multiple of its
 			// composite factors, so we can safely skip it.
