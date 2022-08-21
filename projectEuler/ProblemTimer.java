@@ -127,6 +127,15 @@ abstract class ProblemTimer extends Timer {
 	public static long solve(Problem problem) {
 		if (!test(problem)) {
 			System.out.print(problem.getTitle() + " did not solve its test correctly.");
+
+			if (problem instanceof ParameterizedProblem<?>) {
+				ParameterizedProblem<Object> paramProblem = (ParameterizedProblem<Object>) problem;
+				long expected = paramProblem.getTestSolution();
+				long experimental = paramProblem.solve(paramProblem.getTestParameter(), false);
+
+				System.out.print(" Expected " + expected + ", but got " + experimental);
+			}
+
 			return -1L;
 		}
 		System.out.print(problem.getTitle() + " : ");
