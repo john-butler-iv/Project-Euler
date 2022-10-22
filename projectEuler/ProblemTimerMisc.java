@@ -21,22 +21,26 @@ public class ProblemTimerMisc extends ProblemTimer {
 				return problems[4];
 			case 113:
 				return problems[5];
-			case 144:
+			case 127:
 				return problems[6];
-			case 202:
+			case 144:
 				return problems[7];
-			case 205:
+			case 202:
 				return problems[8];
-			case 206:
+			case 205:
 				return problems[9];
-			case 246:
+			case 206:
 				return problems[10];
-			case 301:
+			case 246:
 				return problems[11];
-			case 357:
+			case 247:
 				return problems[12];
-			case 752:
+			case 301:
 				return problems[13];
+			case 357:
+				return problems[14];
+			case 752:
+				return problems[15];
 			default:
 				break;
 		}
@@ -50,20 +54,22 @@ public class ProblemTimerMisc extends ProblemTimer {
 	public ProblemTimerMisc() {
 		previousTimer = new ProblemTimer51To100();
 
-		problems = new Problem[14];
+		problems = new Problem[16];
 		problems[0] = new P101();
 		problems[1] = new P102();
 		problems[2] = new P108();
 		problems[3] = new P110();
 		problems[4] = new P112();
 		problems[5] = new P113();
-		problems[6] = new P144();
-		problems[7] = new P202();
-		problems[8] = new P205();
-		problems[9] = new P206();
-		problems[10] = new P246();
-		problems[11] = new P301();
-		problems[12] = new P357();
-		problems[13] = new P752();
+		problems[6] = new P127();
+		problems[7] = new P144();
+		problems[8] = new P202();
+		problems[9] = new P205();
+		problems[10] = new P206();
+		problems[11] = new P246();
+		problems[12] = new P247();
+		problems[13] = new P301();
+		problems[14] = new P357();
+		problems[15] = new P752();
 	}
 }

@@ -1,7 +1,9 @@
 package projectEuler;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import projectEuler.CollectionTools.Tuple;
 
 class PrimeFinder {
 	private boolean[] primeTable;
@@ -35,7 +37,7 @@ class PrimeFinder {
 			primeTable[i] = true;
 
 		int sqrtLimit = (int) Math.sqrt(limit);
-		for (int i = 2; i < sqrtLimit; i++) {
+		for (int i = 2; i <= sqrtLimit; i++) {
 			// if the number is composite, it is not prime, and thus we don't want to append
 			// it to our list, and any multiple of a composite number is a multiple of its
 			// composite factors, so we can safely skip it.
@@ -51,7 +53,7 @@ class PrimeFinder {
 		}
 
 		// keep track of additional primes found
-		for (int i = sqrtLimit; i < limit; i++)
+		for (int i = sqrtLimit + 1; i < limit; i++)
 			if (primeTable[i])
 				primes.add(i);
 	}
@@ -189,6 +191,10 @@ class PrimeFinder {
 	public List<Integer> uniquePrimeFactorize(int n) {
 		List<Integer> factors = new ArrayList<>();
 
+		if (n <= 1) {
+			return factors;
+		}
+
 		// this check isn't necessary, but it's constant runtime, and if n was in fact
 		// prime, it saves a lot of time
 		if (isPrime(n)) {
@@ -206,6 +212,32 @@ class PrimeFinder {
 			}
 		}
 		return factors;
+	}
+
+	/**
+	 * Generates an ArrayList where the List at element 'a' contains the unique
+	 * prime factors of 'a'.
+	 * 
+	 * @param n the limit when searching for prime factors. all numbers <= n will
+	 *          have a factor in the cache
+	 * @return an ArrayList of Lists of factors
+	 */
+	public ArrayList<List<Integer>> getUniquePrimeFactorCache(int n) {
+		ArrayList<List<Integer>> cache = new ArrayList<>(n + 1);
+		for (int i = 0; i < n + 1; i++) {
+			cache.add(new ArrayList<Integer>());
+		}
+
+		for (int prime : primes) {
+			if (prime > n)
+				break;
+
+			for (int i = prime; i <= n; i += prime) {
+				cache.get(i).add(prime);
+			}
+		}
+
+		return cache;
 	}
 
 	/**
@@ -319,6 +351,78 @@ class PrimeFinder {
 	 */
 	public boolean areCoprime(int a, int b) {
 		return gcd(a, b) == 1;
+	}
+
+	/**
+	 * Finds all pairs of coprime numbers
+	 * 
+	 * @param maxNum limit for our search. All numbers in the output will be less
+	 *               than or equal to maxNum
+	 * @return An array of pairs of coprime numbers
+	 */
+	public static Tuple<Integer, Integer>[] findCoprimePairs(int maxNum) {
+		return findCoprimePairsList(maxNum).toArray();
+	}
+
+	private static CustomLinkedList<Tuple<Integer, Integer>> findCoprimePairsList(int maxNum) {
+
+		CustomLinkedList<Tuple<Integer, Integer>> pairsList = new CustomLinkedList<>();
+
+		pairsList.addFront(new Tuple<Integer, Integer>(0, 1));
+		pairsList.addBack(new Tuple<Integer, Integer>(1, 1));
+
+		for (int i = 0; i < maxNum; i++) {
+			findMiddlePairs(pairsList, maxNum);
+		}
+
+		return pairsList;
+	}
+
+	private static void findMiddlePairs(CustomLinkedList<Tuple<Integer, Integer>> pairsList, int maxNum) {
+		Iterator<CustomLinkedList<Tuple<Integer, Integer>>.CustomLinkedNode> nodeIt = pairsList.nodeIterator();
+
+		CustomLinkedList<Tuple<Integer, Integer>>.CustomLinkedNode prevNode = nodeIt.next();
+		CustomLinkedList<Tuple<Integer, Integer>>.CustomLinkedNode currNode;
+
+		while (nodeIt.hasNext()) {
+			currNode = nodeIt.next();
+
+			int middleVal1 = prevNode.value.val1 = currNode.value.val1;
+			int middleVal2 = prevNode.value.val2 = currNode.value.val2;
+			// TODO could optimize this algorithm by not considering pairs that fail this
+			// check in the future. ie, store pending pairs in a queue, and don't requeue
+			// the result if it doesn't pass this check.
+			if (middleVal2 <= maxNum) {
+				Tuple<Integer, Integer> middlePair = new Tuple<Integer, Integer>(
+						middleVal1, middleVal2);
+
+				pairsList.addBefore(currNode, middlePair);
+			}
+
+			prevNode = currNode;
+		}
+
+	}
+
+	/**
+	 * Computes a cache where cache[n][m] is true if and only if n and m are
+	 * coprime.
+	 * 
+	 * @param maxNum the inclusive upperbound of our search.
+	 * @return
+	 */
+	public static boolean[][] findCoprimeCache(int maxNum) {
+		boolean[][] coprimeCache = new boolean[maxNum + 1][maxNum + 1];
+		CustomLinkedList<Tuple<Integer, Integer>> pairsList = findCoprimePairsList(maxNum);
+
+		Iterator<Tuple<Integer, Integer>> pairIt = pairsList.iterator();
+		while (pairIt.hasNext()) {
+			Tuple<Integer, Integer> pair = pairIt.next();
+			coprimeCache[pair.val1][pair.val2] = true;
+			coprimeCache[pair.val2][pair.val1] = true;
+		}
+
+		return coprimeCache;
 	}
 
 	/**

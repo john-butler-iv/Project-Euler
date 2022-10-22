@@ -3,6 +3,15 @@ package projectEuler;
 import java.util.*;
 
 public class CollectionTools {
+	public static class Tuple<E1, E2> {
+		public E1 val1;
+		public E2 val2;
+
+		public Tuple(E1 val1, E2 val2) {
+			this.val1 = val1;
+			this.val2 = val2;
+		}
+	}
 
 	public static <T> boolean inBounds(List<T> list, int i) {
 		if (list == null)
@@ -452,6 +461,35 @@ public class CollectionTools {
 	public static <E> void printlnList(List<E> list) {
 		printList(list);
 		System.out.println();
+	}
+
+	public static <E extends Comparable<E>> boolean areDisjointSorted(List<E> listA, List<E> listB) {
+		if (listA.isEmpty() || listB.isEmpty())
+			return true;
+
+		Iterator<E> itA = listA.iterator();
+		E currA = itA.next();
+		Iterator<E> itB = listB.iterator();
+		E currB = itB.next();
+
+		while (true) {
+			int cmpVal = currA.compareTo(currB);
+			if (cmpVal == 0) // A = B
+				return false;
+			else if (cmpVal > 0) { // A > B
+				if (itB.hasNext())
+					currB = itB.next();
+				else
+					break;
+			} else { // cmpVal < 0 // A < B
+				if (itA.hasNext())
+					currA = itA.next();
+				else
+					break;
+			}
+		}
+
+		return true;
 	}
 
 }

@@ -9,6 +9,17 @@ abstract class Problem implements Consumer<Object> {
 	}
 
 	public boolean test() {
+		return test(false, false);
+	}
+
+	public boolean test(boolean printResults) {
+		return test(printResults, false);
+	}
+
+	public boolean test(boolean printFailure, boolean printSuccess) {
+		if (printSuccess) {
+			System.out.println(this.getTitle() + " does not have a test.");
+		}
 		return true;
 	}
 

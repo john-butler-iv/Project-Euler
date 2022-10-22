@@ -13,7 +13,8 @@ abstract class ProblemTimer extends Timer {
 	protected int minPid;
 
 	public static void printUsage() {
-		System.err.println("Usage: java projectEuler.ProblemTimer <solve / time> <pid [pid] [...] / all / range>");
+		System.err.println(
+				"Usage: java projectEuler.ProblemTimer <solve / test / time > <pid [pid] [...] / all / range>");
 	}
 
 	public static void main(String[] args) {
@@ -28,9 +29,11 @@ abstract class ProblemTimer extends Timer {
 
 		// determine the operation
 		Function<Problem, Long> function;
-		if (args[0].equalsIgnoreCase("solve"))
+		if (args[0].equalsIgnoreCase("solve")) {
 			function = ProblemTimer.solve;
-		else if (args[0].equalsIgnoreCase("time")) {
+		} else if (args[0].equalsIgnoreCase("test")) {
+			function = ProblemTimer.test;
+		} else if (args[0].equalsIgnoreCase("time")) {
 			function = ProblemTimer.time;
 		} else {
 			printUsage();
@@ -75,17 +78,6 @@ abstract class ProblemTimer extends Timer {
 	}
 
 	/**
-	 * tests the problem passed to see if should be run (see Problem.test()). It
-	 * also checks if problem is null. If it is, false is returned
-	 * 
-	 * @param problem the problem to be tested
-	 * @return returns whether problem passes its test or false if problem is null
-	 */
-	public static boolean test(Problem problem) {
-		return problem != null && problem.test();
-	}
-
-	/**
 	 * The function time(Problem) in a variable
 	 */
 	public static Function<Problem, Long> time = problem -> time(problem);
@@ -100,8 +92,7 @@ abstract class ProblemTimer extends Timer {
 	 *         Object).
 	 */
 	public static long time(Problem problem) {
-		if (!test(problem)) {
-			System.out.println(problem.getTitle() + " did not solve its test correctly");
+		if (!test(problem, true, false)) {
 			return -1L;
 		}
 
@@ -125,22 +116,56 @@ abstract class ProblemTimer extends Timer {
 	 * @return the solution to the problem passed
 	 */
 	public static long solve(Problem problem) {
-		if (!test(problem)) {
-			System.out.print(problem.getTitle() + " did not solve its test correctly.");
-
-			if (problem instanceof ParameterizedProblem<?>) {
-				ParameterizedProblem<Object> paramProblem = (ParameterizedProblem<Object>) problem;
-				long expected = paramProblem.getTestSolution();
-				long experimental = paramProblem.solve(paramProblem.getTestParameter(), false);
-
-				System.out.print(" Expected " + expected + ", but got " + experimental);
-			}
-
+		if (!test(problem, true, false)) {
 			return -1L;
 		}
+
 		System.out.print(problem.getTitle() + " : ");
 		return problem.solve(true);
 	};
+
+	public static Function<Problem, Long> test = problem -> test(problem, true, true) ? 1L : 0L;
+
+	/**
+	 * tests the problem passed to see if should be run (see Problem.test()). It
+	 * also checks if problem is null. If it is, false is returned. This is
+	 * equivilant
+	 * to calling test(problem, false)
+	 * 
+	 * @param problem the problem to be tested
+	 * @return returns whether problem passes its test or false if problem is null
+	 */
+	public static boolean test(Problem problem) {
+		return test(problem, false, false);
+	}
+
+	/**
+	 * tests the problem passed to see if should be run (see Problem.test()). It
+	 * also checks if problem is null. If it is, false is returned. The result can
+	 * also
+	 * be optionally printed to the console
+	 * 
+	 * @param problem      the problem to be tested
+	 * @param printResults if true, we will output the results of the test to the
+	 *                     console.
+	 * @return returns whether problem passes its test or false if problem is null
+	 */
+	public static boolean test(Problem problem, boolean printFailure, boolean printSuccess) {
+		if (problem == null)
+			return false;
+		boolean testPassed;
+		try {
+			testPassed = problem.test(printFailure, printSuccess);
+		} catch (Exception e) {
+			testPassed = false;
+			if (printFailure) {
+				System.out.println(problem.getTitle() + " encountered an exception on its test");
+				e.printStackTrace();
+			}
+		}
+
+		return testPassed;
+	}
 
 	/**
 	 * applies the specified function to all problems in relProbs
