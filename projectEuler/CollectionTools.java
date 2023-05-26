@@ -160,13 +160,21 @@ public class CollectionTools {
 		return returnStr;
 	}
 
+	/**
+	 * Creates an iterator, which iterates over all permutations of the array
+	 * PLEASE NOTE it is assumed arr is sorted
+	 * 
+	 * @param arr the sorted array which permutations will be generated from
+	 * 
+	 * @return an iterator that iterates over all permuations of arr
+	 */
 	public static <E extends Comparable<E>> Iterator<E[]> permuteIterator(E[] arr) {
 		return new Iterator<E[]>() {
 			E[] curr = arr;
 
 			@Override
 			public boolean hasNext() {
-				return curr != null; // curr.length != 0;
+				return curr != null;
 			}
 
 			@Override
@@ -178,6 +186,41 @@ public class CollectionTools {
 		};
 	}
 
+	/**
+	 * Creates an iterator, which iterates over all permutations of the array in
+	 * reverse order.
+	 * PLEASE NOTE it is assumed arr is sorted
+	 * 
+	 * @param arr the sorted array which permutations will be generated from
+	 * 
+	 * @return an iterator that iterates over all permuations of arr
+	 */
+	public static <E extends Comparable<E>> Iterator<E[]> reversePermuteIterator(E[] arr) {
+		return new Iterator<E[]>() {
+			E[] curr = arr;
+
+			@Override
+			public boolean hasNext() {
+				return curr != null;
+			}
+
+			@Override
+			public E[] next() {
+				E[] retVar = curr;
+				curr = prevPermute(curr);
+				return retVar;
+			}
+		};
+	}
+
+	/**
+	 * Creates an iterator, which iterates over all permutations of the ArrayList.
+	 * PLEASE NOTE it is assumed list is sorted
+	 * 
+	 * @param list the sorted ArrayList which permutations will be generated from
+	 * 
+	 * @return an iterator that iterates over all permuations of list
+	 */
 	public static <E extends Comparable<E>> Iterator<ArrayList<E>> permuteIterator(ArrayList<E> list) {
 		return new Iterator<ArrayList<E>>() {
 			ArrayList<E> curr = list;
@@ -228,6 +271,7 @@ public class CollectionTools {
 	 * last lexicographic permuation, "" will be returned.
 	 * 
 	 * @param str the string which will be permuted
+	 * 
 	 * @return the next permutation of str, or "" if there is no next permutation.
 	 */
 	public static String permute(String str) {
@@ -254,6 +298,17 @@ public class CollectionTools {
 		return reverse(str, pivot + 1);
 	}
 
+	/**
+	 * computes the next lexicographic permutation of arr. i.e. permute([0, 1, 2,
+	 * 3])
+	 * gives [0, 1, 3, 2]. This method does not "wrap around", and if arr has
+	 * reached the
+	 * last lexicographic permuation, nullwill be returned.
+	 * 
+	 * @param arr the arr which will be permuted
+	 * 
+	 * @return the next permutation of arr, or null if there is no next permutation.
+	 */
 	public static <E extends Comparable<E>> E[] permute(E[] arr) {
 		if (arr == null || arr.length == 0)
 			return null;
@@ -352,10 +407,46 @@ public class CollectionTools {
 	}
 
 	/**
+	 * computes the previous permutation of arr. ie permute([3, 2, 1, 0])
+	 * gives [3, 2, 0, 1]
+	 * 
+	 * @param <E> a comparable type. The comparision will be used to determine
+	 *            what is lexicographically next/previous
+	 * @param arr the array to permute
+	 * @return the previous permutation of arr
+	 */
+	public static <E extends Comparable<E>> E[] prevPermute(E[] arr) {
+		if (arr == null || arr.length == 0)
+			return null;
+
+		// assigns the pivot to before the last "run" in the string
+		int pivot = arr.length - 1;
+		while (--pivot >= 0 && arr[pivot].compareTo(arr[pivot + 1]) <= 0)
+			;
+
+		// if we're already at the last permutation, there is no next one.
+		if (pivot == -1)
+			return null;
+
+		// finds the last number greater than the pivot
+		int lexRoot = arr.length;
+		while (--lexRoot > pivot && arr[pivot].compareTo(arr[lexRoot]) <= 0)
+			;
+
+		E[] retVar = Arrays.copyOf(arr, arr.length);
+
+		swap(retVar, pivot, lexRoot);
+
+		reverse(retVar, pivot + 1);
+
+		return retVar;
+	}
+
+	/**
 	 * determines if str1 and str2 are permutations of each other, i.e.
 	 * arePermutations("123345", "543123") returns true. This works the same as
 	 * arePermutations(String, String, Map), but assumes no alphabet restrictions.
-	 * For this reason, it is reccomended to use that function if there are
+	 * For this reason, it is recommended to use that function if there are
 	 * significant restrictions to the strings' character space. i.e. if the strings
 	 * are all numbers.
 	 * 
@@ -381,6 +472,15 @@ public class CollectionTools {
 		return Arrays.equals(set1, set2);
 	}
 
+	/**
+	 * If str1 and str2 are numeric strings (only contain digits '0'-'9'), then
+	 * this determines if str1 and str2 are permutations of each other, i.e.
+	 * areNumPermuatations("12345","54321") returns true.
+	 * 
+	 * @param str1 one string which may or may not be a permuted version of str2
+	 * @param str2 one string whihc may or may not be a permuted version of str1
+	 * @return true if str1 and str2 are permutations of each other.
+	 */
 	public static boolean areNumPermutations(String str1, String str2) {
 		if (str1.length() != str2.length())
 			return false;
@@ -433,36 +533,18 @@ public class CollectionTools {
 		return Arrays.equals(set1, set2);
 	}
 
-	public static <E> void printArray(E[] arr) {
-		System.out.print("[");
-		for (int i = 0; i < arr.length - 1; i++) {
-			System.out.print(arr[i] + ", ");
-		}
-		if (arr.length != 0)
-			System.out.print(arr[arr.length - 1]);
-		System.out.print("]");
-	}
-
-	public static <E> void printlnArray(E[] arr) {
-		printArray(arr);
-		System.out.println();
-	}
-
-	public static <E> void printList(List<E> list) {
-		System.out.print("[");
-		for (int i = 0; i < list.size() - 1; i++) {
-			System.out.print(list.get(i) + ", ");
-		}
-		if (list.size() != 0)
-			System.out.print(list.get(list.size() - 1));
-		System.out.print("]");
-	}
-
-	public static <E> void printlnList(List<E> list) {
-		printList(list);
-		System.out.println();
-	}
-
+	/**
+	 * Given two sorted lists, determines if they don't share any elements (are
+	 * disjoint)
+	 * 
+	 * @param <E>   Comparable type used to determine if listA or listB share
+	 *              elements
+	 * @param listA a list of comparable elements which may or may not be disjoint
+	 *              with listB
+	 * @param listB a list of comparable elements which may or may not be disjoint
+	 *              with listA
+	 * @return true if listA and listB do not share any elements.
+	 */
 	public static <E extends Comparable<E>> boolean areDisjointSorted(List<E> listA, List<E> listB) {
 		if (listA.isEmpty() || listB.isEmpty())
 			return true;
@@ -492,4 +574,33 @@ public class CollectionTools {
 		return true;
 	}
 
+	public static <E> void printArray(E[] arr) {
+		System.out.print("[");
+		for (int i = 0; i < arr.length - 1; i++) {
+			System.out.print(arr[i] + ", ");
+		}
+		if (arr.length != 0)
+			System.out.print(arr[arr.length - 1]);
+		System.out.print("]");
+	}
+
+	public static <E> void printlnArray(E[] arr) {
+		printArray(arr);
+		System.out.println();
+	}
+
+	public static <E> void printList(List<E> list) {
+		System.out.print("[");
+		for (int i = 0; i < list.size() - 1; i++) {
+			System.out.print(list.get(i) + ", ");
+		}
+		if (list.size() != 0)
+			System.out.print(list.get(list.size() - 1));
+		System.out.print("]");
+	}
+
+	public static <E> void printlnList(List<E> list) {
+		printList(list);
+		System.out.println();
+	}
 }
