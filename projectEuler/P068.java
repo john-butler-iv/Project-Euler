@@ -61,7 +61,7 @@ public class P068 extends Problem {
 		return extractString(greatestAttempt).equals("432621513");
 	}
 
-	public long solve(boolean printResults) {
+	public long solveFast(boolean printResults) {
 		// TODO, I don't have a proof that the spindles should be in order. I can
 		// say that five greatest values (6-10) must all be on the outside,
 		// because otherwise one of the lower values (1-5) would be in the outer
@@ -142,7 +142,7 @@ public class P068 extends Problem {
 		return bestResult;
 	}
 
-	public long solveSlow(boolean printResults) {
+	public long solve(boolean printResults) {
 		Iterator<Integer[]> it = CollectionTools.reversePermuteIterator(new Integer[] { 10, 9, 8, 7, 6, 5 });
 
 		long greatestAttempt = 0;
