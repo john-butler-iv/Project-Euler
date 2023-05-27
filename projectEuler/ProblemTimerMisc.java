@@ -8,43 +8,22 @@ public class ProblemTimerMisc extends ProblemTimer {
 
 	@Override
 	protected Problem getProblem(int pid) {
-		switch (pid) {
-			case 101:
-				return problems[0];
-			case 102:
-				return problems[1];
-			case 108:
-				return problems[2];
-			case 110:
-				return problems[3];
-			case 112:
-				return problems[4];
-			case 113:
-				return problems[5];
-			case 127:
-				return problems[6];
-			case 144:
-				return problems[7];
-			case 202:
-				return problems[8];
-			case 205:
-				return problems[9];
-			case 206:
-				return problems[10];
-			case 246:
-				return problems[11];
-			case 247:
-				return problems[12];
-			case 301:
-				return problems[13];
-			case 357:
-				return problems[14];
-			case 752:
-				return problems[15];
-			default:
+		Problem retProblem = null;
+
+		// check if we have the requested problem
+		for (Problem problem : problems) {
+			if (problem.getNumber() == pid) {
+				retProblem = problem;
 				break;
+			}
 		}
-		return previousTimer.getProblem(pid);
+
+		if (retProblem == null) {
+			// otherwise, must be in another timer.
+			retProblem = previousTimer.getProblem(pid);
+		}
+
+		return retProblem;
 	}
 
 	public static void main(String[] args) {
@@ -52,24 +31,21 @@ public class ProblemTimerMisc extends ProblemTimer {
 	}
 
 	public ProblemTimerMisc() {
-		previousTimer = new ProblemTimer51To100();
+		previousTimer = new ProblemTimer101To150();
 
-		problems = new Problem[16];
-		problems[0] = new P101();
-		problems[1] = new P102();
-		problems[2] = new P108();
-		problems[3] = new P110();
-		problems[4] = new P112();
-		problems[5] = new P113();
-		problems[6] = new P127();
-		problems[7] = new P144();
-		problems[8] = new P202();
-		problems[9] = new P205();
-		problems[10] = new P206();
-		problems[11] = new P246();
-		problems[12] = new P247();
-		problems[13] = new P301();
-		problems[14] = new P357();
-		problems[15] = new P752();
+		problems = new Problem[8];
+		// 201-250
+		problems[0] = new P202();
+		problems[1] = new P205();
+		problems[2] = new P206();
+		problems[3] = new P246();
+		problems[4] = new P247();
+		// 301-350
+		problems[5] = new P301();
+		// 351-352
+		problems[6] = new P357();
+		// ...
+		// 751-800
+		problems[7] = new P752();
 	}
 }
