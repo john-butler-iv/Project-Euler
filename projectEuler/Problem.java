@@ -28,7 +28,7 @@ abstract class Problem implements Consumer<Object> {
 	public abstract String getTitle();
 
 	public int getNumber() {
-		return Integer.valueOf(getTitle().substring(9, 12));
+		return Integer.valueOf(getTitle().substring(8, 11));
 	}
 
 	public String toString() {

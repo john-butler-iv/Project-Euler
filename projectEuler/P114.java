@@ -8,9 +8,28 @@ public class P114 extends ParameterizedProblem<Integer> {
 	}
 
 	@Override
-	public long solve(Integer parameter, boolean printResults) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'solve'");
+	public long solve(Integer fieldWidth, boolean printResults) {
+		long ways = solveCore(fieldWidth);
+
+		if (printResults) {
+			System.out.println("There are " + ways + " ways to fill a row measuring " + fieldWidth + " units.");
+		}
+		return ways;
+	}
+
+	private long solveCore(int fieldWidth) {
+		if (fieldWidth <= 0) {
+			return 0;
+		} else if (fieldWidth <= 2) {
+			return 1;
+		}
+
+		long ways = 0;
+		for (int blockSize = 3; blockSize <= fieldWidth; blockSize++) {
+			ways += solveCore(fieldWidth - blockSize);
+		}
+
+		return ways;
 	}
 
 	@Override

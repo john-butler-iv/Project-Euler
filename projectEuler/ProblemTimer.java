@@ -49,14 +49,12 @@ abstract class ProblemTimer extends Timer {
 
 			for (int i = 1; i < args.length; i++) {
 
-				try {
-					problems[i - 1] = instance.getProblem(Integer.parseInt(args[i]));
-				} catch (NumberFormatException e) {
-				}
-
-				if (problems[i - 1] == null)
+				int pid = getPID(args[i]);
+				if (pid <= 0) {
 					System.err.println(args[i] + " is not a valid pid");
-
+				} else {
+					problems[i - 1] = instance.getProblem(pid);
+				}
 			}
 		}
 
@@ -65,6 +63,24 @@ abstract class ProblemTimer extends Timer {
 			instance.apply(function, problems);
 		else
 			instance.applyAll(function);
+	}
+
+	private static int getPID(String problemDescriptor) {
+		int pid;
+
+		// if passed the filename, trim it to just the numeric portion
+		if (problemDescriptor.length() >= 9) {
+			problemDescriptor = problemDescriptor.substring(
+					problemDescriptor.length() - 8,
+					problemDescriptor.length() - 5);
+		}
+
+		try {
+			pid = Integer.parseInt(problemDescriptor);
+		} catch (NumberFormatException e) {
+			pid = -1;
+		}
+		return pid;
 	}
 
 	// this is only used in subclasses
