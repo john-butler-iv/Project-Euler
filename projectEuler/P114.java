@@ -9,7 +9,8 @@ public class P114 extends ParameterizedProblem<Integer> {
 
 	@Override
 	public long solve(Integer fieldWidth, boolean printResults) {
-		long ways = solveCore(fieldWidth);
+		long[] cache = new long[fieldWidth + 1];
+		long ways = solveCore(fieldWidth, cache);
 
 		if (printResults) {
 			System.out.println("There are " + ways + " ways to fill a row measuring " + fieldWidth + " units.");
@@ -17,18 +18,23 @@ public class P114 extends ParameterizedProblem<Integer> {
 		return ways;
 	}
 
-	private long solveCore(int fieldWidth) {
-		if (fieldWidth <= 0) {
-			return 0;
-		} else if (fieldWidth <= 2) {
+	private long solveCore(int fieldWidth, long[] cache) {
+		// we need a check for if fieldWidth <= 0, so we may as well, just go up to 2 and exclude the need for initializing the cache
+		if (fieldWidth <= 2)
 			return 1;
-		}
+		if (cache[fieldWidth] != 0)
+			return cache[fieldWidth];
 
-		long ways = 0;
+		// represents leaving space empty
+		long ways = 1;
+
 		for (int blockSize = 3; blockSize <= fieldWidth; blockSize++) {
-			ways += solveCore(fieldWidth - blockSize);
+			for (int offset = 0; offset <= fieldWidth - blockSize; offset++) {
+				ways += solveCore(fieldWidth - blockSize - offset - 1, cache);
+			}
 		}
 
+		cache[fieldWidth] = ways;
 		return ways;
 	}
 
