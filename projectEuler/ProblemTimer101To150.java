@@ -31,8 +31,8 @@ public class ProblemTimer101To150 extends ProblemTimer {
 		problems[12] = new P113();
 		problems[13] = new P114();
 		problems[14] = new P115();
-		//problems[15] = new P116();
-		//problems[16] = new P117();
+		problems[15] = new P116();
+		problems[16] = new P117();
 		//problems[17] = new P118();
 		//problems[18] = new P119();
 		//problems[19] = new P120();

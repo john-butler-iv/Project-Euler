@@ -54,6 +54,9 @@ abstract class ProblemTimer extends Timer {
 					System.err.println(args[i] + " is not a valid pid");
 				} else {
 					problems[i - 1] = instance.getProblem(pid);
+					if (problems[i - 1] == null) {
+						System.err.println(pid + " is not the pid of a written problem");
+					}
 				}
 			}
 		}
