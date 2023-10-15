@@ -33,19 +33,21 @@ public class ProblemTimerMisc extends ProblemTimer {
 	public ProblemTimerMisc() {
 		previousTimer = new ProblemTimer101To150();
 
-		problems = new Problem[8];
+		problems = new Problem[9];
+		// 151-200
+		problems[0] = new P152();
 		// 201-250
-		problems[0] = new P202();
-		problems[1] = new P205();
-		problems[2] = new P206();
-		problems[3] = new P246();
-		problems[4] = new P247();
+		problems[1] = new P202();
+		problems[2] = new P205();
+		problems[3] = new P206();
+		problems[4] = new P246();
+		problems[5] = new P247();
 		// 301-350
-		problems[5] = new P301();
+		problems[6] = new P301();
 		// 351-352
-		problems[6] = new P357();
+		problems[7] = new P357();
 		// ...
 		// 751-800
-		problems[7] = new P752();
+		problems[8] = new P752();
 	}
 }
